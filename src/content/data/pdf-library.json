@@ -1,0 +1,55 @@
+{
+  "version": "1.0.0",
+  "lastUpdated": "2026-11-17",
+  "description": "Catálogo de recursos PDF da biblioteca GPTCLONE. Os itens marcados como 'sample' são conteúdo de exemplo claramente identificado. Nenhum material protegido por direitos de autor foi incluído sem permissão.",
+  "documents": [
+    {
+      "id": "pdf-sample-001",
+      "title": "Guia de Introdução ao GPTCLONE (Exemplo)",
+      "description": "Documento de exemplo que introduz os conceitos básicos do projeto GPTCLONE, arquitetura de alto nível e objetivos. Este é conteúdo de amostra (sample) criado para demonstração do catálogo.",
+      "category": "documentacao",
+      "tags": ["gptclone", "introducao", "arquitetura", "sample"],
+      "author": "Equipa GPTCLONE",
+      "license": "CC-BY-4.0",
+      "language": "pt-PT",
+      "pages": 12,
+      "sizeBytes": 245760,
+      "sample": true,
+      "downloadUrl": "/resources/pdfs/sample-gptclone-guide.pdf",
+      "previewUrl": "/resources/pdfs/sample-gptclone-guide.pdf",
+      "uploadDate": "2026-11-17"
+    },
+    {
+      "id": "pdf-sample-002",
+      "title": "Notas de Arquitetura Transformer (Exemplo)",
+      "description": "Resumo técnico de exemplo sobre a arquitetura Transformer, self-attention e componentes principais. Conteúdo de amostra para demonstração do catálogo.",
+      "category": "investigacao",
+      "tags": ["transformer", "arquitetura", "ia", "sample"],
+      "author": "Equipa GPTCLONE",
+      "license": "CC-BY-4.0",
+      "language": "pt-PT",
+      "pages": 8,
+      "sizeBytes": 184320,
+      "sample": true,
+      "downloadUrl": "/resources/pdfs/sample-transformer-notes.pdf",
+      "previewUrl": "/resources/pdfs/sample-transformer-notes.pdf",
+      "uploadDate": "2026-11-17"
+    },
+    {
+      "id": "pdf-sample-003",
+      "title": "Tutorial de Tokenização BPE (Exemplo)",
+      "description": "Guia prático de exemplo sobre tokenização BPE (Byte Pair Encoding) com exemplos passo a passo. Conteúdo de amostra para demonstração do catálogo.",
+      "category": "tutorial",
+      "tags": ["tokenizacao", "bpe", "nlp", "tutorial", "sample"],
+      "author": "Equipa GPTCLONE",
+      "license": "CC-BY-4.0",
+      "language": "pt-PT",
+      "pages": 15,
+      "sizeBytes": 312880,
+      "sample": true,
+      "downloadUrl": "/resources/pdfs/sample-bpe-tutorial.pdf",
+      "previewUrl": "/resources/pdfs/sample-bpe-tutorial.pdf",
+      "uploadDate": "2026-11-17"
+    }
+  ]
+}

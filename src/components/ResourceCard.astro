@@ -1,0 +1,114 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  category?: string;
+  tags?: string[];
+  author?: string;
+  license?: string;
+  language?: string;
+  size?: string;
+  pages?: number;
+  duration?: string;
+  href?: string;
+  downloadUrl?: string;
+  isSample?: boolean;
+  isPlaceholder?: boolean;
+  type?: 'pdf' | 'audiobook';
+}
+
+const {
+  title,
+  description,
+  category,
+  tags = [],
+  author,
+  license,
+  language,
+  size,
+  pages,
+  duration,
+  href,
+  downloadUrl,
+  isSample = false,
+  isPlaceholder = false,
+  type = 'pdf',
+} = Astro.props;
+
+function formatBytes(bytes?: number): string {
+  if (!bytes) return '';
+  if (bytes < 1024) return bytes + ' B';
+  if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';
+  return (bytes / 1048576).toFixed(1) + ' MB';
+}
+
+const sizeText = size || (pages ? `${pages} páginas` : '');
+---
+
+<article class="card group">
+  <div class="p-6">
+    <div class="flex flex-wrap gap-2 mb-3">
+      {category && (
+        <span class="badge badge-category">{category}</span>
+      )}
+      {type === 'audiobook' && (
+        <span class="badge badge-category">Áudio</span>
+      )}
+      {isSample && (
+        <span class="badge badge-tag">Amostra</span>
+      )}
+      {isPlaceholder && (
+        <span class="badge badge-tag">Em breve</span>
+      )}
+      {tags.map((tag) => (
+        <span class="badge badge-tag">{tag}</span>
+      ))}
+    </div>
+    <h3 class="text-lg font-bold text-gptclone-text mb-2">
+      {href ? (
+        <a href={href} class="hover:text-gptclone-purple-light dark:hover:text-gptclone-purple-light transition-colors">
+          {title}
+        </a>
+      ) : (
+        title
+      )}
+    </h3>
+    <p class="text-gptclone-text/80 mb-4 line-clamp-3">{description}</p>
+
+    <div class="flex flex-wrap gap-3 mb-4 text-sm text-gptclone-text/70">
+      {author && <span>Por {author}</span>}
+      {language && <span>{language}</span>}
+      {license && <span>Licença: {license}</span>}
+      {sizeText && <span>{sizeText}</span>}
+      {duration && <span>Duração: {duration}</span>}
+    </div>
+
+    <div class="flex flex-wrap gap-3">
+      {href && (
+        <a
+          href={href}
+          class="btn-primary text-xs px-4 py-2"
+        >
+          {type === 'audiobook' ? 'Ouvir' : 'Ler'}
+        </a>
+      )}
+      {downloadUrl && !isPlaceholder && (
+        <a
+          href={downloadUrl}
+          class="btn-outline text-xs px-4 py-2"
+          download
+        >
+          Descarregar
+        </a>
+      )}
+      {isPlaceholder && (
+        <button
+          class="btn-outline text-xs px-4 py-2 opacity-60 cursor-not-allowed"
+          disabled
+        >
+          Em breve
+        </button>
+      )}
+    </div>
+  </div>
+</article>

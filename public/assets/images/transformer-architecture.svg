@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 300" fill="none">
+  <rect width="600" height="300" fill="#0f172a"/>
+  <rect x="100" y="100" width="80" height="100" rx="4" fill="#8b5cf6" opacity="0.8"/>
+  <rect x="210" y="70" width="80" height="160" rx="4" fill="#3b82f6" opacity="0.7"/>
+  <rect x="320" y="100" width="80" height="100" rx="4" fill="#06b6d4" opacity="0.6"/>
+  <rect x="430" y="130" width="80" height="40" rx="4" fill="#8b5cf6" opacity="0.5"/>
+  <path d="M180 150 L210 150" stroke="#94a3b8" stroke-width="2"/>
+  <path d="M290 150 L320 150" stroke="#94a3b8" stroke-width="2"/>
+  <path d="M400 150 L430 150" stroke="#94a3b8" stroke-width="2"/>
+  <text x="300" y="260" font-family="Inter, sans-serif" font-size="20" font-weight="bold" fill="#94a3b8" text-anchor="middle">Arquitetura Transformer</text>
+</svg>

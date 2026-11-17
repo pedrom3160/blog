@@ -1,0 +1,12 @@
+# GPTCLONE Blog - robots.txt
+# https://pedrom3160.github.io/blog/
+
+User-agent: *
+Allow: /
+
+# Disallow private directories
+Disallow: /resources/pdfs/
+Disallow: /resources/audiobooks/
+
+# Sitemap
+Sitemap: https://pedrom3160.github.io/blog/sitemap.xml

@@ -1,0 +1,52 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ResourceCard from '../components/ResourceCard.astro';
+import pdfLibraryData from '../content/data/pdf-library.json';
+---
+
+<BaseLayout title="Biblioteca PDF" description="Catálogo de documentos PDF: manuais técnicos, tutoriais, documentos de investigação e guias de programação." lang="pt-PT">
+  <div class="container py-12">
+    <header class="mb-12">
+      <h1 class="text-3xl font-bold text-slate-900 dark:text-white mb-2">Biblioteca PDF</h1>
+      <p class="text-slate-600 dark:text-slate-400">Navegue, filtre e descarregue documentos técnicos, tutoriais e materiais educativos.</p>
+    </header>
+
+    <div class="flex flex-wrap gap-2 mb-8">
+      <span class="badge badge-category">Todos</span>
+      <span class="badge badge-tag">Documentação</span>
+      <span class="badge badge-tag">Investigação</span>
+      <span class="badge badge-tag">Tutorial</span>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {pdfLibraryData.documents.map((doc) => (
+        <ResourceCard
+          title={doc.title}
+          description={doc.description}
+          category={doc.category}
+          tags={doc.tags}
+          author={doc.author}
+          license={doc.license}
+          language={doc.language}
+          pages={doc.pages}
+          size={doc.sizeBytes ? `${(doc.sizeBytes / 1024 / 1024).toFixed(2)} MB` : undefined}
+          href={doc.sample ? undefined : doc.previewUrl}
+          downloadUrl={doc.downloadUrl}
+          isSample={doc.sample}
+          type="pdf"
+        />
+      ))}
+    </div>
+
+    {pdfLibraryData.documents.some((d) => d.sample) && (
+      <div class="mt-12 p-6 rounded-lg bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800/30">
+        <h3 class="text-lg font-bold text-amber-900 dark:text-amber-100 mb-2">Aviso sobre conteúdo de amostra</h3>
+        <p class="text-amber-700 dark:text-amber-300 text-sm">
+          Os itens marcados como "Amostra" são conteúdo de exemplo criado para demonstração do catálogo.
+          Nenhum material protegido por direitos de autor foi incluído sem permissão.
+          Adicione os seus próprios ficheiros PDF ao diretório <code>public/resources/pdfs/</code> e atualize o ficheiro <code>content/data/pdf-library.json</code>.
+        </p>
+      </div>
+    )}
+  </div>
+</BaseLayout>

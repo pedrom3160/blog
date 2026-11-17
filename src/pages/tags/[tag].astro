@@ -1,0 +1,64 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+import { filterByTag, sortByDateDesc } from '../../utils/content';
+
+export async function getStaticPaths() {
+  const journal = await getCollection('journal');
+  const aiResearch = await getCollection('ai-research');
+  const academy = await getCollection('academy');
+  const all = [...journal, ...aiResearch, ...academy];
+  const tags = new Set<string>();
+  all.forEach((entry) => {
+    entry.data.tags?.forEach((t) => tags.add(t));
+  });
+  return Array.from(tags).map((tag) => ({
+    params: { tag },
+    props: { tag },
+  }));
+}
+
+interface Props {
+  tag: string;
+}
+
+const { tag } = Astro.props as Props;
+
+const journal = await getCollection('journal');
+const aiResearch = await getCollection('ai-research');
+const academy = await getCollection('academy');
+const allArticles = sortByDateDesc([...journal, ...aiResearch, ...academy]);
+const filtered = filterByTag(allArticles, tag);
+---
+
+<BaseLayout title={`Etiqueta: ${tag}`} description={`Artigos com a etiqueta "${tag}" no GPTCLONE Blog.`} lang="pt-PT">
+  <div class="container py-12">
+    <header class="mb-12">
+      <h1 class="text-3xl font-bold text-gptclone-text mb-2">Etiqueta: {tag}</h1>
+      <p class="text-gptclone-text/70">{filtered.length} artigo(s) encontrado(s).</p>
+    </header>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      {filtered.map((entry) => (
+        <ArticleCard
+          title={entry.data.title}
+          description={entry.data.description}
+          date={entry.data.pubDate}
+          author={entry.data.author}
+          tags={entry.data.tags}
+          category={entry.data.category}
+          readingTime={entry.data.readingTime}
+          href={`/${entry.collection}/${entry.id}/`}
+          image={entry.data.image}
+        />
+      ))}
+    </div>
+
+    {filtered.length === 0 && (
+      <div class="card p-12 text-center">
+        <p class="text-gptclone-text/70">Nenhum artigo encontrado com esta etiqueta.</p>
+      </div>
+    )}
+  </div>
+</BaseLayout>

@@ -1,0 +1,61 @@
+{
+  "version": "1.0.0",
+  "lastUpdated": "2026-11-17",
+  "description": "Catálogo de recursos áudio da biblioteca GPTCLONE. Os itens marcados como 'sample' são conteúdo de exemplo claramente identificado. Arquivos de áudio de exemplo estão planeados para futuras atualizações.",
+  "audiobooks": [
+    {
+      "id": "audio-sample-001",
+      "title": "Introdução à Inteligência Artificial - Áudio (Amostra)",
+      "description": "Versão áudio de amostra do artigo introdutório sobre IA. Este é um marcador de posição (placeholder) para conteúdo áudio futuro gerado a partir de materiais educativos do GPTCLONE.",
+      "category": "ia-fundamentos",
+      "tags": ["ia", "introducao", "audio", "sample", "placeholder"],
+      "author": "Equipa GPTCLONE",
+      "narrator": "Síntese de voz (planeada)",
+      "license": "CC-BY-4.0",
+      "language": "pt-PT",
+      "durationSeconds": null,
+      "durationDisplay": "Disponível em breve",
+      "sample": true,
+      "placeholder": true,
+      "downloadUrl": null,
+      "streamUrl": null,
+      "uploadDate": "2026-11-17"
+    },
+    {
+      "id": "audio-sample-002",
+      "title": "Grandes Modelos de Linguagem - Áudio (Amostra)",
+      "description": "Versão áudio de amostra do artigo sobre LLMs. Este é um marcador de posição (placeholder) para conteúdo áudio futuro.",
+      "category": "llm",
+      "tags": ["llm", "grandes-modelos-linguagem", "audio", "sample", "placeholder"],
+      "author": "Equipa GPTCLONE",
+      "narrator": "Síntese de voz (planeada)",
+      "license": "CC-BY-4.0",
+      "language": "pt-PT",
+      "durationSeconds": null,
+      "durationDisplay": "Disponível em breve",
+      "sample": true,
+      "placeholder": true,
+      "downloadUrl": null,
+      "streamUrl": null,
+      "uploadDate": "2026-11-17"
+    },
+    {
+      "id": "audio-sample-003",
+      "title": "Arquitetura Transformer - Áudio (Amostra)",
+      "description": "Versão áudio de amostra do artigo sobre arquitetura Transformer. Este é um marcador de posição (placeholder) para conteúdo áudio futuro.",
+      "category": "arquitetura",
+      "tags": ["transformer", "arquitetura", "audio", "sample", "placeholder"],
+      "author": "Equipa GPTCLONE",
+      "narrator": "Síntese de voz (planeada)",
+      "license": "CC-BY-4.0",
+      "language": "pt-PT",
+      "durationSeconds": null,
+      "durationDisplay": "Disponível em breve",
+      "sample": true,
+      "placeholder": true,
+      "downloadUrl": null,
+      "streamUrl": null,
+      "uploadDate": "2026-11-17"
+    }
+  ]
+}

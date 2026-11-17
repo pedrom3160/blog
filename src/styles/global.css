@@ -1,0 +1,150 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-gptclone-purple: 112 71 215;
+    --color-gptclone-purple-dark: 91 33 178;
+    --color-gptclone-purple-light: 166 107 255;
+    --color-gptclone-aurora: 22 201 216;
+    --color-gptclone-surface: 57 65 109;
+    --color-gptclone-bg: 36 32 68;
+    --color-gptclone-text: 242 238 255;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-gptclone-bg text-gptclone-text antialiased;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  .dark {
+    @apply bg-gptclone-bg text-gptclone-text;
+  }
+
+  .dark body {
+    @apply bg-gptclone-bg text-gptclone-text;
+  }
+
+  :focus-visible {
+    @apply outline-none ring-2 ring-gptclone-purple ring-offset-2 ring-offset-gptclone-bg rounded;
+  }
+
+  /* Selection styling */
+  ::selection {
+    @apply bg-gptclone-purple/30 text-current;
+  }
+
+  .dark ::selection {
+    @apply bg-gptclone-purple/50 text-current;
+  }
+}
+
+@layer components {
+  .container {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center px-6 py-3 text-sm font-medium text-white bg-gptclone-purple hover:bg-gptclone-purple-dark dark:bg-gptclone-purple dark:hover:bg-gptclone-purple-light rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-gptclone-purple focus:ring-offset-2 focus:ring-offset-gptclone-bg;
+  }
+
+  .btn-outline {
+    @apply inline-flex items-center justify-center px-6 py-3 text-sm font-medium text-gptclone-purple hover:bg-gptclone-purple/10 dark:text-gptclone-purple-light dark:hover:bg-gptclone-purple-light/20 border border-gptclone-purple/30 dark:border-gptclone-purple-light/30 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-gptclone-purple focus:ring-offset-2 focus:ring-offset-gptclone-bg;
+  }
+
+  .badge {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium leading-none;
+  }
+
+  .badge-category {
+    @apply bg-gptclone-purple/20 text-gptclone-purple-light dark:bg-gptclone-purple/30 dark:text-gptclone-purple-light;
+  }
+
+  .badge-tag {
+    @apply bg-gptclone-surface/50 text-gptclone-text/80 dark:bg-gptclone-surface/50 dark:text-gptclone-text/70;
+  }
+
+  .card {
+    @apply bg-gptclone-surface/50 dark:bg-gptclone-surface/70 rounded-xl border border-gptclone-purple/20 dark:border-gptclone-purple/30 shadow-sm transition-all duration-200 hover:shadow-md hover:border-gptclone-purple/30;
+  }
+
+  .prose.invert {
+    @apply text-gptclone-text/90;
+  }
+
+  .prose.invert h1, .prose.invert h2, .prose.invert h3, .prose.invert h4, .prose.invert h5, .prose.invert h6 {
+    @apply text-gptclone-text;
+  }
+
+  .prose.invert a {
+    @apply text-gptclone-purple-light underline;
+  }
+
+  .prose.invert code {
+    @apply text-gptclone-purple-light bg-gptclone-surface/50 px-1.5 py-0.5 rounded;
+  }
+
+  .prose.invert pre {
+    @apply bg-gptclone-bg text-gptclone-text border border-gptclone-purple/30;
+  }
+
+  .prose.invert blockquote {
+    @apply border-l-4 border-gptclone-purple pl-4 italic text-gptclone-text/80;
+  }
+
+  .prose.invert hr {
+    @apply border-gptclone-purple/20;
+  }
+
+  .prose.invert strong {
+    @apply text-gptclone-text;
+  }
+
+  .prose.invert table {
+    @apply border-gptclone-purple/20;
+  }
+
+  .prose.invert th {
+    @apply bg-gptclone-surface/50 text-gptclone-text border-gptclone-purple/20;
+  }
+
+  .prose.invert td {
+    @apply border-gptclone-purple/20;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .gradient-text {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-gptclone-purple via-gptclone-purple-light to-gptclone-aurora;
+  }
+
+  .aurora-border {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .aurora-border::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 1px;
+    background: linear-gradient(135deg, #7047D7 0%, #16C9D8 50%, #A66BFF 100%);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: destination-out;
+    mask-composite: exclude;
+    pointer-events: none;
+    z-index: 1;
+  }
+}
