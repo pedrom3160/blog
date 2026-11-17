@@ -3,6 +3,7 @@ import rss from '@astrojs/rss';
 
 export default defineConfig({
   site: 'https://pedrom3160.github.io/blog/',
+  base: '/blog/',
   integrations: [],
   markdown: {
     syntaxHighlight: 'prism',
