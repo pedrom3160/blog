@@ -1,4 +1,7 @@
 ---
+slug: introducao-ao-gptclone
+collection: journal
+permalink: /journal/introducao-ao-gptclone/
 title: "Introdução ao GPTCLONE"
 description: "O que é o GPTCLONE, os seus objetivos, arquitetura e limites do projeto. Uma visão geral para quem está a começar a conhecer a iniciativa."
 pubDate: 2026-11-17

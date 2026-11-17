@@ -1,4 +1,7 @@
 ---
+slug: sobre-o-jornal-gptclone
+collection: journal
+permalink: /journal/sobre-o-jornal-gptclone/
 title: "Sobre o Jornal GPTCLONE"
 description: "Propósito e escopo do Jornal GPTCLONE: notícias de desenvolvimento, atualizações técnicas, marcos e notas de investigação."
 pubDate: 2026-11-17

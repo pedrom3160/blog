@@ -1,0 +1,24 @@
+---
+layout: layouts/base.njk
+title: Pesquisar
+description: Pesquisar artigos, PDFs e audiolivros no GPTCLONE Blog.
+permalink: /search/
+---
+<section class="section">
+  <div class="container container-narrow">
+    <header class="section-header">
+      <h1>Pesquisar</h1>
+      <p class="section-intro">Pesquise em todo o conteúdo do GPTCLONE Blog.</p>
+    </header>
+
+    <form class="filter-bar filter-bar-page" id="page-search-form" role="search" data-page-search>
+      <div class="filter-field">
+        <label class="sr-only" for="page-search-input">Pesquisar</label>
+        <input id="page-search-input" type="search" data-page-search-input placeholder="Pesquisar artigos, PDFs, audiolivros..." autocomplete="off" />
+      </div>
+    </form>
+
+    <div class="search-results search-results-page" id="page-search-results" aria-live="polite"></div>
+    <p class="search-empty" id="page-search-empty" hidden>Nenhum resultado encontrado. Experimente outros termos.</p>
+  </div>
+</section>

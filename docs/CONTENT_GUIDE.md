@@ -8,102 +8,47 @@ O idioma principal do site é **português europeu (pt-PT)**. A arquitetura est�
 
 ### 1. Jornal GPTCLONE
 
-Localização: `content/journal/`
+Localização: `src/content/journal/`
 
-Artigos sobre:
-- Notícias do projeto
-- Atualizações de desenvolvimento
-- Marcos atingidos
-- Anúncios de lançamento
-- Decisões técnicas
-- Alterações de arquitetura
-- Relatórios de desenvolvimento
-- Notas de investigação
-- Sumários de progresso
-
-Cada artigo deve incluir:
-- Data de publicação
-- Autor
-- Categorias e tags
-- Tempo de leitura estimado
-- Artigos relacionados
+Artigos sobre notícias do projeto, atualizações de desenvolvimento, marcos, anúncios, decisões técnicas e relatórios.
 
 ### 2. Investigação em IA
 
-Localização: `content/ai-research/`
+Localização: `src/content/ai-research/`
 
-Tópicos cobertos:
-- Modelos de Linguagem de Grande Escala (LLMs)
-- Arquiteturas Transformer
-- Tokenização
-- Machine Learning
-- Treino e fine-tuning de modelos
-- Agentes de IA
-- Avaliação e inferência
-- RAG e embeddings
-- Computação distribuída
-- Experiências técnicas
+Tópicos: LLMs, Transformers, Tokenização, Machine Learning, treino/fine-tuning, agentes, avaliação, RAG, NLP.
 
-**Importante:** Distinguir claramente entre resultados verificados, hipóteses e planos futuros. Nunca apresentar funcionalidades planeadas como já implementadas.
+**Importante:** Distinguir claramente entre resultados verificados, hipóteses e planos futuros.
 
 ### 3. GPTCLONE Academy
 
-Localização: `content/academy/`
+Localização: `src/content/academy/`
 
-Conceito: **Learn by Building** (Aprender Construindo).
-
-Caminho inicial: **From Zero to Builder — The GPTCLONE Journey**
-
-Tópicos:
-- Fundamentos de programação
-- Python
-- Matemática e álgebra para IA
-- Inteligência artificial
-- Machine learning
-- Redes neurais e LLMs
-- Linux e sistemas operativos
-- Networking
-- Cibersegurança fundamentais
-- Hardware
-- Desenvolvimento assistido por IA
-- Vibe Coding
+Caminho inicial: **From Zero to Builder — The GPTCLONE Journey** — fundamentos de programação, Python, matemática para IA, ML, redes neurais, Linux, networking, cibersegurança, hardware e desenvolvimento assistido por IA.
 
 ### 4. Biblioteca PDF
 
-Localização: `content/data/pdf-library.json`
+Localização: `src/_data/pdfLibrary.json`
 
-Catálogo de documentos PDF com:
-- Título, descrição, categoria, tags
-- Autor, licença, idioma
-- Número de páginas, tamanho
-- URL de download (quando o ficheiro existe)
-- Marcador `sample` para conteúdo de exemplo
+Catálogo de documentos PDF com título, descrição, categoria, tags, autor, licença, páginas, tamanho e `downloadUrl`/`previewUrl`. Os ficheiros de amostra (CC-BY-4.0, claramente identificados como exemplos) podem ser regenerados com `npm run generate:samples`.
 
-**Nunca criar ligações de download falsas ou ficheiros em falta.** Se um PDF não existe, fornecer estado vazio verdadeiro e documentação sobre como adicionar.
+**Nunca criar ligações de download falsas ou ficheiros em falta.** `npm run validate` verifica que cada URL do catálogo existe no build.
 
 ### 5. Biblioteca de Audiolivros
 
-Localização: `content/data/audiobook-library.json`
+Localização: `src/_data/audiobookLibrary.json`
 
-Catálogo de recursos áudio com:
-- Título, descrição, categoria, tags
-- Autor, narrador, licença, idioma
-- Duração (quando disponível)
-- URL de streaming/download (quando legalmente permitido e ficheiro existe)
-- Marcador `placeholder` para conteúdo futuro
-
-Respeitar direitos de autor e licenciamento.
+Catálogo de recursos áudio. As entradas atuais são placeholders verdadeiros (`placeholder: true`, `streamUrl: null`, "Disponível em breve"). O ficheiro `sample-tone.wav` é uma demonstração técnica do player, não um audiolivro. Respeitar direitos de autor e licenciamento.
 
 ## Como Adicionar Conteúdo
 
 ### Adicionar um Artigo (Markdown)
 
-1. Criar um ficheiro `.md` na coleção apropriada (`content/journal/`, `content/ai-research/` ou `content/academy/`)
-2. Incluir frontmatter YAML com todos os campos obrigatórios
-3. Escrever o conteúdo em Markdown
-4. O artigo é automaticamente listado na página da respetiva coleção
+1. Criar um ficheiro `.md` em `src/content/journal/`, `src/content/ai-research/` ou `src/content/academy/`
+2. Incluir frontmatter YAML completo
+3. O artigo é automaticamente listado (coleção explícita em `.eleventy.js`)
 
-Exemplo de frontmatter:
+Exemplo:
 
 ```markdown
 ---
@@ -111,10 +56,12 @@ title: "Título do Artigo"
 description: "Descrição resumida do artigo."
 pubDate: 2026-11-17
 author: "Equipa GPTCLONE"
+slug: "titulo-do-artigo"
+collection: "journal"
+permalink: "/journal/titulo-do-artigo/"
 image: "/assets/images/exemplo.svg"
 tags: ["tag1", "tag2"]
 category: "Categoria"
-readingTime: "5 min"
 related: ["slug-de-artigo-relacionado"]
 ---
 
@@ -123,28 +70,33 @@ related: ["slug-de-artigo-relacionado"]
 Conteúdo do artigo em Markdown.
 ```
 
+Notas:
+- `permalink` é escrito **sem** o prefixo `/blog` — o filtro `| url` e o transform de build adicionam-no.
+- Tags alimentam automaticamente `/tags/` e `/tags/[tag]/`.
+- Os dados por coleção (layout, etc.) estão em `.11tydata.json` dentro de cada diretório.
+
 ### Adicionar um PDF à Biblioteca
 
 1. Colocar o ficheiro PDF em `public/resources/pdfs/`
-2. Adicionar uma entrada ao ficheiro `content/data/pdf-library.json`
-3. Definir `downloadUrl` e `previewUrl` apontando para o ficheiro
-4. Marcar `sample` como `false` se não for conteúdo de exemplo
+2. Adicionar uma entrada a `src/_data/pdfLibrary.json`
+3. Definir `downloadUrl` e `previewUrl` (sem prefixo `/blog`)
+4. Atualizar `pages` e `sizeBytes` com valores reais
 
 ### Adicionar um Audiolivro
 
 1. Colocar o ficheiro de áudio em `public/resources/audiobooks/`
-2. Adicionar uma entrada ao ficheiro `content/data/audiobook-library.json`
-3. Definir `streamUrl` ou `downloadUrl`
-4. Respeitar direitos de autor — apenas conteúdo com licença adequada
+2. Adicionar uma entrada a `src/_data/audiobook-library.json` (renomear para o formato de `audiobookLibrary.json`)
+3. Definir `streamUrl`/`downloadUrl` apenas quando o ficheiro existir e o licenciamento o permitir
+4. Caso contrário, manter `placeholder: true` e `durationDisplay` honesto
 
 ### Adicionar um Autor
 
-1. Criar um ficheiro `.md` em `content/authors/`
-2. Incluir frontmatter com `name`, `avatar` (opcional), `bio`, `role`
+1. Criar um ficheiro `.md` em `src/content/authors/`
+2. Incluir frontmatter com `name`, `avatar` (opcional), `bio`, `role` (`permalink: false` é herdado do `.11tydata.json`)
 
 ## Princípios Editoriais
 
-- **Precisão técnica:** Todas as explicações distinguem factos estabelecidos de planos e ideias experimentais
-- **Transparência:** Não afirmar funcionalidades como implementadas quando estão apenas planeadas
-- **Acessibilidade:** Todo o conteúdo é público e gratuito, sem necessidade de registo
-- **Honestidade:** Nunca inventar conquistas, marcos de referência ou capacidades não verificadas
+- **Precisão técnica:** distinguir factos estabelecidos de planos e ideias experimentais
+- **Transparência:** não afirmar funcionalidades como implementadas quando estão apenas planeadas
+- **Acessibilidade:** todo o conteúdo é público e gratuito, sem necessidade de registo
+- **Honestidade:** nunca inventar conquistas, marcos de referência ou capacidades não verificadas

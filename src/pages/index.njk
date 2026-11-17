@@ -1,0 +1,123 @@
+---
+layout: layouts/base.njk
+title: GPTCLONE Blog
+description: Conhecimento, investigação, educação e diário de projeto. Acesso público e gratuito sem necessidade de conta.
+permalink: /
+---
+{% import "components/cards.njk" as cards %}
+{% set featured = collections.articles.slice(0, 3) %}
+{% set latest = collections.articles.slice(0, 6) %}
+
+<section class="hero">
+  <div class="hero-glow" aria-hidden="true"></div>
+  <div class="container hero-inner">
+    <span class="hero-badge">Público e gratuito &middot; Sem registo necessário</span>
+    <h1 class="hero-title">Conhecimento aberto,<br />investigação partilhada</h1>
+    <p class="hero-lead">
+      O GPTCLONE Blog é uma plataforma pública de conhecimento, investigação e educação.
+      Explore o Jornal, a Biblioteca PDF, a Biblioteca de Audiolivros, a Investigação em IA e a Academia.
+    </p>
+    <div class="hero-actions">
+      <a class="btn btn-primary btn-lg" href="{{ '/journal/' | url }}">Explorar o Jornal</a>
+      <a class="btn btn-outline btn-lg" href="{{ '/ai-research/' | url }}">Investigação em IA</a>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-heading">
+      <div>
+        <h2>Artigos em destaque</h2>
+        <p>Leituras recentes do Jornal e da Investigação em IA</p>
+      </div>
+      <a class="link-more" href="{{ '/journal/' | url }}">Ver todos &rarr;</a>
+    </div>
+    <div class="card-grid card-grid-3">
+      {% for article in featured %}{{ cards.articleCard(article) }}{% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section section-alt">
+  <div class="container">
+    <div class="section-heading">
+      <div>
+        <h2>Áreas de conteúdo</h2>
+        <p>Explore as principais secções do GPTCLONE Blog</p>
+      </div>
+    </div>
+    <div class="area-grid">
+      <a class="area-card" href="{{ '/journal/' | url }}">
+        <span class="area-icon area-icon-purple" aria-hidden="true">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-4 0V9" /><path d="M18 14h-8M15 18h-5M10 6h8v4h-8z" /></svg>
+        </span>
+        <h3>Jornal GPTCLONE</h3>
+        <p>Notícias, atualizações de desenvolvimento, marcos, decisões técnicas e relatórios de progresso.</p>
+        <span class="area-link">Ler mais &rarr;</span>
+      </a>
+
+      <a class="area-card" href="{{ '/ai-research/' | url }}">
+        <span class="area-icon area-icon-aurora" aria-hidden="true">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2" /><polyline points="2 17 12 22 22 17" /><polyline points="2 12 12 17 22 12" /></svg>
+        </span>
+        <h3>Investigação em IA</h3>
+        <p>IA, Machine Learning, Deep Learning, LLMs, Transformers, Tokenização e muito mais.</p>
+        <span class="area-link">Ler mais &rarr;</span>
+      </a>
+
+      <a class="area-card" href="{{ '/academy/' | url }}">
+        <span class="area-icon area-icon-emerald" aria-hidden="true">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10 12 5 2 10l10 5 10-5z" /><path d="M6 12v5c0 1.1 2.7 2 6 2s6-.9 6-2v-5" /></svg>
+        </span>
+        <h3>GPTCLONE Academy</h3>
+        <p>Caminhos de aprendizagem estruturados, do nível iniciante ao avançado.</p>
+        <span class="area-link">Ler mais &rarr;</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-heading">
+      <div>
+        <h2>Bibliotecas de recursos</h2>
+        <p>Navegue, filtre e descarregue documentos técnicos e materiais educativos</p>
+      </div>
+    </div>
+    <div class="library-grid">
+      <div class="library-card">
+        <div class="library-icon" aria-hidden="true">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><polyline points="14 2 14 8 20 8" /><line x1="16" y1="13" x2="8" y2="13" /><line x1="16" y1="17" x2="8" y2="17" /></svg>
+        </div>
+        <h3>Biblioteca PDF</h3>
+        <p>Manuais técnicos, tutoriais, documentos de investigação e guias de programação.</p>
+        <a class="btn btn-primary" href="{{ '/pdf-library/' | url }}">Explorar PDFs</a>
+      </div>
+
+      <div class="library-card">
+        <div class="library-icon" aria-hidden="true">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6" /><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z" /></svg>
+        </div>
+        <h3>Biblioteca de Audiolivros</h3>
+        <p>Material educativo em formato áudio, reproduzível diretamente no navegador.</p>
+        <a class="btn btn-primary" href="{{ '/audiobook-library/' | url }}">Explorar Audiolivros</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section-alt">
+  <div class="container">
+    <div class="section-heading">
+      <div>
+        <h2>Últimas publicações</h2>
+        <p>Todo o conteúdo recente, por ordem de publicação</p>
+      </div>
+    </div>
+    <div class="card-grid card-grid-3">
+      {% for article in latest %}{{ cards.articleCard(article) }}{% endfor %}
+    </div>
+  </div>
+</section>

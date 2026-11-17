@@ -5,7 +5,8 @@ node_modules/
 
 # Build output
 dist/
-astro-env.d.ts
+_site/
+.astro/
 
 # Environment files
 .env
@@ -39,3 +40,6 @@ coverage/
 
 # Misc
 *.local
+
+# Local migration backup (old Astro source kept locally only)
+migration-backup/

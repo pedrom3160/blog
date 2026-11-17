@@ -1,0 +1,205 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [13 0 R 15 0 R 17 0 R 19 0 R 21 0 R 23 0 R 25 0 R 27 0 R 29 0 R 31 0 R 33 0 R 35 0 R] /Count 12 >>
+endobj
+3 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+4 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>
+endobj
+13 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 14 0 R >>
+endobj
+14 0 obj
+<< /Length 779 >>
+stream
+BT /F2 22 Tf 72 720 Td (Introduo aos LLMs  GPTCLONE Sample) Tj ET
+BT /F1 11 Tf 72 690 Td (GPTCLONE Blog - documento de exemplo (sample). Licenca: CC-BY-4.0.) Tj ET
+BT /F1 11 Tf 72 668 Td (Este PDF foi gerado automaticamente para demonstrar a Biblioteca PDF.) Tj ET
+BT /F1 11 Tf 72 646 Td (Nao e uma publicacao academica real. Confira as fontes antes de citar.) Tj ET
+BT /F2 14 Tf 72 600 Td (Indice do conteudo:) Tj ET
+BT /F1 10 Tf 84 580 Td (Grandes Modelos de Linguagem \(LLMs\) sao sistemas de inteligencia artificial treinados em g) Tj ET
+BT /F1 10 Tf 84 556 Td (Neste documento de exemplo percorremos os conceitos fundamentais: tokenizacao, embeddings,) Tj ET
+BT /F1 10 Tf 84 532 Td (Cada capitulo inclui um resumo e perguntas de revisao pensadas para estudo autonomo.) Tj ET
+endstream
+endobj
+15 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 16 0 R >>
+endobj
+16 0 obj
+<< /Length 362 >>
+stream
+BT /F2 16 Tf 72 740 Td (Pagina 2 de 12) Tj ET
+BT /F1 11 Tf 72 700 Td (Grandes Modelos de Linguagem \(LLMs\) sao sistemas de inteligencia artificial treinados em grande) Tj ET
+BT /F1 11 Tf 72 680 Td (s volumes de texto para prever a proxima palavra de uma sequencia.) Tj ET
+BT /F1 9 Tf 72 80 Td (GPTCLONE Blog sample - CC-BY-4.0 - pedrom3160.github.io/blog) Tj ET
+endstream
+endobj
+17 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 18 0 R >>
+endobj
+18 0 obj
+<< /Length 325 >>
+stream
+BT /F2 16 Tf 72 740 Td (Pagina 3 de 12) Tj ET
+BT /F1 11 Tf 72 700 Td (Neste documento de exemplo percorremos os conceitos fundamentais: tokenizacao, embeddings, self) Tj ET
+BT /F1 11 Tf 72 680 Td (-attention e o ciclo de treino.) Tj ET
+BT /F1 9 Tf 72 80 Td (GPTCLONE Blog sample - CC-BY-4.0 - pedrom3160.github.io/blog) Tj ET
+endstream
+endobj
+19 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 20 0 R >>
+endobj
+20 0 obj
+<< /Length 283 >>
+stream
+BT /F2 16 Tf 72 740 Td (Pagina 4 de 12) Tj ET
+BT /F1 11 Tf 72 700 Td (Cada capitulo inclui um resumo e perguntas de revisao pensadas para estudo autonomo.) Tj ET
+BT /F1 11 Tf 72 680 Td () Tj ET
+BT /F1 9 Tf 72 80 Td (GPTCLONE Blog sample - CC-BY-4.0 - pedrom3160.github.io/blog) Tj ET
+endstream
+endobj
+21 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 22 0 R >>
+endobj
+22 0 obj
+<< /Length 362 >>
+stream
+BT /F2 16 Tf 72 740 Td (Pagina 5 de 12) Tj ET
+BT /F1 11 Tf 72 700 Td (Grandes Modelos de Linguagem \(LLMs\) sao sistemas de inteligencia artificial treinados em grande) Tj ET
+BT /F1 11 Tf 72 680 Td (s volumes de texto para prever a proxima palavra de uma sequencia.) Tj ET
+BT /F1 9 Tf 72 80 Td (GPTCLONE Blog sample - CC-BY-4.0 - pedrom3160.github.io/blog) Tj ET
+endstream
+endobj
+23 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 24 0 R >>
+endobj
+24 0 obj
+<< /Length 325 >>
+stream
+BT /F2 16 Tf 72 740 Td (Pagina 6 de 12) Tj ET
+BT /F1 11 Tf 72 700 Td (Neste documento de exemplo percorremos os conceitos fundamentais: tokenizacao, embeddings, self) Tj ET
+BT /F1 11 Tf 72 680 Td (-attention e o ciclo de treino.) Tj ET
+BT /F1 9 Tf 72 80 Td (GPTCLONE Blog sample - CC-BY-4.0 - pedrom3160.github.io/blog) Tj ET
+endstream
+endobj
+25 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 26 0 R >>
+endobj
+26 0 obj
+<< /Length 283 >>
+stream
+BT /F2 16 Tf 72 740 Td (Pagina 7 de 12) Tj ET
+BT /F1 11 Tf 72 700 Td (Cada capitulo inclui um resumo e perguntas de revisao pensadas para estudo autonomo.) Tj ET
+BT /F1 11 Tf 72 680 Td () Tj ET
+BT /F1 9 Tf 72 80 Td (GPTCLONE Blog sample - CC-BY-4.0 - pedrom3160.github.io/blog) Tj ET
+endstream
+endobj
+27 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 28 0 R >>
+endobj
+28 0 obj
+<< /Length 362 >>
+stream
+BT /F2 16 Tf 72 740 Td (Pagina 8 de 12) Tj ET
+BT /F1 11 Tf 72 700 Td (Grandes Modelos de Linguagem \(LLMs\) sao sistemas de inteligencia artificial treinados em grande) Tj ET
+BT /F1 11 Tf 72 680 Td (s volumes de texto para prever a proxima palavra de uma sequencia.) Tj ET
+BT /F1 9 Tf 72 80 Td (GPTCLONE Blog sample - CC-BY-4.0 - pedrom3160.github.io/blog) Tj ET
+endstream
+endobj
+29 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 30 0 R >>
+endobj
+30 0 obj
+<< /Length 325 >>
+stream
+BT /F2 16 Tf 72 740 Td (Pagina 9 de 12) Tj ET
+BT /F1 11 Tf 72 700 Td (Neste documento de exemplo percorremos os conceitos fundamentais: tokenizacao, embeddings, self) Tj ET
+BT /F1 11 Tf 72 680 Td (-attention e o ciclo de treino.) Tj ET
+BT /F1 9 Tf 72 80 Td (GPTCLONE Blog sample - CC-BY-4.0 - pedrom3160.github.io/blog) Tj ET
+endstream
+endobj
+31 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 32 0 R >>
+endobj
+32 0 obj
+<< /Length 284 >>
+stream
+BT /F2 16 Tf 72 740 Td (Pagina 10 de 12) Tj ET
+BT /F1 11 Tf 72 700 Td (Cada capitulo inclui um resumo e perguntas de revisao pensadas para estudo autonomo.) Tj ET
+BT /F1 11 Tf 72 680 Td () Tj ET
+BT /F1 9 Tf 72 80 Td (GPTCLONE Blog sample - CC-BY-4.0 - pedrom3160.github.io/blog) Tj ET
+endstream
+endobj
+33 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 34 0 R >>
+endobj
+34 0 obj
+<< /Length 363 >>
+stream
+BT /F2 16 Tf 72 740 Td (Pagina 11 de 12) Tj ET
+BT /F1 11 Tf 72 700 Td (Grandes Modelos de Linguagem \(LLMs\) sao sistemas de inteligencia artificial treinados em grande) Tj ET
+BT /F1 11 Tf 72 680 Td (s volumes de texto para prever a proxima palavra de uma sequencia.) Tj ET
+BT /F1 9 Tf 72 80 Td (GPTCLONE Blog sample - CC-BY-4.0 - pedrom3160.github.io/blog) Tj ET
+endstream
+endobj
+35 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 36 0 R >>
+endobj
+36 0 obj
+<< /Length 326 >>
+stream
+BT /F2 16 Tf 72 740 Td (Pagina 12 de 12) Tj ET
+BT /F1 11 Tf 72 700 Td (Neste documento de exemplo percorremos os conceitos fundamentais: tokenizacao, embeddings, self) Tj ET
+BT /F1 11 Tf 72 680 Td (-attention e o ciclo de treino.) Tj ET
+BT /F1 9 Tf 72 80 Td (GPTCLONE Blog sample - CC-BY-4.0 - pedrom3160.github.io/blog) Tj ET
+endstream
+endobj
+xref
+0 37
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000194 00000 n 
+0000000264 00000 n 
+0000000000 00000 n 
+0000000000 00000 n 
+0000000000 00000 n 
+0000000000 00000 n 
+0000000000 00000 n 
+0000000000 00000 n 
+0000000000 00000 n 
+0000000000 00000 n 
+0000000339 00000 n 
+0000000477 00000 n 
+0000001308 00000 n 
+0000001446 00000 n 
+0000001860 00000 n 
+0000001998 00000 n 
+0000002375 00000 n 
+0000002513 00000 n 
+0000002848 00000 n 
+0000002986 00000 n 
+0000003400 00000 n 
+0000003538 00000 n 
+0000003915 00000 n 
+0000004053 00000 n 
+0000004388 00000 n 
+0000004526 00000 n 
+0000004940 00000 n 
+0000005078 00000 n 
+0000005455 00000 n 
+0000005593 00000 n 
+0000005929 00000 n 
+0000006067 00000 n 
+0000006482 00000 n 
+0000006620 00000 n 
+trailer
+<< /Size 37 /Root 1 0 R >>
+startxref
+6998
+%%EOF

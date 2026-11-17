@@ -1,0 +1,35 @@
+{% import "components/cards.njk" as cards %}
+
+{% macro collectionListing(items, heading, intro, filterLabel = 'Categoria') %}
+{% set filters = items | categories %}
+
+<section class="section listing-section">
+  <div class="container">
+    <header class="section-header">
+      <h1>{{ heading }}</h1>
+      <p class="section-intro">{{ intro }}</p>
+    </header>
+
+    <div class="filter-bar" data-collection-filter>
+      <div class="filter-field">
+        <label class="sr-only" for="listing-search">Pesquisar</label>
+        <input id="listing-search" type="search" data-filter-search placeholder="Pesquisar em {{ heading | lower }}..." />
+      </div>
+      <div class="filter-field">
+        <label class="sr-only" for="listing-category">{{ filterLabel }}</label>
+        <select id="listing-category" data-filter-category>
+          <option value="">{{ filterLabel }}: todos</option>
+          {% for filter in filters %}
+            <option value="{{ filter.name | lower }}">{{ filter.name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+
+    <div class="card-grid" data-filter-grid>
+      {% for item in items %}{{ cards.articleCard(item) }}{% endfor %}
+    </div>
+    <p class="filter-empty" data-filter-empty hidden>Nenhum resultado encontrado. Ajuste a pesquisa ou o filtro.</p>
+  </div>
+</section>
+{% endmacro %}

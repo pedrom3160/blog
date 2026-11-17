@@ -1,33 +1,25 @@
 {
   "name": "gptclone-blog",
-  "version": "1.0.0",
-  "description": "GPTCLONE Blog - Knowledge, research, educational and project-journal platform",
+  "version": "2.0.0",
+  "description": "GPTCLONE Blog - Plataforma publica de conhecimento, investigacao, educacao e diario de projeto",
   "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
   "scripts": {
-    "dev": "astro dev",
-    "start": "astro dev",
+    "dev": "eleventy --serve",
     "build": "node scripts/build.mjs",
-    "preview": "astro preview",
-    "astro": "astro",
+    "preview": "eleventy --serve",
     "test": "vitest run",
-    "test:watch": "vitest",
-    "lint": "eslint --ext .astro,.js,.ts,.tsx src/"
+    "validate": "node scripts/validate.mjs",
+    "generate:samples": "node scripts/generate-samples.mjs"
   },
   "dependencies": {
-    "@astrojs/mdx": "^3.1.3",
-    "@astrojs/rss": "^4.0.9",
-    "astro": "^4.16.12",
-    "sharp": "^0.33.5"
+    "@11ty/eleventy": "^3.1.8",
+    "markdown-it": "^14.1.0"
   },
   "devDependencies": {
-    "@astrojs/sitemap": "^3.7.5",
-    "@testing-library/jest-dom": "^6.6.3",
-    "autoprefixer": "^10.4.20",
-    "chalk": "^6.0.1",
-    "jsdom": "^25.0.1",
-    "postcss": "^8.4.47",
-    "tailwindcss": "^3.4.14",
-    "typescript": "^5.6.3",
-    "vitest": "^2.1.4"
+    "jsdom": "^26.1.0",
+    "vitest": "^3.2.4"
   }
 }

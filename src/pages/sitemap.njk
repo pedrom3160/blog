@@ -1,0 +1,17 @@
+---
+permalink: /sitemap.xml
+---
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  {%- for page in collections.sitePages %}
+  <url>
+    <loc>{{ page.url | absoluteUrl }}</loc>
+  </url>
+  {%- endfor %}
+  {%- for article in collections.articles %}
+  <url>
+    <loc>{{ article.url | absoluteUrl }}</loc>
+    <lastmod>{{ article.data.pubDate | isoDate }}</lastmod>
+  </url>
+  {%- endfor %}
+</urlset>

@@ -1,0 +1,83 @@
+{% macro articleCard(article, headingLevel = 3) %}
+<article class="card article-card" data-search="{{ (article.data.title ~ ' ' ~ article.data.description ~ ' ' ~ (article.data.tags | join(' ')) ~ ' ' ~ article.data.category) | lower }}" data-category="{{ article.data.category | lower }}">
+  {% if article.data.image %}
+  <a class="article-card-media" href="{{ article.url | url }}" tabindex="-1" aria-hidden="true">
+    <img src="{{ article.data.image | url }}" alt="" loading="lazy" decoding="async" />
+  </a>
+  {% endif %}
+  <div class="article-card-body">
+    <div class="badges">
+      {% if article.data.category %}<span class="badge badge-category">{{ article.data.category }}</span>{% endif %}
+      {% for tag in article.data.tags %}
+        <a class="badge badge-tag" href="{{ ('/tags/' ~ (tag | slug) ~ '/') | url }}">{{ tag }}</a>
+      {% endfor %}
+    </div>
+    <h{{ headingLevel }} class="article-card-title">
+      <a href="{{ article.url | url }}">{{ article.data.title }}</a>
+    </h{{ headingLevel }}>
+    <p class="article-card-desc">{{ article.data.description }}</p>
+    <div class="article-card-meta">
+      <span class="meta-author">Por {{ article.data.author }}</span>
+      <time datetime="{{ article.data.pubDate | isoDate }}">{{ article.data.pubDate | formatDate }}</time>
+      {% if article.data.readingTime %}
+        <span class="reading-time">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="10" />
+            <path d="M12 6v6l4 2" />
+          </svg>
+          {{ article.data.readingTime }}
+        </span>
+      {% endif %}
+    </div>
+  </div>
+</article>
+{% endmacro %}
+
+{% macro resourceCard(item, type = 'pdf') %}
+<article class="card resource-card" data-search="{{ (item.title ~ ' ' ~ item.description ~ ' ' ~ (item.tags | join(' ')) ~ ' ' ~ item.category) | lower }}" data-category="{{ item.category | lower }}" data-tags="{{ item.tags | join(' ') | lower }}">
+  <div class="resource-card-body">
+    <div class="badges">
+      <span class="badge badge-category">{{ item.category }}</span>
+      {% if type == 'audiobook' %}<span class="badge badge-audio">Áudio</span>{% endif %}
+      {% if item.sample %}<span class="badge badge-sample">Amostra</span>{% endif %}
+      {% if item.placeholder %}<span class="badge badge-soon">Em breve</span>{% endif %}
+      {% for tag in item.tags %}<span class="badge badge-tag">{{ tag }}</span>{% endfor %}
+    </div>
+    <h3 class="resource-card-title">{{ item.title }}</h3>
+    <p class="resource-card-desc">{{ item.description }}</p>
+    <dl class="resource-meta">
+      {% if item.author %}<div><dt>Por</dt><dd>{{ item.author }}</dd></div>{% endif %}
+      {% if item.narrator %}<div><dt>Narrador</dt><dd>{{ item.narrator }}</dd></div>{% endif %}
+      {% if item.language %}<div><dt>Idioma</dt><dd>{{ item.language }}</dd></div>{% endif %}
+      {% if item.license %}<div><dt>Licença</dt><dd>{{ item.license }}</dd></div>{% endif %}
+      {% if item.pages %}<div><dt>Páginas</dt><dd>{{ item.pages }}</dd></div>{% endif %}
+      {% if item.sizeBytes %}<div><dt>Tamanho</dt><dd>{{ item.sizeBytes | fileSize }}</dd></div>{% endif %}
+      {% if item.durationDisplay %}<div><dt>Duração</dt><dd>{{ item.durationDisplay }}</dd></div>{% endif %}
+    </dl>
+    <div class="resource-actions">
+      {% if item.streamUrl %}<a class="btn btn-primary btn-sm" href="{{ item.streamUrl | url }}">Ouvir</a>{% endif %}
+      {% if item.downloadUrl %}<a class="btn btn-outline btn-sm" href="{{ item.downloadUrl | url }}" download>Descarregar</a>{% endif %}
+      {% if item.placeholder %}<button class="btn btn-outline btn-sm" type="button" disabled>Em breve</button>{% endif %}
+    </div>
+  </div>
+</article>
+{% endmacro %}
+
+{% macro audioPlayer(title, src, downloadUrl = null) %}
+<div class="audio-player" data-audio-player>
+  <div class="audio-player-head">
+    <h4 class="audio-player-title">{{ title }}</h4>
+    <span class="audio-player-time"><span data-current>0:00</span> / <span data-duration>0:00</span></span>
+  </div>
+  <audio data-audio preload="metadata" src="{{ src | url }}"></audio>
+  <div class="audio-player-controls">
+    <button type="button" class="audio-play" data-play aria-label="Reproduzir">
+      <svg class="icon-play" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z" /></svg>
+      <svg class="icon-pause" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 5h4v14H6zM14 5h4v14h-4z" /></svg>
+    </button>
+    <input type="range" class="audio-progress" data-progress min="0" max="100" value="0" step="0.1" aria-label="Progresso da reprodução" />
+    <input type="range" class="audio-volume" data-volume min="0" max="1" value="0.8" step="0.01" aria-label="Volume" />
+    {% if downloadUrl %}<a class="btn btn-outline btn-sm" href="{{ downloadUrl | url }}" download>Descarregar</a>{% endif %}
+  </div>
+</div>
+{% endmacro %}

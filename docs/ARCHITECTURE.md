@@ -2,107 +2,95 @@
 
 ## Visão Geral
 
-O GPTCLONE Blog é um site estático construído com [Astro](https://astro.build/), projetado como uma plataforma pública de conhecimento, investigação, educação e diário de projeto. O site é totalmente estático, não requer backend, não necessita de registo de utilizador e é hospedado via GitHub Pages.
+O GPTCLONE Blog é um site estático construído com [Eleventy 3.x](https://www.11ty.dev/), projetado como uma plataforma pública de conhecimento, investigação, educação e diário de projeto. O site é totalmente estático, não requer backend, não necessita de registo de utilizador e é hospedado via GitHub Pages em `https://pedrom3160.github.io/blog/`.
 
 ## Stack Tecnológica
 
-| Camada | Tecnologia | Versão | Propósito |
-|--------|-----------|--------|-----------|
-| Framework | Astro | ^4.16.12 | Gerador de site estático, SSR/SSG |
-| Linguagem | TypeScript | ^5.6.3 | Tipagem estática, segurança de tipos |
-| Estilização | Tailwind CSS | ^3.4.14 | CSS utilitário, design system GPTCLONE |
-| Conteúdo | MDX + Astro Content Collections | — | Artigos, tutoriais, conteúdos estruturados |
-| RSS | @astrojs/rss | ^4.0.9 | Feed de sindicação |
-| Sitemap | @astrojs/sitemap | ^3.2.1 | Mapa do site para SEO |
-| Testes | Vitest | ^2.1.4 | Testes unitários |
-| Imagens | sharp | ^0.33.5 | Otimização de imagens |
-| Pacotes | pnpm | — | Gestão de dependências |
+| Camada | Tecnologia | Propósito |
+|--------|-----------|-----------|
+| Gerador | Eleventy (^3.1.8) | Site estático, coleções, filtros, transforms |
+| Templates | Nunjucks | Layouts e componentes |
+| Conteúdo | Markdown + markdown-it | Artigos e páginas |
+| Estilização | CSS moderno (`src/styles/main.css`) | Design system GPTCLONE (dark/light) |
+| Interatividade | JavaScript ES Modules (vanilla) | Tema, pesquisa, filtros, TOC, player |
+| Testes | Vitest (^3.2.x) + jsdom | Unitários e DOM |
+| Pacotes | npm (Node.js 22 LTS) | Gestão de dependências |
+| Hospedagem | GitHub Pages + GitHub Actions | Deploy automático |
 
 ## Estrutura de Diretórios
 
 ```
 blog/
-├── .github/
-│   └── workflows/
-│       └── deploy.yml          # GitHub Actions para Pages
-├── docs/                       # Documentação do projeto
-├── reports/                    # Relatórios de desenvolvimento
-├── content/
-│   ├── config.ts               # Configuração das coleções de conteúdo
-│   ├── journal/                # Artigos do jornal (Markdown)
-│   ├── ai-research/            # Artigos de investigação IA (Markdown)
-│   ├── academy/                # Conteúdo da academia (Markdown)
-│   ├── authors/                # Perfis de autor (MDX frontmatter)
-│   └── data/                   # Catálogos JSON (PDFs, audiolivros)
-├── public/
-│   ├── assets/                 # Imagens, avatares, ícones
-│   ├── favicon.svg             # Favicon do site
-│   └── robots.txt              # Diretrizes para crawlers
+├── .eleventy.js              # Configuração: collections, filtros, base path
+├── .github/workflows/deploy.yml  # GitHub Actions para Pages
+├── docs/                     # Documentação
 ├── src/
-│   ├── components/             # Componentes Astro reutilizáveis
-│   ├── layouts/                # Layouts de página
-│   ├── pages/                  # Rotas e páginas
-│   ├── styles/                 # Estilos globais (CSS)
-│   └── utils/                  # Utilitários (conteúdo, data, busca)
-├── tests/                      # Testes Vitest
-├── astro.config.mjs            # Configuração do Astro
-├── tailwind.config.js          # Configuração do Tailwind
-├── postcss.config.mjs          # Configuração do PostCSS
-├── tsconfig.json               # Configuração do TypeScript
-├── vitest.config.mts           # Configuração do Vitest
-├── package.json                # Dependências e scripts
-├── pnpm-lock.yaml              # Ficheiro de bloqueio pnpm
-└── README.md                   # Documentação principal
+│   ├── _includes/            # base.njk, article.njk, header, footer, cards, search-modal
+│   ├── pages/                # Páginas (njk) + search-index.11ty.js
+│   ├── content/              # Markdown: journal/, ai-research/, academy/, authors/
+│   ├── _data/                # site.js, navigation.js, pdfLibrary.json, audiobookLibrary.json
+│   ├── assets/               # Imagens, favicon.svg
+│   ├── styles/main.css       # Design system
+│   ├── scripts/main.js       # Interatividade cliente
+│   └── utils/                # date.js, search.js
+├── public/resources/         # PDFs e áudio de amostra (CC-BY-4.0)
+├── scripts/                  # build.mjs, validate.mjs, generate-samples.mjs
+├── tests/                    # Testes Vitest
+└── package.json
 ```
 
 ## Coleções de Conteúdo
 
-As coleções são definidas em `content/config.ts`:
+Definidas em `.eleventy.js` (as coleções automáticas não estão disponíveis nesta configuração; são construídas explicitamente):
 
-- **journal** — Artigos do jornal GPTCLONE (notícias, atualizações, marcos)
-- **ai-research** — Artigos de investigação em IA (LLMs, Transformers, etc.)
-- **academy** — Conteúdo educativo da GPTCLONE Academy
-- **authors** — Perfis de autor
+- **journal**, **ai-research**, **academy** — via `getFilteredByGlob` sobre `src/content/<seção>/*.md`
+- **authors** — perfis de autor (`permalink: false`)
+- **articles** — união das três coleções de artigos, ordenada por `pubDate`
+- **tags** — construída a partir de `tags` no front matter
+- **sitePages** — páginas de listagem/navegação
 
-Cada entrada de artigo segue o esquema `blogSchema` com campos: `title`, `description`, `pubDate`, `updatedDate`, `author`, `image`, `tags`, `category`, `readingTime`, `draft`, `related`.
+Cada artigo tem front matter: `title`, `description`, `pubDate`, `author`, `tags`, `category`, `slug`, `collection`, `permalink` e dados de diretório em `.11tydata.json` (layout `layouts/article.njk`).
 
-## Rotes do Site
+## Rotas do Site
 
-| Rota | Descrição |
+| Rota (sem base path) | Descrição |
 |------|-----------|
-| `/` | Página inicial com artigos em destaque e visão geral |
-| `/journal/` | Listagem de artigos do jornal |
-| `/journal/[slug]/` | Artigo individual do jornal |
-| `/ai-research/` | Listagem de artigos de investigação IA |
-| `/ai-research/[slug]/` | Artigo individual de investigação |
-| `/academy/` | Listagem de conteúdo da academia |
-| `/academy/[slug]/` | Lição individual da academia |
-| `/pdf-library/` | Catálogo de documentos PDF |
-| `/audiobook-library/` | Catálogo de audiolivros |
-| `/about/` | Sobre o blog, missão e limites |
-| `/tags/[tag]/` | Artigos filtrados por tag |
+| `/` | Página inicial |
+| `/journal/`, `/journal/[slug]/` | Jornal |
+| `/ai-research/`, `/ai-research/[slug]/` | Investigação IA |
+| `/academy/`, `/academy/[slug]/` | Academy |
+| `/pdf-library/` | Biblioteca PDF |
+| `/audiobook-library/` | Biblioteca de audiolivros |
+| `/about/` | Sobre |
+| `/search/` | Página de pesquisa (+ modal global) |
+| `/tags/`, `/tags/[tag]/` | Índice de etiquetas e filtro |
 | `/rss.xml` | Feed RSS |
-| `/404` | Página de erro personalizada |
+| `/sitemap.xml` | Sitemap |
+| `/search-index.json` | Índice de pesquisa |
+| `/404.html` | Página de erro |
+
+## Base Path (`/blog/`)
+
+O site é servido sob `/blog/`. Estratégia:
+
+1. `pathPrefix: '/blog/'` no retorno de `return {}` — o filtro interno `| url` adiciona o prefixo.
+2. Filtro `absoluteUrl` — `https://pedrom3160.github.io/blog/` + URL não prefixado.
+3. Transform `base-path-links` — reescreve `href|src|poster|srcset` começados por `/` para `/blog/...` no HTML de saída (cobre links em Markdown).
+
+Permalinks no conteúdo são escritos **sem** o prefixo; `page.url` é não prefixado.
 
 ## Design System
 
-A paleta de cores GPTCLONE (purple & aurora):
+Paleta purple & aurora: `#1b1836`, `#242044`, `#39416D`, `#7047D7`, `#A66BFF`, `#16C9D8`, `#F2EEFF`. Tema escuro é o padrão; tema claro completo via `data-theme="light"`, com preferência do sistema e persistência em `localStorage` (`gptclone-theme`). Variáveis CSS custom em `src/styles/main.css`.
 
-- `#1b1836` — primary dark background
-- `#242044` — deep purple (bg)
-- `#39416D` — secondary purple (surface)
-- `#7047D7` — primary purple
-- `#A66BFF` — aurora purple
-- `#16C9D8` — cyan accent
-- `#F2EEFF` — light text
+## Testes e Validação
 
-Tema escuro como experiência principal. Suporte a tema claro via toggle. CSS custom properties em `src/styles/global.css`.
+- `npm test` — Vitest: utilitários de data/pesquisa e comportamento DOM (tema, navegação, filtros) via jsdom.
+- `npm run validate` — valida `_site/`: inventário de páginas, assets, ausência de URLs sem `/blog` ou com `/blog/blog`, resolução de links internos, existência de recursos de catálogo, sanidade de RSS/sitemap/canônicas.
 
 ## Deploy
 
-O site é construído estaticamente com `astro build` (saída em `dist/`). O deploy é feito via GitHub Actions para GitHub Pages. O workflow está em `.github/workflows/deploy.yml`.
-
-URL esperado: `https://pedrom3160.github.io/blog/`
+`scripts/build.mjs` executa `eleventy --pathprefix=/blog/` (saída `_site/`). O workflow `.github/workflows/deploy.yml` faz: checkout → Node 22 → `npm ci` → `npm test` → `npm run build` → `npm run validate` → upload de `_site` → deploy-pages.
 
 ## Princípios de Design
 

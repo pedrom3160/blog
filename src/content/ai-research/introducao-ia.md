@@ -1,4 +1,7 @@
 ---
+slug: introducao-ia
+collection: ai-research
+permalink: /ai-research/introducao-ia/
 title: "Inteligência Artificial: Uma Introdução"
 description: "O que é a Inteligência Artificial, os seus ramos principais, história resumida e conceitos fundamentais. Artigo introdutório da secção de Investigação em IA."
 pubDate: 2026-11-17

@@ -1,4 +1,7 @@
 ---
+slug: ecossistema-gptclone-limites
+collection: journal
+permalink: /journal/ecossistema-gptclone-limites/
 title: "Ecossistema GPTCLONE e Limites do Projeto"
 description: "Como o Blog se encaixa no ecossistema GPTCLONE e os limites arquitetónicos que respeitamos."
 pubDate: 2026-11-17

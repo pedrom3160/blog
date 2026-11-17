@@ -2,6 +2,8 @@
 
 Plataforma pública de conhecimento, investigação, educação e diário de projeto do GPTCLONE.
 
+**URL de produção:** https://pedrom3160.github.io/blog/
+
 ## Idioma
 
 Português Europeu (pt-PT). Arquitetura preparada para expansão multilingue.
@@ -9,18 +11,21 @@ Português Europeu (pt-PT). Arquitetura preparada para expansão multilingue.
 ## Secções de conteúdo
 
 - **Jornal GPTCLONE** — Notícias, atualizações de desenvolvimento, marcos, decisões técnicas.
-- **Biblioteca PDF** — Catálogo de documentos técnicos, tutoriais, guias de programação.
-- **Biblioteca de Audiolivros** — Material educativo em formato áudio.
+- **Biblioteca PDF** — Catálogo de documentos técnicos (PDFs de amostra CC-BY-4.0).
+- **Biblioteca de Audiolivros** — Material educativo em formato áudio (entradas placeholder, áudio em breve).
 - **Investigação em IA** — IA, ML, DL, LLMs, Transformers, Tokenização e muito mais.
 - **GPTCLONE Academy** — Caminhos de aprendizagem estruturados.
+- **Pesquisa** — Modal de pesquisa global e página de pesquisa, sobre `search-index.json`.
 
 ## Stack
 
-- [Astro](https://astro.build/) — Generador de sites estáticos
-- [TypeScript](https://www.typescriptlang.org/) — Tipagem estática
-- [Tailwind CSS](https://tailwindcss.com/) — Estilização utilitária
-- [MDX](https://mdxjs.com/) — Conteúdo em Markdown com componentes
+- [Eleventy 3.x](https://www.11ty.dev/) — Gerador de sites estáticos
+- Nunjucks — Templates
+- Markdown — Conteúdo
+- CSS moderno (design system próprio, sem frameworks CSS)
+- JavaScript ES Modules (vanilla, sem frameworks)
 - [Vitest](https://vitest.dev/) — Testes
+- Node.js 22 LTS + npm
 
 ## Comandos
 
@@ -31,35 +36,45 @@ npm install
 # Servidor de desenvolvimento
 npm run dev
 
-# Build de produção
+# Build de produção (base path /blog/, saída em _site/)
 npm run build
+
+# Validar o output do build (links, assets, base path, SEO)
+npm run validate
 
 # Pré-visualizar build
 npm run preview
 
-# Executar testes
+# Executar testes (Vitest)
 npm test
+
+# Regenerar PDFs/áudio de amostra
+npm run generate:samples
 ```
 
 ## Estrutura de diretórios
 
 ```
+.eleventy.js        Configuração Eleventy (collections, filtros, base path)
 src/
-  components/   Componentes reutilizáveis
-  layouts/      Layouts de página
-  pages/        Páginas e rotas
-  styles/       Estilos globais
-  utils/        Utilitários
-content/
-  journal/      Artigos do jornal (Markdown)
-  ai-research/  Artigos de investigação IA (Markdown)
-  academy/      Conteúdo da academia (Markdown)
-  authors/      Perfis de autor
-  data/         Dados de catálogos (JSON)
+  _includes/        Layouts e componentes Nunjucks
+  pages/            Páginas e rotas (njk, 11ty.js)
+  content/          Conteúdo Markdown (journal, ai-research, academy, authors)
+  _data/            Dados globais (site, navigation, catálogos JSON)
+  assets/           Imagens, favicon
+  styles/           Design system (main.css)
+  scripts/          Interatividade cliente (main.js)
+  utils/            Utilitários (datas, pesquisa)
 public/
-  assets/       Imagens, avatares, ícones
-  resources/    PDFs e audiolivros (não versionar ficheiros grandes)
+  resources/        PDFs e áudio de amostra
+scripts/            build.mjs, validate.mjs, generate-samples.mjs
+tests/              Testes Vitest
+.github/workflows/  Deploy para GitHub Pages
 ```
+
+## Base path
+
+O site é servido em `/blog/`. Todos os URLs relativos à raiz são reescritos para `/blog/...` por um transform de build (ver `.eleventy.js`).
 
 ## Licença
 

@@ -1,0 +1,8 @@
+---
+layout: layouts/base.njk
+title: Jornal GPTCLONE
+description: Notícias, atualizações de desenvolvimento, marcos, decisões técnicas e relatórios de progresso do projeto GPTCLONE.
+permalink: /journal/
+---
+{% import "components/listing.njk" as listing %}
+{{ listing.collectionListing(collections.journal | sortByDate, "Jornal GPTCLONE", "Notícias do projeto, atualizações de desenvolvimento, marcos, decisões técnicas e muito mais.", "Categoria") }}

@@ -1,17 +1,18 @@
-import { execSync } from 'node:child_process';
+// Production build with the GitHub Pages base path. Run: node scripts/build.mjs
+import { spawnSync } from 'node:child_process';
+import { rmSync } from 'node:fs';
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-try {
-  execSync('npx astro build', { stdio: 'inherit' });
-} catch (err) {
-  console.error('Astro build failed:', err.message);
-  process.exit(1);
-}
+const root = dirname(dirname(fileURLToPath(import.meta.url)));
+const siteDir = join(root, '_site');
 
-try {
-  execSync('node scripts/generate-sitemap.mjs', { stdio: 'inherit' });
-} catch (err) {
-  console.error('Sitemap generation failed:', err.message);
-  process.exit(1);
-}
+rmSync(siteDir, { recursive: true, force: true });
 
-console.log('Build complete!');
+const result = spawnSync('npx', ['@11ty/eleventy', '--pathprefix=/blog/'], {
+  cwd: root,
+  stdio: 'inherit',
+  shell: true,
+});
+
+process.exit(result.status ?? 1);

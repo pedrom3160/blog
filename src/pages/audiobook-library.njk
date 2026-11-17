@@ -1,0 +1,58 @@
+---
+layout: layouts/base.njk
+title: Biblioteca de Audiolivros
+description: Material educativo em formato áudio, reproduzível diretamente no navegador.
+permalink: /audiobook-library/
+---
+{% import "components/cards.njk" as cards %}
+{% set categories = audiobookLibrary.audiobooks | categories %}
+
+<section class="section">
+  <div class="container">
+    <header class="section-header">
+      <h1>Biblioteca de Audiolivros</h1>
+      <p class="section-intro">Ouça conteúdo educativo diretamente no navegador. Organizado por categoria e tópico.</p>
+    </header>
+
+    <div class="filter-bar" data-collection-filter>
+      <div class="filter-field">
+        <label class="sr-only" for="audio-search">Pesquisar audiolivros</label>
+        <input id="audio-search" type="search" data-filter-search placeholder="Pesquisar audiolivros..." />
+      </div>
+      <div class="filter-field">
+        <label class="sr-only" for="audio-category">Categoria</label>
+        <select id="audio-category" data-filter-category>
+          <option value="">Categoria: todas</option>
+          {% for category in categories %}
+            <option value="{{ category.name | lower }}">{{ category.name }} ({{ category.count }})</option>
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+
+    <div class="card-grid card-grid-3" data-filter-grid>
+      {% for audio in audiobookLibrary.audiobooks %}{{ cards.resourceCard(audio, 'audiobook') }}{% endfor %}
+    </div>
+    <p class="filter-empty" data-filter-empty hidden>Nenhum audiolivro encontrado. Ajuste a pesquisa ou o filtro.</p>
+  </div>
+</section>
+
+<section class="section section-alt">
+  <div class="container">
+    <h2 class="section-title">Reprodução de áudio</h2>
+    <p class="section-intro">O leitor de áudio do GPTCLONE Blog suporta reprodução, pausa, progresso, volume e descarga.</p>
+
+    {{ cards.audioPlayer('Amostra técnica de áudio', '/resources/audiobooks/sample-tone.wav', '/resources/audiobooks/sample-tone.wav') }}
+
+    <div class="notice notice-info">
+      <h2>Sobre o conteúdo áudio</h2>
+      <p>
+        A amostra acima é um tom técnico gerado automaticamente apenas para demonstrar o leitor de áudio.
+        Os itens do catálogo marcados como &ldquo;Em breve&rdquo; são marcadores de posição para futuros audiolivros.
+        Para adicionar conteúdo áudio real, coloque os ficheiros em
+        <code>public/resources/audiobooks/</code> e registe as entradas em
+        <code>src/_data/audiobook-library.json</code>.
+      </p>
+    </div>
+  </div>
+</section>

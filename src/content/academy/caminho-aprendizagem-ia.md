@@ -1,4 +1,7 @@
 ---
+slug: caminho-aprendizagem-ia
+collection: academy
+permalink: /academy/caminho-aprendizagem-ia/
 title: "Caminho de Aprendizagem em Inteligência Artificial"
 description: "Caminho de aprendizagem estruturado da GPTCLONE Academy, do nível iniciante ao avançado, cobrindo fundamentos de IA, machine learning e deep learning."
 pubDate: 2026-11-17

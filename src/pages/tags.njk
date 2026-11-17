@@ -1,0 +1,29 @@
+---
+layout: layouts/base.njk
+pagination:
+  data: collections.tags
+  size: 1
+  alias: tag
+permalink: /tags/{{ tag | slug }}/
+---
+{% import "components/cards.njk" as cards %}
+{% set articles = collections.articles | filterByTag(tag) %}
+
+<section class="section">
+  <div class="container">
+    <header class="section-header">
+      <h1>Etiqueta: {{ tag }}</h1>
+      <p class="section-intro">{{ articles.length }} artigo(s) encontrado(s) com esta etiqueta.</p>
+    </header>
+
+    {% if articles.length %}
+      <div class="card-grid card-grid-3">
+        {% for article in articles %}{{ cards.articleCard(article) }}{% endfor %}
+      </div>
+    {% else %}
+      <div class="card card-empty">
+        <p>Nenhum artigo encontrado com esta etiqueta.</p>
+      </div>
+    {% endif %}
+  </div>
+</section>

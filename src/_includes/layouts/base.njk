@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="{{ site.language }}" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{% if title %}{{ title }} | {{ site.title }}{% else %}{{ site.title }}{% endif %}</title>
+    <meta name="description" content="{{ description or site.description }}" />
+    <link rel="canonical" href="{{ page.url | absoluteUrl }}" />
+    <meta name="theme-color" content="#1b1836" />
+    <meta name="search-index" content="{{ '/search-index.json' | url }}" />
+
+    <meta property="og:site_name" content="{{ site.title }}" />
+    <meta property="og:type" content="{{ ogType or 'website' }}" />
+    <meta property="og:url" content="{{ page.url | absoluteUrl }}" />
+    <meta property="og:title" content="{{ title or site.title }}" />
+    <meta property="og:description" content="{{ description or site.description }}" />
+    <meta property="og:locale" content="{{ site.locale }}" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="{{ title or site.title }}" />
+    <meta name="twitter:description" content="{{ description or site.description }}" />
+
+    <link rel="icon" type="image/svg+xml" href="{{ '/assets/favicon.svg' | url }}" />
+    <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ '/rss.xml' | url }}" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Fira+Code:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="{{ '/styles/main.css' | url }}" />
+
+    <script>
+      (function () {
+        try {
+          var stored = localStorage.getItem('gptclone-theme');
+          document.documentElement.setAttribute('data-theme', stored === 'light' ? 'light' : 'dark');
+        } catch (error) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Saltar para o conteúdo</a>
+    {% include "components/header.njk" %}
+    <main id="main" class="site-main">
+      {{ content | safe }}
+    </main>
+    {% include "components/footer.njk" %}
+    {% include "components/search-modal.njk" %}
+    <script src="{{ '/scripts/main.js' | url }}?v=2.0.0" defer></script>
+  </body>
+</html>

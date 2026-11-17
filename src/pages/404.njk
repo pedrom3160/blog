@@ -1,0 +1,17 @@
+---
+layout: layouts/base.njk
+title: Página não encontrada
+description: A página que procura não existe ou foi movida.
+permalink: /404.html
+---
+<section class="notfound">
+  <div class="container notfound-inner">
+    <p class="notfound-code">404</p>
+    <h1>Página não encontrada</h1>
+    <p>A página que procura não existe ou foi movida.</p>
+    <div class="notfound-actions">
+      <a class="btn btn-primary" href="{{ '/' | url }}">Voltar ao início</a>
+      <a class="btn btn-outline" href="{{ '/journal/' | url }}">Explorar o Jornal</a>
+    </div>
+  </div>
+</section>

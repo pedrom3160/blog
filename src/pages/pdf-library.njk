@@ -1,0 +1,48 @@
+---
+layout: layouts/base.njk
+title: Biblioteca PDF
+description: Catálogo de documentos PDF - manuais técnicos, tutoriais, documentos de investigação e guias de programação.
+permalink: /pdf-library/
+---
+{% import "components/cards.njk" as cards %}
+{% set categories = pdfLibrary.documents | categories %}
+
+<section class="section">
+  <div class="container">
+    <header class="section-header">
+      <h1>Biblioteca PDF</h1>
+      <p class="section-intro">Navegue, filtre e descarregue documentos técnicos, tutoriais e materiais educativos.</p>
+    </header>
+
+    <div class="filter-bar" data-collection-filter>
+      <div class="filter-field">
+        <label class="sr-only" for="pdf-search">Pesquisar PDFs</label>
+        <input id="pdf-search" type="search" data-filter-search placeholder="Pesquisar documentos..." />
+      </div>
+      <div class="filter-field">
+        <label class="sr-only" for="pdf-category">Categoria</label>
+        <select id="pdf-category" data-filter-category>
+          <option value="">Categoria: todas</option>
+          {% for category in categories %}
+            <option value="{{ category.name | lower }}">{{ category.name }} ({{ category.count }})</option>
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+
+    <div class="card-grid card-grid-3" data-filter-grid>
+      {% for doc in pdfLibrary.documents %}{{ cards.resourceCard(doc, 'pdf') }}{% endfor %}
+    </div>
+    <p class="filter-empty" data-filter-empty hidden>Nenhum documento encontrado. Ajuste a pesquisa ou o filtro.</p>
+
+    <div class="notice notice-info">
+      <h2>Aviso sobre conteúdo de amostra</h2>
+      <p>
+        Os itens marcados como &ldquo;Amostra&rdquo; são conteúdo de exemplo criado para demonstração do catálogo.
+        Nenhum material protegido por direitos de autor foi incluído sem permissão.
+        Para adicionar os seus próprios documentos, coloque os ficheiros em
+        <code>public/resources/pdfs/</code> e registe as entradas em <code>src/_data/pdf-library.json</code>.
+      </p>
+    </div>
+  </div>
+</section>

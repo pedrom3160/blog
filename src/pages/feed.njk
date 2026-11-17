@@ -1,0 +1,29 @@
+---
+permalink: /rss.xml
+---
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>{{ site.title }}</title>
+    <description>{{ site.description }}</description>
+    <link>{{ site.url }}</link>
+    <language>{{ site.language }}</language>
+    <atom:link href="{{ site.url }}rss.xml" rel="self" type="application/rss+xml" />
+    {% if collections.articles.length %}
+      <lastBuildDate>{{ collections.articles[0].data.pubDate | rssDate }}</lastBuildDate>
+    {% endif %}
+    {%- for article in collections.articles %}
+    <item>
+      <title>{{ article.data.title }}</title>
+      <description>{{ article.data.description }}</description>
+      <link>{{ article.url | absoluteUrl }}</link>
+      <guid isPermaLink="true">{{ article.url | absoluteUrl }}</guid>
+      <pubDate>{{ article.data.pubDate | rssDate }}</pubDate>
+      <author>{{ article.data.author }}</author>
+      {%- for tag in article.data.tags %}
+      <category>{{ tag }}</category>
+      {%- endfor %}
+    </item>
+    {%- endfor %}
+  </channel>
+</rss>

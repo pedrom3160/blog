@@ -1,4 +1,7 @@
 ---
+slug: arquitetura-transformers
+collection: ai-research
+permalink: /ai-research/arquitetura-transformers/
 title: "Arquitetura Transformer Explicada"
 description: "Como funciona a arquitetura Transformer: self-attention, camadas, codificação posicional, encoder e decoder. Explicação técnica passo a passo."
 pubDate: 2026-11-17
