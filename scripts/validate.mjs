@@ -105,11 +105,11 @@ for (const file of htmlFiles) {
 const broken = [...localLinks].filter((l) => {
   if (l.endsWith('.xml') || l.endsWith('.json')) return !assetExists(l);
   let rel = l.slice(BASE.length) || '/';
-  if (!rel.endsWith('/')) rel += '/';
-  const target = rel.endsWith('/') ? rel + 'index.html' : rel;
-  if (existsSync(join(site, target))) return false;
-  const noIndex = join(site, rel.replaceAll('/', '\\'));
-  return !existsSync(noIndex);
+  // Exact file (e.g. /styles/main.css, /resources/pdfs/x.pdf)
+  if (existsSync(join(site, rel))) return false;
+  // Directory link -> index.html
+  const dir = rel.endsWith('/') ? rel : rel + '/';
+  return !existsSync(join(site, dir, 'index.html'));
 });
 if (broken.length) fail(`Broken internal links (${broken.length}):\n  ` + broken.slice(0, 15).join('\n  '));
 
