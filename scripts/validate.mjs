@@ -42,7 +42,7 @@ function assetExists(url) {
 // 1. Expected page inventory
 // ---------------------------------------------------------------------------
 const EXPECTED_DIRS = [
-  '', '/about', '/donations', '/journal', '/ai-research', '/academy',
+  '', '/about', '/suggestions', '/donations', '/journal', '/ai-research', '/academy',
   '/pdf-library', '/audiobook-library', '/search', '/tags',
 ];
 const CONTENT_SLUGS = [
@@ -68,7 +68,7 @@ if (!existsSync(join(site, 'search-index.json'))) fail('Missing /search-index.js
 // ---------------------------------------------------------------------------
 // 2. Assets copied
 // ---------------------------------------------------------------------------
-for (const asset of ['/styles/main.css', '/scripts/main.js', '/assets/favicon.svg', '/assets/images/social-card.png']) {
+for (const asset of ['/styles/main.css', '/scripts/main.js', '/scripts/suggestions.js', '/assets/favicon.svg', '/assets/images/social-card.png']) {
   if (!assetExists(asset)) fail(`Missing asset: ${asset}`);
 }
 
@@ -141,15 +141,16 @@ if (locs.some((l) => !l.startsWith(SITE_URL))) fail('Sitemap contains URLs outsi
 if (locs.some((l) => l.includes('/blog/blog'))) fail('Sitemap contains doubled /blog/blog URLs');
 if (!locs.includes(SITE_URL + 'donations/')) fail('Sitemap is missing /donations/');
 if (!locs.includes(SITE_URL + 'about/')) fail('Sitemap is missing /about/');
+if (!locs.includes(SITE_URL + 'suggestions/')) fail('Sitemap is missing /suggestions/');
 if (locs.some((l) => l.endsWith('/404.html'))) fail('Sitemap must not include 404.html');
 const rss = readFileSync(join(site, 'rss.xml'), 'utf8');
 if (rss.includes('/blog/blog')) fail('RSS contains doubled /blog/blog URLs');
 if (!rss.startsWith('<?xml')) fail('rss.xml is not XML');
 
 // ---------------------------------------------------------------------------
-// 7. Navigation contract — exactly Blog, About, Donations
+// 7. Navigation contract — exactly Blog, About, Suggestions, Donations
 // ---------------------------------------------------------------------------
-const REQUIRED_NAV = ['Blog', 'About', 'Donations'];
+const REQUIRED_NAV = ['Blog', 'About', 'Suggestions', 'Donations'];
 const navPagesChecked = [];
 for (const file of htmlFiles) {
   const rel = file.slice(site.length).replaceAll('\\', '/');
@@ -169,6 +170,56 @@ for (const file of htmlFiles) {
   navPagesChecked.push(rel);
 }
 if (!navPagesChecked.length) fail('No pages were checked for primary navigation');
+
+// Suggestions page: real route, real form, no fake success path.
+const suggestionsHtml = readFileSync(join(site, 'suggestions', 'index.html'), 'utf8');
+const suggestionsNav = suggestionsHtml.match(/<nav class="primary-nav"[^>]*>([\s\S]*?)<\/nav>/);
+if (!suggestionsNav || !suggestionsNav[1].includes('aria-current="page"')) {
+  fail('Suggestions page does not mark its primary navigation item as current');
+}
+for (const field of ['category', 'title', 'body', 'name']) {
+  if (!new RegExp(`name="${field}"`).test(suggestionsHtml)) fail(`Suggestions form is missing the "${field}" field`);
+}
+if (!/id="suggestion-form"/.test(suggestionsHtml)) fail('Suggestions form is missing its id');
+if (!/data-repo="pedrom3160\/blog"/.test(suggestionsHtml)) fail('Suggestions form is missing its GitHub repository');
+if (!/action="https:\/\/github\.com\/pedrom3160\/blog\/issues\/new"/.test(suggestionsHtml)) {
+  fail('Suggestions form has no working GitHub issue fallback action');
+}
+if (!/id="suggestion-status"[^>]*role="status"/.test(suggestionsHtml) || !/aria-live="polite"/.test(suggestionsHtml)) {
+  fail('Suggestions form status is not an accessible live region');
+}
+const suggestionsText = suggestionsHtml.replaceAll('&amp;', '&').replaceAll('&#39;', "'");
+for (const copy of [
+  'Um nome ainda por encontrar',
+  'O GPTCLONE é um nome temporário.',
+  'O nome pode ser temporário. A visão não.',
+  'Ideias & Funcionalidades',
+  'O que pode sugerir?',
+  'Preparar sugestão no GitHub',
+]) {
+  if (!suggestionsText.includes(copy)) fail(`Suggestions page is missing expected copy: ${copy}`);
+}
+const categoryCards = (suggestionsHtml.match(/class="suggestion-card"/g) || []).length;
+if (categoryCards !== 5) fail(`Suggestions page must render 5 categories (found ${categoryCards})`);
+if (!/Última revisão desta página: [^<]{8,}/.test(suggestionsText)) {
+  fail('Suggestions page is missing a rendered last-reviewed date');
+}
+
+// The site must not present itself as a team or use the retired promo headline.
+const FORBIDDEN = [
+  /Equipa GPTCLONE/i,
+  /Público e gratuito\s*[·—-]\s*Sem registo necessário/i,
+  /público e gratuito, sem registo/i,
+  /gptclone-team/i,
+];
+for (const file of htmlFiles) {
+  const rel = file.slice(site.length).replaceAll('\\', '/');
+  if (rel.startsWith('/admin/')) continue;
+  const html = readFileSync(file, 'utf8');
+  for (const pattern of FORBIDDEN) {
+    if (pattern.test(html)) fail(`Forbidden identity text in ${rel}: ${pattern}`);
+  }
+}
 
 // ---------------------------------------------------------------------------
 // 8. Accessibility / document invariants
@@ -191,6 +242,10 @@ for (const file of htmlFiles) {
   const ids = [...html.matchAll(/\sid="([^"]+)"/g)].map((m) => m[1]);
   const duplicate = ids.find((id, index) => ids.indexOf(id) !== index);
   if (duplicate) fail(`Duplicate id "${duplicate}" in ${rel}`);
+
+  for (const label of html.matchAll(/<label[^>]*\bfor="([^"]+)"[^>]*>/g)) {
+    if (!ids.includes(label[1])) fail(`Label for missing id "${label[1]}" in ${rel}`);
+  }
 
   const title = html.match(/<title>([^<]*)<\/title>/);
   if (!title || title[1].trim().length < 10) fail(`Missing or too-short <title> in ${rel}`);

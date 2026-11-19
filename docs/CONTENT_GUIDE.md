@@ -55,7 +55,7 @@ Exemplo:
 title: "Título do Artigo"
 description: "Descrição resumida do artigo."
 pubDate: 2026-11-17
-author: "Equipa GPTCLONE"
+author: "GPTCLONE"
 slug: "titulo-do-artigo"
 collection: "journal"
 permalink: "/journal/titulo-do-artigo/"
@@ -101,5 +101,5 @@ Notas:
 
 - **Precisão técnica:** distinguir factos estabelecidos de planos e ideias experimentais
 - **Transparência:** não afirmar funcionalidades como implementadas quando estão apenas planeadas
-- **Acessibilidade:** todo o conteúdo é público e gratuito, sem necessidade de registo
+- **Acessibilidade:** o conteúdo está disponível sem conta e sem paywall
 - **Honestidade:** nunca inventar conquistas, marcos de referência ou capacidades não verificadas

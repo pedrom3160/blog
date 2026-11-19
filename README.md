@@ -7,12 +7,13 @@ Publicação independente sobre inteligência artificial: notas de investigaçã
 
 ## Identidade e navegação
 
-O site tem **exatamente três destinos na navegação principal**:
+O site tem **exatamente quatro destinos na navegação principal**:
 
 | Menu | Destino |
 |------|---------|
 | Blog | `/` — homepage editorial com destaque, arquivo, áreas de conteúdo e temas |
 | About | `/about/` — projeto, missão, visão, princípios e limites |
+| Suggestions | `/suggestions/` — convite à participação, nome provisório e formulário |
 | Donations | `/donations/` — modelo de apoio, prioridades e estado dos canais |
 
 As secções de conteúdo (Jornal, Investigação em IA, Academy, Bibliotecas, Etiquetas e Pesquisa) são
@@ -69,28 +70,31 @@ src/
   _includes/
     layouts/              base.njk, article.njk, about.njk
     components/           header, footer, cards, listing, share, search-modal
-  pages/                  homepage, secções, about, donations, bibliotecas, tags,
-                          pesquisa, 404, rss, sitemap, search-index, preview
+  pages/                  homepage, secções, about, suggestions, donations, bibliotecas,
+                          tags, pesquisa, 404, rss, sitemap, search-index, preview
   content/                Markdown (journal, ai-research, academy, authors) + about.md
-  _data/                  site.js, navigation.js, donations.js, catálogos JSON
+  _data/                  site.js, navigation.js, suggestions.js, donations.js, catálogos JSON
   assets/                 capas editoriais SVG, favicon, social-card.png
   styles/main.css         Design system completo
   scripts/main.js         Interações cliente
+  scripts/suggestions.js  Validação e handoff do formulário de sugestões
   utils/                  datas e pesquisa (testados)
 public/resources/         PDFs e áudio de amostra
 scripts/                  build.mjs, validate.mjs, generate-samples.mjs, migrate-content.mjs
 tests/                    Vitest (datas, pesquisa, DOM, navegação/donativos)
-docs/                     Arquitetura, conteúdo, deploy, donativos, contribuição
+docs/                     Arquitetura, conteúdo, deploy, donativos, sugestões, contribuição
 reports/                  Auditoria e relatório de redesign
 ```
 
 ## Navegação e contratos
 
-- A navegação primária é gerada a partir de `src/_data/navigation.js` (3 itens).
-- `npm run validate` falha se qualquer página tiver mais ou menos de três links primários, se os
-  rótulos não forem `Blog · About · Donations`, se faltar `<h1>` único, `lang="pt-PT"`,
-  `alt` em imagens, metadados SEO, JSON-LD de artigo ou se existirem IDs duplicados.
-- Os URLs existentes são preservados; a única rota nova é `/donations/`.
+- A navegação primária é gerada a partir de `src/_data/navigation.js` (4 itens).
+- `npm run validate` falha se qualquer página tiver mais ou menos de quatro links primários, se os
+  rótulos não forem `Blog · About · Suggestions · Donations`, se faltar `<h1>` único, `lang="pt-PT"`,
+  `alt` em imagens, metadados SEO, JSON-LD de artigo, labels associados, IDs duplicados, ou se
+  aparecer a assinatura antiga de equipa ou o título promocional retirado.
+- Os URLs existentes são preservados; as rotas novas são `/donations/` (missão anterior) e
+  `/suggestions/`.
 
 ## Base path
 
@@ -102,6 +106,15 @@ normaliza para `https://pedrom3160.github.io/blog/...`.
 
 `src/_data/donations.js` é o único ponto de configuração. Sem canais verificados, `/donations/`
 mostra um estado vazio explícito em vez de uma ligação inventada. Ver `docs/DONATIONS.md`.
+
+## Sugestões
+
+`/suggestions/` apresenta as categorias de contributo, a explicação do nome provisório e um
+formulário. Por omissão, o formulário não tem backend: valida os campos e prepara uma issue
+pública no GitHub, que o visitante confirma. Não existe falsa confirmação de envio e não é
+pedido email nesse modo. Para receber sugestões sem conta GitHub, configure um endpoint
+privado compatível com CORS em `src/_data/suggestions.js`. Privacidade, spam e limitações estão
+em `docs/SUGGESTIONS.md`.
 
 ## Licença
 

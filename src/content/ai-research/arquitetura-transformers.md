@@ -6,7 +6,7 @@ title: "Arquitetura Transformer Explicada"
 description: "Como funciona a arquitetura Transformer: self-attention, camadas, codificação posicional, encoder e decoder. Explicação técnica passo a passo."
 pubDate: 2026-11-17
 updatedDate: 2026-11-17
-author: "Equipa GPTCLONE"
+author: "GPTCLONE"
 image: "/assets/images/transformer-architecture.svg"
 tags: ["transformer", "arquitetura", "self-attention", "deep-learning", "redes-neurais"]
 category: "Arquitetura de Modelos"

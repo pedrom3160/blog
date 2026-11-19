@@ -6,7 +6,7 @@ title: "Sobre o Jornal GPTCLONE"
 description: "Propósito e escopo do Jornal GPTCLONE: notícias de desenvolvimento, atualizações técnicas, marcos e notas de investigação."
 pubDate: 2026-11-17
 updatedDate: 2026-11-17
-author: "Equipa GPTCLONE"
+author: "GPTCLONE"
 image: "/assets/images/journal.svg"
 tags: ["jornal", "documentação", "processo"]
 category: "Documentação"
@@ -45,7 +45,7 @@ Cada artigo do jornal inclui:
 
 - **Precisão técnica**: Todas as explicações técnicas distinguem factos estabelecidos de planos e ideias experimentais.
 - **Transparência**: Não afirmamos funcionalidades como implementadas quando estão apenas planeadas.
-- **Acessibilidade**: Todo o conteúdo é público e gratuito, sem necessidade de registo.
+- **Acessibilidade**: O conteúdo está disponível sem conta nem paywall.
 
 ## Como contribuir
 

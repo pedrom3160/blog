@@ -55,7 +55,7 @@ A página `/admin/` carrega a aplicação Decap CMS e lê a configuração em
 ## 2. Como autenticar
 
 A autenticação é feita com a **conta GitHub do proprietário** (ou de qualquer
-colaborador com acesso de escrita ao repositório `pedrom3160/blog`).
+pessoa com acesso de escrita ao repositório `pedrom3160/blog`).
 
 1. Abra `https://pedrom3160.github.io/blog/admin/`.
 2. Clique em **Login with GitHub** (ou "Entrar com GitHub").
@@ -83,7 +83,7 @@ Só utilizadores com permissão de *push* no repositório conseguem autenticar-s
      letras minúsculas, números e hífenes.
    - **Data de publicação** — data do artigo.
    - **Data de atualização** — opcional; preencha quando editar o conteúdo.
-   - **Autor** — por omissão "Equipa GPTCLONE".
+   - **Autor** — por omissão "GPTCLONE" (a assinatura pública do projeto).
    - **Imagem em destaque** — carregue ou selecione uma imagem da biblioteca.
    - **Categoria** — categoria do artigo (ex. "Notícias do Projeto").
    - **Etiquetas** — lista de etiquetas (uma por linha).
@@ -218,7 +218,7 @@ ricos (páginas, tamanho, duração, licença) que o editor Markdown não cobre.
      "description": "Descrição do documento.",
      "category": "documentacao",
      "tags": ["ia", "guia"],
-     "author": "Equipa GPTCLONE",
+     "author": "GPTCLONE",
      "license": "CC-BY-4.0",
      "language": "pt-PT",
      "pages": 12,
@@ -294,7 +294,7 @@ permanece na versão anterior — o conteúdo inválido não chega ao público.
   do proxy.
 - A app OAuth do GitHub deve ter o callback `https://<proxy>/auth/callback` e o
   scope `repo`.
-- Apenas colaboradores com acesso de escrita ao repositório conseguem entrar.
+- Apenas contas com acesso de escrita ao repositório conseguem entrar.
 - Limpe os cookies do site e tente novamente.
 
 **Guardar um artigo não o mostra no site**
@@ -387,11 +387,21 @@ configurada por omissão.
 
 ---
 
+## Página de Sugestões
+
+A página `/suggestions/` não é gerida pelo CMS: o texto editorial vive em
+`src/pages/suggestions.njk`, as categorias em `src/_data/suggestions.js` e o comportamento
+em `src/scripts/suggestions.js`. Por omissão, o formulário prepara uma issue pública no
+GitHub; não há backend nem armazenamento de submissões. Para receber sugestões sem conta
+GitHub, configure um endpoint CORS em `src/_data/suggestions.js` e siga
+`docs/SUGGESTIONS.md`. O CMS continua a gerir apenas os artigos, a página Sobre e os
+catálogos de recursos.
+
 ## Resumo: operacional vs. requer configuração
 
 | Funcionalidade | Estado |
 |---|---|
-| Site público (Jornal, Investigação IA, Academy, PDF, Audiolivros, Sobre, Pesquisa, Tags, RSS, Sitemap) | ✅ Operacional |
+| Site público (Jornal, Investigação IA, Academy, PDF, Audiolivros, Sobre, Sugestões, Doações, Pesquisa, Tags, RSS, Sitemap) | ✅ Operacional |
 | Build + validação + testes (GitHub Actions) | ✅ Operacional |
 | Interface de administração `/admin/` | ✅ Implementada |
 | Pré-visualização de rascunhos (`/preview/`) | ✅ Implementada |

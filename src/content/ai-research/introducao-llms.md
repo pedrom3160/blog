@@ -6,7 +6,7 @@ title: "Grandes Modelos de Linguagem (LLMs): Introdução"
 description: "O que são os Grandes Modelos de Linguagem, como funcionam, capacidades, limitações e principais arquiteturas. Artigo introdutório sobre LLMs."
 pubDate: 2026-11-17
 updatedDate: 2026-11-17
-author: "Equipa GPTCLONE"
+author: "GPTCLONE"
 image: "/assets/images/llm-intro.svg"
 tags: ["llm", "grandes-modelos-linguagem", "transformer", "ia", "processamento-linguagem-natural"]
 category: "Grandes Modelos de Linguagem"

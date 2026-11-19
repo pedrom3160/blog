@@ -6,7 +6,7 @@ title: "Tokenização Explicada"
 description: "Como funciona a tokenização em modelos de linguagem: BPE, WordPiece, SentencePiece, e o impacto nos LLMs. Explicação técnica com exemplos."
 pubDate: 2026-11-17
 updatedDate: 2026-11-17
-author: "Equipa GPTCLONE"
+author: "GPTCLONE"
 image: "/assets/images/tokenization.svg"
 tags: ["tokenização", "tokenizer", "bpe", "nlp", "processamento-linguagem-natural"]
 category: "Processamento de Linguagem Natural"

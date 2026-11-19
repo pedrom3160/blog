@@ -3,11 +3,11 @@ export default {
   shortTitle: 'GPTCLONE',
   tagline: 'Publicação independente sobre inteligência artificial',
   description:
-    'Conhecimento, investigação, educação e diário de projeto. Acesso público e gratuito, sem registo.',
+    'Notas de investigação, diário de projeto e material educativo sobre inteligência artificial, em português europeu.',
   url: 'https://pedrom3160.github.io/blog/',
   language: 'pt-PT',
   locale: 'pt_PT',
-  author: 'Equipa GPTCLONE',
+  author: 'GPTCLONE',
   github: 'https://github.com/pedrom3160/blog',
   license: 'CC-BY-4.0',
   year: 2026,

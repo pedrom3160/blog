@@ -6,7 +6,7 @@ title: "Bem-vindo ao GPTCLONE Blog"
 description: "Conheça o novo espaço de conhecimento, investigação e educação do projeto GPTCLONE. Descubra as secções do Jornal, Biblioteca PDF, Biblioteca de Audiolivros, Investigação em IA e Academia."
 pubDate: 2026-11-17
 updatedDate: 2026-11-17
-author: "Equipa GPTCLONE"
+author: "GPTCLONE"
 image: "/assets/images/welcome-hero.svg"
 tags: ["anúncio", "início", "gptclone"]
 category: "Notícias do Projeto"

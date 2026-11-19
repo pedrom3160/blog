@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="GPTCLONE">
+  <rect width="64" height="64" fill="#14161a"/>
+  <path d="M44 20a18 18 0 1 0 0 24" fill="none" stroke="#faf7f1" stroke-width="6"/>
+  <path d="M34 32h16v12" fill="none" stroke="#e2542a" stroke-width="6"/>
+</svg>

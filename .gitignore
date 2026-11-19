@@ -43,6 +43,7 @@ coverage/
 build-out.txt
 .dev-server.log
 .tmp-shots/
+screenshots/
 
 # Local migration backup (old Astro source kept locally only)
 migration-backup/

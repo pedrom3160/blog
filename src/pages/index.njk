@@ -1,7 +1,7 @@
 ---
 layout: layouts/base.njk
 title: GPTCLONE Blog
-description: Publicação independente sobre inteligência artificial. Notas de investigação, diário de projeto e material educativo, em português europeu, sem conta e sem barreiras de acesso.
+description: Publicação independente sobre inteligência artificial. Notas de investigação, diário de projeto e material educativo, em português europeu.
 permalink: /
 navKey: blog
 ---
@@ -19,7 +19,7 @@ navKey: blog
       <h1 class="hero-title">Um registo aberto de <em>investigação</em> em inteligência artificial.</h1>
       <p class="hero-lead">
         O GPTCLONE Blog reúne notas de investigação, diário de projeto e material
-        educativo sobre IA. Publicado em aberto, sem conta e sem paywall.
+        educativo sobre IA, publicados à medida que o trabalho avança.
       </p>
       <div class="hero-actions">
         <a class="btn btn-primary" href="#arquivo">Ler as últimas publicações</a>
@@ -206,6 +206,22 @@ navKey: blog
       </li>
       {% endfor %}
     </ul>
+  </div>
+</section>
+
+<section class="section invite">
+  <div class="container invite-inner">
+    <div>
+      <p class="eyebrow"><span class="section-num">05</span> Sugestões</p>
+      <h2 class="invite-title">O nome é temporário. As ideias são bem-vindas.</h2>
+    </div>
+    <div class="invite-body">
+      <p>
+        GPTCLONE é um nome de trabalho, e o projeto está aberto a propostas. Se tem uma
+        ideia para uma funcionalidade, um nome ou uma melhoria, há espaço para a partilhar.
+      </p>
+      <a class="btn btn-ghost" href="{{ '/suggestions/' | url }}">Enviar uma sugestão</a>
+    </div>
   </div>
 </section>
 

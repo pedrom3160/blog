@@ -29,10 +29,11 @@ blog/
 │   ├── _includes/            # base.njk, article.njk, about.njk, header, footer, cards, listing, share, search-modal
 │   ├── pages/                # Páginas (njk) + search-index.11ty.js
 │   ├── content/              # Markdown: journal/, ai-research/, academy/, authors/
-│   ├── _data/                # site.js, navigation.js, donations.js, pdfLibrary.json, audiobookLibrary.json
+│   ├── _data/                # site.js, navigation.js, suggestions.js, donations.js, catálogos JSON
 │   ├── assets/               # Capas editoriais SVG, favicon.svg, social-card.png
 │   ├── styles/main.css       # Design system
 │   ├── scripts/main.js       # Interatividade cliente
+│   ├── scripts/suggestions.js # Validação e handoff do formulário
 │   └── utils/                # date.js, search.js
 ├── public/resources/         # PDFs e áudio de amostra (CC-BY-4.0)
 ├── scripts/                  # build.mjs, validate.mjs, generate-samples.mjs
@@ -63,6 +64,7 @@ Cada artigo tem front matter: `title`, `description`, `pubDate`, `author`, `tags
 | `/pdf-library/` | Biblioteca PDF |
 | `/audiobook-library/` | Biblioteca de audiolivros |
 | `/about/` | Sobre (missão, visão, princípios, ficha do projeto) |
+| `/suggestions/` | Sugestões (categorias, nome provisório, formulário) |
 | `/donations/` | Donativos (motivo, prioridades, transparência, canais, FAQ) |
 | `/search/` | Página de pesquisa (+ modal global) |
 | `/tags/`, `/tags/[tag]/` | Índice de etiquetas e filtro |
@@ -83,10 +85,19 @@ Permalinks no conteúdo são escritos **sem** o prefixo; `page.url` é não pref
 
 ## Navegação primária
 
-Contrato rígido: **exatamente três destinos** — Blog (`/`), About (`/about/`) e Donations
-(`/donations/`). A lista vive em `src/_data/navigation.js`; o filtro `isNavActive` marca o estado
-ativo e o validador falha se qualquer página emitir outro número de links primários. Secções,
-etiquetas, pesquisa e paginação são descoberta de conteúdo (homepage e rodapé), não menus.
+Contrato rígido: **exatamente quatro destinos** — Blog (`/`), About (`/about/`), Suggestions
+(`/suggestions/`) e Donations (`/donations/`). A lista vive em `src/_data/navigation.js`; o filtro
+`isNavActive` marca o estado ativo e o validador falha se qualquer página emitir outro número de
+links primários. Secções, etiquetas, pesquisa e paginação são descoberta de conteúdo (homepage e
+rodapé), não menus.
+
+## Sugestões e participação
+
+`src/_data/suggestions.js` contém o repositório, as cinco categorias, a data de revisão e um
+`endpoint` opcional. Sem endpoint, `src/scripts/suggestions.js` valida o formulário e abre uma
+issue pública pré-preenchida no GitHub; não há pedido de email nem confirmação falsa. Com endpoint,
+o formulário faz `POST` JSON e só reporta sucesso após uma resposta 2xx. Ver `docs/SUGGESTIONS.md`.
+A página e o formulário são cobertos por `tests/suggestions.test.js` e pelo validador.
 
 ## Design System
 
@@ -101,8 +112,8 @@ acento escuro 7,39:1 (todos ≥ AA).
 
 ## Testes e Validação
 
-- `npm test` — Vitest: utilitários de data/pesquisa, comportamento DOM (tema, navegação, filtros) via jsdom, contrato de navegação (3 itens) e integridade da configuração de donativos.
-- `npm run validate` — valida `_site/`: inventário de páginas (inclui `/donations/`), assets, base path, resolução de links internos (com query string), catálogos, RSS/sitemap/canónicas, **navegação primária exatamente Blog · About · Donations**, um único `<h1>`, `lang="pt-PT"`, `<main id="main">`, `alt` em imagens, título/descrição SEO, IDs únicos e JSON-LD (`BlogPosting` + `BreadcrumbList`, imagem absoluta) nos artigos.
+- `npm test` — Vitest: utilitários de data/pesquisa, comportamento DOM (tema, navegação, filtros), contrato de navegação (4 itens), configuração de donativos e validação/URL do formulário de sugestões.
+- `npm run validate` — valida `_site/`: inventário de páginas (inclui `/suggestions/` e `/donations/`), assets, base path, resolução de links internos (com query string), catálogos, RSS/sitemap/canónicas, **navegação primária exatamente Blog · About · Suggestions · Donations**, um único `<h1>`, `lang="pt-PT"`, `<main id="main">`, `alt` em imagens, labels associados, título/descrição SEO, IDs únicos, campos e conteúdo essencial do formulário de sugestões, ausência de linguagem de equipa e JSON-LD (`BlogPosting` + `BreadcrumbList`, imagem absoluta) nos artigos.
 
 ## Deploy
 
@@ -179,7 +190,7 @@ description: "Resumo / SEO"
 slug: "titulo-do-artigo"
 pubDate: 2026-11-18
 updatedDate: 2026-11-18        # opcional
-author: "Equipa GPTCLONE"
+author: "GPTCLONE"
 image: "/resources/uploads/imagem.jpg"   # opcional
 category: "Categoria"
 tags: ["tag1", "tag2"]

@@ -45,7 +45,7 @@ collections:
       - { label: "Slug do URL", name: "slug", widget: "string" }
       - { label: "Data de publicação", name: "pubDate", widget: "datetime", date_format: "DD/MM/YYYY", time_format: false }
       - { label: "Data de atualização", name: "updatedDate", widget: "datetime", date_format: "DD/MM/YYYY", time_format: false }
-      - { label: "Autor", name: "author", widget: "string", default: "Equipa GPTCLONE" }
+      - { label: "Autor", name: "author", widget: "string", default: "GPTCLONE" }
       - { label: "Imagem em destaque", name: "image", widget: "image" }
       - { label: "Texto alternativo da imagem (acessibilidade)", name: "imageAlt", widget: "string", required: false }
       - { label: "Categoria", name: "category", widget: "string" }
@@ -71,7 +71,7 @@ collections:
       - { label: "Slug do URL", name: "slug", widget: "string" }
       - { label: "Data de publicação", name: "pubDate", widget: "datetime", date_format: "DD/MM/YYYY", time_format: false }
       - { label: "Data de atualização", name: "updatedDate", widget: "datetime", date_format: "DD/MM/YYYY", time_format: false }
-      - { label: "Autor", name: "author", widget: "string", default: "Equipa GPTCLONE" }
+      - { label: "Autor", name: "author", widget: "string", default: "GPTCLONE" }
       - { label: "Imagem em destaque", name: "image", widget: "image" }
       - { label: "Texto alternativo da imagem (acessibilidade)", name: "imageAlt", widget: "string", required: false }
       - { label: "Categoria", name: "category", widget: "string" }
@@ -97,7 +97,7 @@ collections:
       - { label: "Slug do URL", name: "slug", widget: "string" }
       - { label: "Data de publicação", name: "pubDate", widget: "datetime", date_format: "DD/MM/YYYY", time_format: false }
       - { label: "Data de atualização", name: "updatedDate", widget: "datetime", date_format: "DD/MM/YYYY", time_format: false }
-      - { label: "Autor", name: "author", widget: "string", default: "Equipa GPTCLONE" }
+      - { label: "Autor", name: "author", widget: "string", default: "GPTCLONE" }
       - { label: "Imagem em destaque", name: "image", widget: "image" }
       - { label: "Texto alternativo da imagem (acessibilidade)", name: "imageAlt", widget: "string", required: false }
       - { label: "Categoria", name: "category", widget: "string" }

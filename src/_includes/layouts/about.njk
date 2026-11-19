@@ -30,7 +30,7 @@ layout: layouts/base.njk
   <div class="container">
     <div class="section-head">
       <p class="eyebrow"><span class="section-num">01</span> Princípios</p>
-      <h2 class="section-title">Como trabalhamos</h2>
+      <h2 class="section-title">Princípios editoriais</h2>
     </div>
     <ol class="principle-grid">
       {% for principle in principles %}
@@ -64,9 +64,15 @@ layout: layouts/base.njk
         </dl>
       </div>
 
+      <div class="fact-card">
+        <p class="eyebrow">Nome provisório</p>
+        <p>GPTCLONE é um nome de trabalho. Se tiver uma ideia para o nome do projeto, há espaço para a propor.</p>
+        <a class="link-arrow" href="{{ '/suggestions/' | url }}">Sugerir um nome <span aria-hidden="true">&rarr;</span></a>
+      </div>
+
       <div class="fact-card fact-card-cta">
         <p class="eyebrow">Apoiar</p>
-        <p>O blog é gratuito e sem paywall. Conheça as prioridades e o estado atual dos canais de apoio.</p>
+        <p>O blog publica em aberto, sem paywall. Conheça as prioridades e o estado atual dos canais de apoio.</p>
         <a class="btn btn-primary btn-sm" href="{{ '/donations/' | url }}">Donations</a>
       </div>
 

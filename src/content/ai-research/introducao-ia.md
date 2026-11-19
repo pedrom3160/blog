@@ -6,7 +6,7 @@ title: "Inteligência Artificial: Uma Introdução"
 description: "O que é a Inteligência Artificial, os seus ramos principais, história resumida e conceitos fundamentais. Artigo introdutório da secção de Investigação em IA."
 pubDate: 2026-11-17
 updatedDate: 2026-11-17
-author: "Equipa GPTCLONE"
+author: "GPTCLONE"
 image: "/assets/images/ai-intro.svg"
 tags: ["ia", "inteligência-artificial", "introdução", "machine-learning", "deep-learning"]
 category: "Inteligência Artificial"

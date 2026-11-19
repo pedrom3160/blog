@@ -10,7 +10,7 @@ mission: "Partilhar conhecimento técnico de forma acessível, transparente e gr
 vision: "Ser uma referência pública em conteúdo técnico de qualidade sobre IA e desenvolvimento de software, em português europeu, sem barreiras de acesso."
 principles:
   - title: "Abertura"
-    text: "O conteúdo é público, gratuito e sem necessidade de conta. A licença padrão é CC-BY-4.0."
+    text: "O conteúdo é aberto, não exige conta e é publicado sob licença CC-BY-4.0."
   - title: "Rigor"
     text: "Cada artigo procura explicar não só o que funciona, mas por que funciona — com limites e incertezas explícitos."
   - title: "Independência"
@@ -25,18 +25,20 @@ facts:
   - label: "Licença"
     value: "CC-BY-4.0"
   - label: "Acesso"
-    value: "Gratuito, sem conta"
+    value: "Aberto, sem paywall"
+  - label: "Natureza"
+    value: "Projeto independente"
   - label: "Infraestrutura"
     value: "Eleventy 3.x · GitHub Pages"
   - label: "Código"
     value: "Repositório público"
-  - label: "Equipa"
-    value: "Equipa GPTCLONE"
 ---
 
 ## O que é o GPTCLONE
 
 O GPTCLONE é um projeto de investigação e desenvolvimento que procura construir, compreender e documentar os componentes fundamentais de um modelo de linguagem: um tokenizador, uma arquitetura Transformer, um motor de treino e um motor de inferência.
+
+É um projeto independente, desenvolvido fora de qualquer estrutura empresarial. GPTCLONE é, por agora, um nome de trabalho: a identidade final ainda não está decidida, e as propostas de nome são bem-vindas na página de sugestões.
 
 O objetivo é duplo. Por um lado, uma implementação tecnicamente correta. Por outro, uma compreensão explícita de por que cada componente funciona — porque uma implementação que não se compreende dificilmente se melhora.
 
@@ -61,7 +63,7 @@ Essa independência é deliberada. Permite publicar notas de investigação, exp
 
 Inteligência artificial, machine learning, deep learning, grandes modelos de linguagem, arquiteturas Transformer, tokenização, embeddings, RAG, agentes de IA, avaliação e benchmarking, sistemas multimodais e segurança em IA.
 
-## Para onde vamos
+## Direção futura
 
 A direção é simples e não depende de anúncios grandiosos:
 

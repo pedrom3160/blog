@@ -6,7 +6,7 @@ title: "Ecossistema GPTCLONE e Limites do Projeto"
 description: "Como o Blog se encaixa no ecossistema GPTCLONE e os limites arquitetónicos que respeitamos."
 pubDate: 2026-11-17
 updatedDate: 2026-11-17
-author: "Equipa GPTCLONE"
+author: "GPTCLONE"
 image: "/assets/images/ecosystem.svg"
 tags: ["arquitetura", "ecossistema", "limites", "gptclone"]
 category: "Arquitetura"

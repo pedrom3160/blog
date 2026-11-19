@@ -1,0 +1,243 @@
+---
+layout: layouts/base.njk
+title: Sugestões
+description: Um espaço aberto para propor funcionalidades, nomes, melhorias de design e feedback ao GPTCLONE, um projeto independente sobre inteligência artificial.
+permalink: /suggestions/
+navKey: suggestions
+---
+<section class="page-hero page-hero-suggestions">
+  <div class="container">
+    <p class="eyebrow"><span class="eyebrow-mark" aria-hidden="true"></span>Sugestões</p>
+    <div class="page-hero-grid">
+      <h1 class="page-title page-title-lg">Ajude a definir o futuro do GPTCLONE.</h1>
+      <p class="page-lead">
+        O GPTCLONE é um projeto independente, construído através de experimentação,
+        desenvolvimento e melhoria contínua. Mas as boas ideias podem vir de qualquer lado.
+      </p>
+    </div>
+    <p class="page-meta">Projeto independente &middot; Nome provisório &middot; Contributos abertos</p>
+  </div>
+</section>
+
+<section class="section" id="o-que-sugerir">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow"><span class="section-num">01</span> O que pode sugerir?</p>
+      <h2 class="section-title">Uma ideia, um nome, uma melhoria.</h2>
+      <p class="section-lead">
+        Se tem uma ideia para uma nova funcionalidade, um nome para um dos projetos,
+        uma sugestão de design ou simplesmente feedback, este é o lugar para a partilhar.
+      </p>
+    </div>
+
+    <ul class="suggestion-grid">
+      {% for category in suggestions.categories %}
+      <li class="suggestion-card">
+        <span class="suggestion-num" aria-hidden="true">0{{ loop.index }}</span>
+        <div>
+          <h3 class="suggestion-title">{{ category.title }}</h3>
+          <p class="suggestion-desc">{{ category.description }}</p>
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+
+    <div class="suggestion-close">
+      <p>
+        Todas as sugestões são bem-vindas. Nem todas as ideias poderão ser implementadas,
+        mas cada contributo pode ajudar a olhar para o projeto de outra forma e a melhorá-lo.
+      </p>
+      <p class="suggestion-close-line">Ajude a construir algo melhor, em conjunto.</p>
+    </div>
+  </div>
+</section>
+
+<section class="name-band" id="nome">
+  <div class="container name-grid">
+    <div>
+      <p class="eyebrow"><span class="section-num">02</span> Nome provisório</p>
+      <h2 class="name-title">Um nome ainda por encontrar</h2>
+      <p class="name-lead">O GPTCLONE é um nome temporário.</p>
+    </div>
+    <div class="name-copy">
+      <p>
+        Este projeto é um esforço contínuo para construir e desenvolver um modelo de
+        linguagem de raiz. GPTCLONE é simplesmente o nome de trabalho usado por agora,
+        até ser encontrado um nome que represente aquilo em que este projeto se quer tornar.
+      </p>
+      <p>
+        Há espaço para ideias, sugestões e propostas criativas para um novo nome.
+        As propostas de nome são particularmente bem-vindas.
+      </p>
+      <blockquote class="name-quote">O nome pode ser temporário. A visão não.</blockquote>
+      <a class="link-light" href="#sugestao">Propor um nome <span aria-hidden="true">&rarr;</span></a>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="sugestao">
+  <div class="container suggestion-form-grid">
+    <div class="suggestion-aside">
+      <p class="eyebrow"><span class="section-num">03</span> Enviar uma sugestão</p>
+      <h2 class="section-title">Uma ideia pode começar aqui.</h2>
+      <p>
+        {% if suggestions.endpoint %}
+        Preencha o essencial. A sugestão é enviada para o serviço de formulários
+        configurado e não é publicada neste site.
+        {% else %}
+        Preencha o essencial. A sugestão é preparada nesta página e concluída no
+        GitHub, onde fica pública.
+        {% endif %}
+      </p>
+
+      <div class="privacy-note">
+        {% if suggestions.endpoint %}
+        <p>
+          <strong>Privacidade.</strong> Os campos são enviados para
+          {{ suggestions.endpointProvider or 'o serviço de formulários configurado' }}.
+          O email é opcional e não é publicado. Não inclua informação sensível.
+        </p>
+        {% else %}
+        <p>
+          <strong>Como funciona.</strong> Este site é estático e não guarda submissões.
+          Ao continuar, é aberta uma nova issue no repositório público do GPTCLONE com
+          o texto preenchido. A sugestão só fica publicada depois de confirmar no GitHub.
+          É necessária uma conta GitHub gratuita; não inclua dados pessoais ou confidenciais.
+        </p>
+        {% endif %}
+      </div>
+
+      {% if not suggestions.endpoint %}
+      <a class="link-arrow suggestion-direct" href="https://github.com/{{ suggestions.repo }}/issues/new" target="_blank" rel="noopener noreferrer">
+        Abrir uma issue em branco <span aria-hidden="true">&nearr;</span>
+      </a>
+      {% endif %}
+    </div>
+
+    <div class="suggestion-panel">
+      <form
+        class="suggestion-form"
+        id="suggestion-form"
+        action="{% if suggestions.endpoint %}{{ suggestions.endpoint }}{% else %}https://github.com/{{ suggestions.repo }}/issues/new{% endif %}"
+        method="{% if suggestions.endpoint %}post{% else %}get{% endif %}"
+        data-endpoint="{{ suggestions.endpoint }}"
+        data-repo="{{ suggestions.repo }}"
+      >
+        <p class="form-required-note">Campos marcados com <span aria-hidden="true">*</span><span class="sr-only">asterisco</span> são obrigatórios.</p>
+
+        <div class="form-row{% if not suggestions.endpoint %} form-row-single{% endif %}">
+          <div class="form-field">
+            <label for="suggestion-name">Nome ou pseudónimo <span class="form-optional">(opcional)</span></label>
+            <input
+              type="text"
+              id="suggestion-name"
+              name="name"
+              maxlength="80"
+              autocomplete="nickname"
+              aria-describedby="hint-name"
+            />
+            <p class="form-hint" id="hint-name">
+              {% if suggestions.endpoint %}Não é publicado.{% else %}Aparece na issue pública se preencher.{% endif %}
+            </p>
+            <p class="form-error" id="error-name" data-error-for="name" hidden></p>
+          </div>
+
+          {% if suggestions.endpoint %}
+          <div class="form-field">
+            <label for="suggestion-email">Email <span class="form-optional">(opcional)</span></label>
+            <input
+              type="email"
+              id="suggestion-email"
+              name="email"
+              maxlength="120"
+              autocomplete="email"
+              aria-describedby="hint-email"
+            />
+            <p class="form-hint" id="hint-email">Para uma eventual resposta. Não é publicado.</p>
+            <p class="form-error" id="error-email" data-error-for="email" hidden></p>
+          </div>
+          {% endif %}
+        </div>
+
+        <div class="form-field">
+          <label for="suggestion-category">Categoria <span class="form-req" aria-hidden="true">*</span></label>
+          <select id="suggestion-category" name="category" required aria-describedby="hint-category error-category">
+            <option value="">Selecione uma categoria</option>
+            {% for category in suggestions.categories %}
+            <option value="{{ category.id }}">{{ category.title }}</option>
+            {% endfor %}
+          </select>
+          <p class="form-hint" id="hint-category">A área que a sugestão toca.</p>
+          <p class="form-error" id="error-category" data-error-for="category" hidden></p>
+        </div>
+
+        <div class="form-field">
+          <label for="suggestion-title">Título da sugestão <span class="form-req" aria-hidden="true">*</span></label>
+          <input
+            type="text"
+            id="suggestion-title"
+            name="title"
+            required
+            minlength="8"
+            maxlength="120"
+            aria-describedby="hint-title error-title"
+          />
+          <p class="form-hint" id="hint-title">Uma frase curta que resuma a ideia.</p>
+          <p class="form-error" id="error-title" data-error-for="title" hidden></p>
+        </div>
+
+        <div class="form-field">
+          <label for="suggestion-description">Descrição <span class="form-req" aria-hidden="true">*</span></label>
+          <textarea
+            id="suggestion-description"
+            name="body"
+            rows="7"
+            required
+            minlength="30"
+            maxlength="2000"
+            aria-describedby="hint-description error-description"
+          ></textarea>
+          <p class="form-hint" id="hint-description">Contexto, problema e sugestão. Até 2000 caracteres.</p>
+          <p class="form-error" id="error-description" data-error-for="description" hidden></p>
+        </div>
+
+        <div class="hp-field" aria-hidden="true">
+          <label for="suggestion-website">Website</label>
+          <input type="text" id="suggestion-website" name="website" tabindex="-1" autocomplete="off" />
+        </div>
+
+        <div class="form-actions">
+          <button class="btn btn-primary" type="submit">
+            {% if suggestions.endpoint %}Enviar sugestão{% else %}Preparar sugestão no GitHub{% endif %}
+          </button>
+          <button class="btn btn-ghost" type="button" id="suggestion-copy">Copiar sugestão</button>
+        </div>
+
+        <p class="form-footnote">
+          {% if suggestions.endpoint %}
+          O envio só é confirmado depois de uma resposta bem-sucedida do serviço.
+          {% else %}
+          A publicação só fica concluída depois de confirmar no GitHub. Este site não envia nem armazena os dados.
+          {% endif %}
+        </p>
+
+        <div class="form-status" id="suggestion-status" role="status" aria-live="polite" hidden></div>
+
+        <noscript>
+          <p class="form-noscript">
+            Este formulário usa JavaScript para preparar a submissão.
+            {% if not suggestions.endpoint %}
+            Sem JavaScript, pode <a href="https://github.com/{{ suggestions.repo }}/issues/new">abrir uma issue em branco no GitHub</a>.
+            {% endif %}
+          </p>
+        </noscript>
+      </form>
+    </div>
+  </div>
+
+  <div class="container">
+    <p class="page-footnote">Última revisão desta página: {{ suggestions.lastReviewed | formatDate }}.</p>
+  </div>
+</section>
+
+<script type="module" src="{{ '/scripts/suggestions.js' | url }}?v=3.1.0"></script>

@@ -6,7 +6,7 @@ title: "Introdução ao GPTCLONE"
 description: "O que é o GPTCLONE, os seus objetivos, arquitetura e limites do projeto. Uma visão geral para quem está a começar a conhecer a iniciativa."
 pubDate: 2026-11-17
 updatedDate: 2026-11-17
-author: "Equipa GPTCLONE"
+author: "GPTCLONE"
 image: "/assets/images/gptclone-intro.svg"
 tags: ["introdução", "gptclone", "arquitetura", "visão-geral"]
 category: "Documentação"

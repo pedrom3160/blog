@@ -6,7 +6,7 @@ title: "Caminho de Aprendizagem em Inteligência Artificial"
 description: "Caminho de aprendizagem estruturado da GPTCLONE Academy, do nível iniciante ao avançado, cobrindo fundamentos de IA, machine learning e deep learning."
 pubDate: 2026-11-17
 updatedDate: 2026-11-17
-author: "Equipa GPTCLONE"
+author: "GPTCLONE"
 image: "/assets/images/academy-ai-path.svg"
 tags: ["academia", "aprendizagem", "caminho", "ia", "curso"]
 category: "Caminho de Aprendizagem"

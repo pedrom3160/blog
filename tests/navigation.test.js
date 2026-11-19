@@ -3,16 +3,16 @@ import navigation from '../src/_data/navigation.js';
 import donations from '../src/_data/donations.js';
 
 describe('primary navigation contract', () => {
-  it('contains exactly three destinations', () => {
-    expect(navigation).toHaveLength(3);
+  it('contains exactly four destinations', () => {
+    expect(navigation).toHaveLength(4);
   });
 
-  it('exposes Blog, About and Donations in that order', () => {
-    expect(navigation.map((item) => item.label)).toEqual(['Blog', 'About', 'Donations']);
+  it('exposes Blog, About, Suggestions and Donations in that order', () => {
+    expect(navigation.map((item) => item.label)).toEqual(['Blog', 'About', 'Suggestions', 'Donations']);
   });
 
   it('points at preserved routes', () => {
-    expect(navigation.map((item) => item.url)).toEqual(['/', '/about/', '/donations/']);
+    expect(navigation.map((item) => item.url)).toEqual(['/', '/about/', '/suggestions/', '/donations/']);
   });
 
   it('never duplicates a destination', () => {
