@@ -131,8 +131,12 @@ WebKit/Safari is unavailable on this host. Edge was not tested separately.
   (`feat: add Web3Forms path and accessibility hardening`), pushed to `origin/main`.
 - GitHub Actions run [44586881391](https://github.com/pedrom3160/blog/actions/runs/44586881391):
   **completed / success**.
-- Local and remote `main` matched at the pushed commit; the working tree was clean before
-  this report update.
+- Documentation commit `c52b20d1fc53f76074337215a41bcfa3aa108e83`; its Pages run
+  [44588054409](https://github.com/pedrom3160/blog/actions/runs/44588054409) also completed
+  successfully. The rechecked live site still returned GitHub mode, four nav links, the fixed
+  404 header, the search region and the corrected brand label.
+- Local and remote `main` matched at the pushed documentation commit; the working tree was clean
+  before this report update.
 
 Live checks against `https://pedrom3160.github.io/blog/`:
 
