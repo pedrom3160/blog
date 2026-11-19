@@ -1,0 +1,141 @@
+# =============================================================================
+# GPTCLONE Blog — Configuração do Decap CMS (admin/config.yml)
+#
+# Interface de administração em /admin/. Sem base de dados: o conteúdo vive em
+# ficheiros Markdown neste repositório. Autenticação via GitHub OAuth através
+# de um servidor proxy externo (cms-proxy/). Nenhum token ou credencial fica
+# exposto no frontend. Substitua __CMS_PROXY_URL__ pelo URL do proxy antes de
+# usar (ex. https://cms-proxy-gptclone.onrender.com).
+# =============================================================================
+
+backend:
+  name: github
+  repo: pedrom3160/blog
+  branch: main
+  base_url: https://__CMS_PROXY_URL__/api
+  auth_endpoint: https://__CMS_PROXY_URL__/auth
+
+media_folder: "public/resources/uploads"
+public_folder: "/resources/uploads"
+
+site_url: "https://pedrom3160.github.io/blog/"
+
+slug:
+  encoding: "ascii"
+  clean_accents: true
+  sanitize_replacement: "-"
+
+editor:
+  preview: true
+
+collections:
+  - name: "journal"
+    label: "Jornal GPTCLONE"
+    folder: "src/content/journal"
+    create: true
+    slug: "{{slug}}"
+    summary: "{{title}} — {{date}}"
+    view_filters:
+      - label: "Rascunhos"
+        field: "draft"
+        pattern: true
+    fields:
+      - { label: "Título", name: "title", widget: "string" }
+      - { label: "Descrição (resumo / SEO)", name: "description", widget: "text" }
+      - { label: "Slug do URL", name: "slug", widget: "string" }
+      - { label: "Data de publicação", name: "pubDate", widget: "datetime", date_format: "DD/MM/YYYY", time_format: false }
+      - { label: "Data de atualização", name: "updatedDate", widget: "datetime", date_format: "DD/MM/YYYY", time_format: false }
+      - { label: "Autor", name: "author", widget: "string", default: "Equipa GPTCLONE" }
+      - { label: "Imagem em destaque", name: "image", widget: "image" }
+      - { label: "Categoria", name: "category", widget: "string" }
+      - { label: "Etiquetas", name: "tags", widget: "list" }
+      - { label: "Tempo de leitura", name: "readingTime", widget: "string" }
+      - { label: "Rascunho (não publicado no site)", name: "draft", widget: "boolean", default: false }
+      - { label: "Artigos relacionados (slugs)", name: "related", widget: "list" }
+      - { label: "Conteúdo (Markdown)", name: "body", widget: "markdown" }
+
+  - name: "ai-research"
+    label: "Investigação em IA"
+    folder: "src/content/ai-research"
+    create: true
+    slug: "{{slug}}"
+    summary: "{{title}} — {{date}}"
+    view_filters:
+      - label: "Rascunhos"
+        field: "draft"
+        pattern: true
+    fields:
+      - { label: "Título", name: "title", widget: "string" }
+      - { label: "Descrição (resumo / SEO)", name: "description", widget: "text" }
+      - { label: "Slug do URL", name: "slug", widget: "string" }
+      - { label: "Data de publicação", name: "pubDate", widget: "datetime", date_format: "DD/MM/YYYY", time_format: false }
+      - { label: "Data de atualização", name: "updatedDate", widget: "datetime", date_format: "DD/MM/YYYY", time_format: false }
+      - { label: "Autor", name: "author", widget: "string", default: "Equipa GPTCLONE" }
+      - { label: "Imagem em destaque", name: "image", widget: "image" }
+      - { label: "Categoria", name: "category", widget: "string" }
+      - { label: "Etiquetas", name: "tags", widget: "list" }
+      - { label: "Tempo de leitura", name: "readingTime", widget: "string" }
+      - { label: "Rascunho (não publicado no site)", name: "draft", widget: "boolean", default: false }
+      - { label: "Artigos relacionados (slugs)", name: "related", widget: "list" }
+      - { label: "Conteúdo (Markdown)", name: "body", widget: "markdown" }
+
+  - name: "academy"
+    label: "GPTCLONE Academy"
+    folder: "src/content/academy"
+    create: true
+    slug: "{{slug}}"
+    summary: "{{title}} — {{date}}"
+    view_filters:
+      - label: "Rascunhos"
+        field: "draft"
+        pattern: true
+    fields:
+      - { label: "Título", name: "title", widget: "string" }
+      - { label: "Descrição (resumo / SEO)", name: "description", widget: "text" }
+      - { label: "Slug do URL", name: "slug", widget: "string" }
+      - { label: "Data de publicação", name: "pubDate", widget: "datetime", date_format: "DD/MM/YYYY", time_format: false }
+      - { label: "Data de atualização", name: "updatedDate", widget: "datetime", date_format: "DD/MM/YYYY", time_format: false }
+      - { label: "Autor", name: "author", widget: "string", default: "Equipa GPTCLONE" }
+      - { label: "Imagem em destaque", name: "image", widget: "image" }
+      - { label: "Categoria", name: "category", widget: "string" }
+      - { label: "Etiquetas", name: "tags", widget: "list" }
+      - { label: "Tempo de leitura", name: "readingTime", widget: "string" }
+      - { label: "Rascunho (não publicado no site)", name: "draft", widget: "boolean", default: false }
+      - { label: "Artigos relacionados (slugs)", name: "related", widget: "list" }
+      - { label: "Conteúdo (Markdown)", name: "body", widget: "markdown" }
+
+  - name: "about"
+    label: "Página Sobre"
+    file: "src/content/about.md"
+    fields:
+      - { label: "Título da página", name: "title", widget: "string" }
+      - { label: "Descrição curta", name: "description", widget: "text" }
+      - { label: "Missão", name: "mission", widget: "text" }
+      - { label: "Visão", name: "vision", widget: "text" }
+      - { label: "Interesses de investigação", name: "researchInterests", widget: "text" }
+      - { label: "Ecossistema", name: "ecosystem", widget: "text" }
+      - { label: "Conteúdo adicional (Markdown)", name: "body", widget: "markdown" }
+
+preview_path: "preview/"
+preview_template: |
+  <!doctype html>
+  <html lang="pt-PT">
+  <head>
+    <meta charset="utf-8" />
+    <title>{{entryTitle}} — Pré-visualização · GPTCLONE Blog</title>
+  </head>
+  <body style="font-family: system-ui, -apple-system, sans-serif; line-height: 1.6; color: #1a1a1a; padding: 2rem;">
+    <main style="max-width: 720px; margin: 0 auto;">
+      {{> entryHeroImage }}
+      <header>
+        {{> entryTitle }}
+        {{> entryDate }}
+        {{> entryAuthor }}
+      </header>
+      <article>{{> entryBody }}</article>
+      <footer style="margin-top: 3rem; padding-top: 1rem; border-top: 1px solid #ddd; font-size: 0.9rem; color: #555;">
+        Pré-visualização de rascunho — não publicado. Guardar como rascunho ou publicar escreve no repositório GitHub.
+      </footer>
+    </main>
+  </body>
+  </html>

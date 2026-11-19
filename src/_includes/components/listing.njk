@@ -33,3 +33,17 @@
   </div>
 </section>
 {% endmacro %}
+
+{% macro paginationNav(pagination) %}
+{% if pagination and pagination.hrefs and pagination.hrefs.length > 1 %}
+<nav class="pagination" aria-label="Paginação">
+  {% if pagination.href.previous %}
+  <a class="pagination-link pagination-prev" href="{{ pagination.href.previous | url }}" rel="prev">&larr; Página anterior</a>
+  {% endif %}
+  <span class="pagination-status" aria-current="page">Página {{ pagination.pageNumber + 1 }} de {{ pagination.hrefs.length }}</span>
+  {% if pagination.href.next %}
+  <a class="pagination-link pagination-next" href="{{ pagination.href.next | url }}" rel="next">Página seguinte &rarr;</a>
+  {% endif %}
+</nav>
+{% endif %}
+{% endmacro %}

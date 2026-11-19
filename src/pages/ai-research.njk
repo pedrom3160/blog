@@ -2,7 +2,12 @@
 layout: layouts/base.njk
 title: Investigação em IA
 description: Artigos técnicos sobre Inteligência Artificial, Machine Learning, Deep Learning, LLMs, Transformers e muito mais.
-permalink: /ai-research/
+pagination:
+  data: 'collections.ai-research'
+  size: 6
+eleventyComputed:
+  permalink: "{% if pagination.pageNumber > 0 %}/ai-research/page-{{ pagination.pageNumber }}/{% else %}/ai-research/{% endif %}"
 ---
 {% import "components/listing.njk" as listing %}
-{{ listing.collectionListing(collections['ai-research'] | sortByDate, "Investigação em IA", "Inteligência Artificial, Machine Learning, Deep Learning, Grandes Modelos de Linguagem, Transformers, Tokenização e muito mais.", "Tópico") }}
+{{ listing.collectionListing(pagination.items | sortByDate, "Investigação em IA", "Inteligência Artificial, Machine Learning, Deep Learning, Grandes Modelos de Linguagem, Transformers, Tokenização e muito mais.", "Tópico") }}
+{{ listing.paginationNav(pagination) }}

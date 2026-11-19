@@ -7,9 +7,9 @@
     "node": ">=22"
   },
   "scripts": {
-    "dev": "eleventy --serve",
+    "dev": "node node_modules/@11ty/eleventy/cmd.cjs --serve",
     "build": "node scripts/build.mjs",
-    "preview": "eleventy --serve",
+    "preview": "node node_modules/@11ty/eleventy/cmd.cjs --serve",
     "test": "vitest run",
     "validate": "node scripts/validate.mjs",
     "generate:samples": "node scripts/generate-samples.mjs"

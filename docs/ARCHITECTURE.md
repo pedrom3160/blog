@@ -100,3 +100,80 @@ Paleta purple & aurora: `#1b1836`, `#242044`, `#39416D`, `#7047D7`, `#A66BFF`, `
 - Acessibilidade e navegaÃ§Ã£o por teclado
 - Design responsivo (desktop, tablet, mobile)
 - ConteÃºdo verdadeiro â€” nunca apresentar funcionalidades planeadas como implementadas
+
+## CMS de Conteúdo (Decap CMS)
+
+O GPTCLONE Blog inclui um **CMS real baseado em Git** (Decap CMS), acessível em
+`/admin/`, que permite ao proprietário criar, editar, pré-visualizar, publicar,
+despublicar e eliminar artigos **sem recorrer a um agente de IA**.
+
+### Componentes
+
+| Componente | Localização | Função |
+|---|---|---|
+| Interface de administração | `src/admin/index.html` | SPA do Decap CMS (CDN `decap-cms@^3.0.0`) |
+| Configuração | `src/admin/config.yml` | Backend, coleções, campos, media, preview |
+| Proxy OAuth/API | `cms-proxy/server.js` | Autenticação GitHub + encaminhamento da API (Node.js, sem dependências) |
+| Pré-visualização | `src/pages/preview.njk` | Renderiza rascunhos via `?payload=` (JSON) |
+| Coleções CMS | `src/content/{journal,ai-research,academy}/*.md` | Artigos (Markdown + frontmatter) |
+| Página Sobre | `src/content/about.md` | Ficheiro único editável (coleção `files`) |
+| Media | `public/resources/uploads/` | Imagens/PDF carregados pelo CMS |
+
+### Fluxo de dados
+
+```
+/admin/ (Decap CMS)  ?  cms-proxy (OAuth GitHub)  ?  GitHub API
+                                                          ¦
+                                     commit no ramo main
+                                                          ¦
+                             GitHub Actions: test ? build ? validate ? Pages
+                                                          ¦
+                                       https://pedrom3160.github.io/blog/
+```
+
+### Estados editoriais
+
+- **Rascunho** (`draft: true` no frontmatter): excluído automaticamente das
+  coleções públicas (`articles`, `journal`, `ai-research`, `academy`, `tags`,
+  sitemap) e da pesquisa. Visível e editável no CMS; pré-visualizável.
+- **Publicado** (`draft` ausente/`false`): incluído no build e no site.
+- **Eliminado**: ficheiro removido do repositório (commit); recuperável via
+  histórico Git.
+
+### Autenticação e segurança
+
+- OAuth do GitHub através de `cms-proxy/` (servidor externo, pois o GitHub Pages
+  é estático). O token fica num cookie http-only no domínio do proxy; **nenhum
+  segredo é exposto no frontend**.
+- Requer configuração externa única: OAuth App no GitHub + implantação do
+  `cms-proxy/` + preenchimento de `base_url`/`auth_endpoint` em
+  `src/admin/config.yml`. Ver `CONTENT-MANAGEMENT.md` (secção 12) e
+  `cms-proxy/README.md`.
+- Sem a configuração, o site público e a edição via Git funcionam normalmente;
+  apenas `/admin/` não autentica.
+
+### Formato do conteúdo
+
+Cada artigo é um ficheiro Markdown com frontmatter YAML:
+
+```yaml
+---
+title: "Título"
+description: "Resumo / SEO"
+slug: "titulo-do-artigo"
+pubDate: 2026-11-18
+updatedDate: 2026-11-18        # opcional
+author: "Equipa GPTCLONE"
+image: "/resources/uploads/imagem.jpg"   # opcional
+category: "Categoria"
+tags: ["tag1", "tag2"]
+readingTime: "5 min"           # opcional
+draft: false                   # true = rascunho (não publicado)
+related: ["outro-artigo"]      # opcional (slugs)
+---
+Corpo do artigo em Markdown.
+```
+
+O URL final é `/blog/<coleção>/<slug>/`. PDFs e audiolivros são geridos como
+catálogos JSON (`src/_data/pdfLibrary.json`, `src/_data/audiobookLibrary.json`)
+com os ficheiros em `public/resources/`.

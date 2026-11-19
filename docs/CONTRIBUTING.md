@@ -20,19 +20,19 @@ cd blog
 
 ### 2. Instalar Dependências
 
-O projeto usa pnpm:
+O projeto usa npm:
 
 ```powershell
-pnpm install
+npm install
 ```
 
 ### 3. Ambiente de Desenvolvimento
 
 ```powershell
 # Servidor de desenvolvimento com recarregamento automático
-pnpm run dev
+npm run dev
 
-# O servidor fica disponível em http://localhost:4321 (porta padrão do Astro)
+# O servidor fica disponível em http://localhost:8080 (porta padrão do Eleventy)
 ```
 
 ### 4. Adicionar Conteúdo
@@ -49,17 +49,17 @@ Consulte `docs/CONTENT_GUIDE.md` para instruções detalhadas sobre:
 Antes de submeter alterações, executar:
 
 ```powershell
-# Verificar tipos TypeScript
-npx tsc --noEmit
-
 # Executar testes
-pnpm test
+npm test
 
 # Build de produção
-pnpm run build
+npm run build
+
+# Validar o output do build (links, base path, SEO)
+npm run validate
 
 # Pré-visualizar build
-pnpm run preview
+npm run preview
 ```
 
 ### 6. Submeter Alterações

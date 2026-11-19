@@ -1,0 +1,130 @@
+---
+layout: layouts/base.njk
+title: Pré-visualização — GPTCLONE Blog
+description: Pré-visualização de rascunho antes de publicar (GPTCLONE CMS).
+permalink: /preview/
+---
+<section class="section">
+  <div class="container container-narrow">
+    <header class="section-header">
+      <h1>Pré-visualização de rascunho</h1>
+      <p class="section-intro">Pré-visualize o conteúdo antes de publicar no GPTCLONE Blog.</p>
+    </header>
+
+    <div id="cms-preview" class="prose" data-preview>
+      <p class="notice preview-empty">
+        Abra esta página a partir do editor do GPTCLONE CMS (botão
+        <strong>Pré-visualizar</strong>) para ver o rascunho selecionado.
+      </p>
+    </div>
+  </div>
+</section>
+
+<script
+  src="https://cdn.jsdelivr.net/npm/markdown-it@14.1.0/dist/markdown-it.min.js"
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+></script>
+<script>
+  (function () {
+    var container = document.querySelector('[data-preview]');
+    if (!container) return;
+
+    var md =
+      window.markdownIt &&
+      window.markdownIt({ html: true, linkify: true }).enable([
+        'table',
+        'strikethrough',
+      ]);
+
+    function escapeHtml(value) {
+      return String(value == null ? '' : value)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function getPayload() {
+      var m = location.search.match(/[?&]payload=([^&]+)/);
+      if (m) return JSON.parse(decodeURIComponent(m[1]));
+      var hash = location.hash;
+      if (hash.startsWith('#payload=')) {
+        return JSON.parse(decodeURIComponent(hash.slice(9)));
+      }
+      return null;
+    }
+
+    function render(payload) {
+      container.innerHTML = '';
+      var notice = document.createElement('p');
+      notice.className = 'notice preview-active';
+      notice.textContent =
+        'Pré-visualização de rascunho — as alterações só são publicadas ao guardar ou publicar no CMS.';
+      container.appendChild(notice);
+
+      var article = document.createElement('article');
+      article.className = 'preview-article';
+
+      if (payload.title) {
+        var h1 = document.createElement('h1');
+        h1.className = 'article-title';
+        h1.textContent = payload.title;
+        article.appendChild(h1);
+      }
+
+      var meta = document.createElement('div');
+      meta.className = 'article-meta';
+      if (payload.author) {
+        var author = document.createElement('span');
+        author.className = 'meta-author';
+        author.textContent = 'Por ' + escapeHtml(payload.author);
+        meta.appendChild(author);
+      }
+      if (payload.pubDate) {
+        var time = document.createElement('time');
+        time.dateTime = payload.pubDate;
+        time.textContent = new Date(payload.pubDate).toLocaleDateString('pt-PT', {
+          day: 'numeric',
+          month: 'long',
+          year: 'numeric',
+        });
+        meta.appendChild(time);
+      }
+      if (meta.children.length) article.appendChild(meta);
+
+      if (payload.category) {
+        var cat = document.createElement('span');
+        cat.className = 'badge badge-category';
+        cat.textContent = payload.category;
+        article.appendChild(cat);
+      }
+      if (Array.isArray(payload.tags)) {
+        var base = location.pathname.replace(/\/preview\/?$/, '') || '';
+        payload.tags.forEach(function (tag) {
+          var t = document.createElement('a');
+          t.className = 'badge badge-tag';
+          t.textContent = tag;
+          t.href = base + '/tags/' + String(tag).toLowerCase() + '/';
+          article.appendChild(t);
+        });
+      }
+      container.appendChild(article);
+
+      if (payload.body && md) {
+        var body = document.createElement('div');
+        body.className = 'article-content';
+        body.innerHTML = md.render(payload.body);
+        container.appendChild(body);
+      }
+    }
+
+    var payload = getPayload();
+    if (payload) {
+      render(payload);
+    } else {
+      container.querySelector('.preview-empty').hidden = false;
+    }
+  })();
+</script>

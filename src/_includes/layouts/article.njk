@@ -74,5 +74,20 @@ layout: layouts/base.njk
         </a>
       </div>
     </footer>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": {{ title | dump | safe }},
+      "description": {{ (description or '') | dump | safe }},
+      "datePublished": "{{ pubDate | isoDate }}",
+      "dateModified": "{{ (updatedDate or pubDate) | isoDate }}",
+      "author": { "@type": "Person", "name": {{ (author or site.author) | dump | safe }} },
+      "publisher": { "@type": "Organization", "name": {{ site.title | dump | safe }}, "url": "{{ site.url }}" },
+      "mainEntityOfPage": { "@type": "WebPage", "@id": "{{ page.url | absoluteUrl }}" },
+      "image": {{ (image or '') | dump | safe }}
+    }
+    </script>
   </div>
 </article>

@@ -1,0 +1,36 @@
+---
+layout: layouts/base.njk
+---
+<section class="section">
+  <div class="container container-narrow">
+    <header class="section-header">
+      <h1>{{ title }}</h1>
+    </header>
+
+    <div class="prose">
+      <p class="section-intro">{{ description }}</p>
+
+      {% if mission %}
+      <h2>Missão</h2>
+      <p>{{ mission }}</p>
+      {% endif %}
+
+      {% if vision %}
+      <h2>Visão</h2>
+      <p>{{ vision }}</p>
+      {% endif %}
+
+      {% if researchInterests %}
+      <h2>Interesses de investigação</h2>
+      <p>{{ researchInterests }}</p>
+      {% endif %}
+
+      {% if ecosystem %}
+      <h2>Ecossistema</h2>
+      <p>{{ ecosystem }}</p>
+      {% endif %}
+
+      {{ content | safe }}
+    </div>
+  </div>
+</section>

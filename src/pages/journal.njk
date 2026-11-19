@@ -2,7 +2,12 @@
 layout: layouts/base.njk
 title: Jornal GPTCLONE
 description: Notícias, atualizações de desenvolvimento, marcos, decisões técnicas e relatórios de progresso do projeto GPTCLONE.
-permalink: /journal/
+pagination:
+  data: 'collections.journal'
+  size: 6
+eleventyComputed:
+  permalink: "{% if pagination.pageNumber > 0 %}/journal/page-{{ pagination.pageNumber }}/{% else %}/journal/{% endif %}"
 ---
 {% import "components/listing.njk" as listing %}
-{{ listing.collectionListing(collections.journal | sortByDate, "Jornal GPTCLONE", "Notícias do projeto, atualizações de desenvolvimento, marcos, decisões técnicas e muito mais.", "Categoria") }}
+{{ listing.collectionListing(pagination.items | sortByDate, "Jornal GPTCLONE", "Notícias do projeto, atualizações de desenvolvimento, marcos, decisões técnicas e muito mais.", "Categoria") }}
+{{ listing.paginationNav(pagination) }}

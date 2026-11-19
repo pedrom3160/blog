@@ -1,0 +1,16 @@
+{
+  "name": "gptclone-blog-cms-proxy",
+  "version": "1.0.0",
+  "description": "Proxy de autenticação e API do GitHub para o Decap CMS do GPTCLONE Blog (GitHub Pages é estático, pelo que o OAuth não pode correr no frontend).",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": ["decap-cms", "github-oauth", "github-pages", "cms-proxy"],
+  "license": "MIT",
+  "dependencies": {}
+}

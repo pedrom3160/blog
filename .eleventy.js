@@ -14,6 +14,7 @@ export default function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy({ 'src/scripts': 'scripts' });
   eleventyConfig.addPassthroughCopy({ 'public/resources': 'resources' });
   eleventyConfig.addPassthroughCopy({ 'public/robots.txt': 'robots.txt' });
+  eleventyConfig.addPassthroughCopy({ 'src/admin': 'admin' });
 
   // ---------------------------------------------------------------------------
   // Markdown
@@ -131,17 +132,30 @@ export default function (eleventyConfig) {
   // ---------------------------------------------------------------------------
   const ARTICLE_COLLECTIONS = /^\.\/src\/content\/(journal|ai-research|academy)\//;
 
-  eleventyConfig.addCollection('journal', (api) => api.getFilteredByGlob('./src/content/journal/*.md'));
-  eleventyConfig.addCollection('ai-research', (api) =>
-    api.getFilteredByGlob('./src/content/ai-research/*.md')
+  // Artigos com front matter `draft: true` são excluídos das coleções públicas
+  // (rascunhos do CMS do Decap). Autores não usam este campo.
+  function isPublished(page) {
+    return !page.data || page.data.draft !== true;
+  }
+
+  eleventyConfig.addCollection('journal', (api) =>
+    api.getFilteredByGlob('./src/content/journal/*.md').filter(isPublished)
   );
-  eleventyConfig.addCollection('academy', (api) => api.getFilteredByGlob('./src/content/academy/*.md'));
+  eleventyConfig.addCollection('ai-research', (api) =>
+    api.getFilteredByGlob('./src/content/ai-research/*.md').filter(isPublished)
+  );
+  eleventyConfig.addCollection('academy', (api) =>
+    api.getFilteredByGlob('./src/content/academy/*.md').filter(isPublished)
+  );
   eleventyConfig.addCollection('authors', (api) => api.getFilteredByGlob('./src/content/authors/*.md'));
 
-  // Automatic "tags" collection is unavailable in this setup; build it explicitly.
+  // Automatic "tags" collection is unavailable in this setup; build it explicitly
+  // from published articles only (drafts must not leak into /tags/).
   eleventyConfig.addCollection('tags', (api) => {
     const seen = new Map();
     for (const page of api.getAll()) {
+      if (!isPublished(page)) continue;
+      if (!page.inputPath || !ARTICLE_COLLECTIONS.test(page.inputPath)) continue;
       const tags = page.data && page.data.tags;
       if (!Array.isArray(tags)) continue;
       for (const tag of tags) {
@@ -156,6 +170,7 @@ export default function (eleventyConfig) {
     api
       .getAll()
       .filter((page) => page.inputPath && ARTICLE_COLLECTIONS.test(page.inputPath))
+      .filter(isPublished)
       .sort((a, b) => new Date(b.data.pubDate) - new Date(a.data.pubDate))
   );
 

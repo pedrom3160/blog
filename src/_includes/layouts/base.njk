@@ -15,9 +15,25 @@
     <meta property="og:title" content="{{ title or site.title }}" />
     <meta property="og:description" content="{{ description or site.description }}" />
     <meta property="og:locale" content="{{ site.locale }}" />
-    <meta name="twitter:card" content="summary" />
+    {% if image %}
+    <meta property="og:image" content="{{ image | absoluteUrl }}" />
+    <meta property="og:image:alt" content="{{ title or site.title }}" />
+    {% endif %}
+    <meta name="twitter:card" content="{% if image %}summary_large_image{% else %}summary{% endif %}" />
     <meta name="twitter:title" content="{{ title or site.title }}" />
     <meta name="twitter:description" content="{{ description or site.description }}" />
+    {% if image %}
+    <meta name="twitter:image" content="{{ image | absoluteUrl }}" />
+    {% endif %}
+    {% if pubDate %}
+    <meta property="article:published_time" content="{{ pubDate | isoDate }}" />
+    {% endif %}
+    {% if updatedDate %}
+    <meta property="article:modified_time" content="{{ updatedDate | isoDate }}" />
+    {% endif %}
+    {% if author %}
+    <meta property="article:author" content="{{ author }}" />
+    {% endif %}
 
     <link rel="icon" type="image/svg+xml" href="{{ '/assets/favicon.svg' | url }}" />
     <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ '/rss.xml' | url }}" />

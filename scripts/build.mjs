@@ -6,13 +6,13 @@ import { fileURLToPath } from 'node:url';
 
 const root = dirname(dirname(fileURLToPath(import.meta.url)));
 const siteDir = join(root, '_site');
+const eleventyBin = join(root, 'node_modules', '@11ty', 'eleventy', 'cmd.cjs');
 
 rmSync(siteDir, { recursive: true, force: true });
 
-const result = spawnSync('npx', ['@11ty/eleventy', '--pathprefix=/blog/'], {
+const result = spawnSync(process.execPath, [eleventyBin, '--pathprefix=/blog/'], {
   cwd: root,
   stdio: 'inherit',
-  shell: true,
 });
 
 process.exit(result.status ?? 1);
