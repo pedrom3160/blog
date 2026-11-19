@@ -1,11 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 300" fill="none">
-  <rect width="600" height="300" fill="#0f172a"/>
-  <path d="M50 250 L150 150 L250 250 L350 150 L450 250 L550 150" stroke="#8b5cf6" stroke-width="3" fill="none" opacity="0.8"/>
-  <circle cx="50" cy="250" r="8" fill="#8b5cf6"/>
-  <circle cx="150" cy="150" r="8" fill="#3b82f6"/>
-  <circle cx="250" cy="250" r="8" fill="#06b6d4"/>
-  <circle cx="350" cy="150" r="8" fill="#8b5cf6"/>
-  <circle cx="450" cy="250" r="8" fill="#3b82f6"/>
-  <circle cx="550" cy="150" r="8" fill="#06b6d4"/>
-  <text x="300" y="280" font-family="Inter, sans-serif" font-size="20" font-weight="bold" fill="#94a3b8" text-anchor="middle">Caminho de Aprendizagem</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675">
+  <rect width="1200" height="675" fill="#14161a"/>
+  <g stroke="#262a31" stroke-width="1">
+    <path d="M0 168.75h1200M0 337.5h1200M0 506.25h1200M300 0v675M600 0v675M900 0v675"/>
+  </g>
+  <text x="56" y="84" font-family="'IBM Plex Mono', ui-monospace, monospace" font-size="18" letter-spacing="6" fill="#8d877c">GPTCLONE / JOURNAL</text>
+  <text x="56" y="618" font-family="'IBM Plex Mono', ui-monospace, monospace" font-size="16" letter-spacing="5" fill="#8d877c">P-01</text>
+  <text x="1144" y="628" text-anchor="end" font-family="Georgia, 'Times New Roman', serif" font-size="150" fill="#1f2329">09</text>
+  <path d="M420 480h120v-80h120v-80h120v-80h120" fill="none" stroke="#f5f1e8" stroke-width="2"/>
+  <g fill="#e2542a"><rect x="508" y="392" width="24" height="24"/><rect x="628" y="312" width="24" height="24"/><rect x="748" y="232" width="24" height="24"/></g>
+  <circle cx="900" cy="240" r="10" fill="#f5f1e8"/>
 </svg>

@@ -8,6 +8,7 @@ permalink: /rss.xml
     <description>{{ site.description }}</description>
     <link>{{ site.url }}</link>
     <language>{{ site.language }}</language>
+    <copyright>Conteúdo sob licença {{ site.license }} — GPTCLONE Blog {{ site.year }}</copyright>
     <atom:link href="{{ site.url }}rss.xml" rel="self" type="application/rss+xml" />
     {% if collections.articles.length %}
       <lastBuildDate>{{ collections.articles[0].data.pubDate | rssDate }}</lastBuildDate>

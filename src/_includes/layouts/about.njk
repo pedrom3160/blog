@@ -1,36 +1,84 @@
 ---
 layout: layouts/base.njk
 ---
+<section class="page-hero page-hero-about">
+  <div class="container">
+    <p class="eyebrow"><span class="eyebrow-mark" aria-hidden="true"></span>{{ kicker or 'Sobre' }}</p>
+    <div class="page-hero-grid">
+      <h1 class="page-title page-title-lg">{{ heading or title }}</h1>
+      <p class="page-lead">{{ lead or description }}</p>
+    </div>
+    <p class="page-meta">Publicação independente &middot; Desde {{ site.founded }}</p>
+  </div>
+</section>
+
+<section class="statement-band">
+  <div class="container statement-grid">
+    <div class="statement-block">
+      <p class="eyebrow">Missão</p>
+      <p class="statement">{{ mission }}</p>
+    </div>
+    <div class="statement-block">
+      <p class="eyebrow">Visão</p>
+      <p class="statement">{{ vision }}</p>
+    </div>
+  </div>
+</section>
+
+{% if principles %}
 <section class="section">
-  <div class="container container-narrow">
-    <header class="section-header">
-      <h1>{{ title }}</h1>
-    </header>
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow"><span class="section-num">01</span> Princípios</p>
+      <h2 class="section-title">Como trabalhamos</h2>
+    </div>
+    <ol class="principle-grid">
+      {% for principle in principles %}
+      <li class="principle">
+        <span class="principle-num" aria-hidden="true">0{{ loop.index }}</span>
+        <h3 class="principle-title">{{ principle.title }}</h3>
+        <p class="principle-text">{{ principle.text }}</p>
+      </li>
+      {% endfor %}
+    </ol>
+  </div>
+</section>
+{% endif %}
 
-    <div class="prose">
-      <p class="section-intro">{{ description }}</p>
-
-      {% if mission %}
-      <h2>Missão</h2>
-      <p>{{ mission }}</p>
-      {% endif %}
-
-      {% if vision %}
-      <h2>Visão</h2>
-      <p>{{ vision }}</p>
-      {% endif %}
-
-      {% if researchInterests %}
-      <h2>Interesses de investigação</h2>
-      <p>{{ researchInterests }}</p>
-      {% endif %}
-
-      {% if ecosystem %}
-      <h2>Ecossistema</h2>
-      <p>{{ ecosystem }}</p>
-      {% endif %}
-
+<section class="section section-tint">
+  <div class="container about-grid">
+    <div class="prose about-prose">
       {{ content | safe }}
     </div>
+
+    <aside class="about-aside">
+      <div class="fact-card">
+        <p class="eyebrow">Ficha do projeto</p>
+        <dl class="fact-list">
+          {% for fact in facts %}
+          <div>
+            <dt>{{ fact.label }}</dt>
+            <dd>{{ fact.value }}</dd>
+          </div>
+          {% endfor %}
+        </dl>
+      </div>
+
+      <div class="fact-card fact-card-cta">
+        <p class="eyebrow">Apoiar</p>
+        <p>O blog é gratuito e sem paywall. Conheça as prioridades e o estado atual dos canais de apoio.</p>
+        <a class="btn btn-primary btn-sm" href="{{ '/donations/' | url }}">Donations</a>
+      </div>
+
+      <div class="fact-card">
+        <p class="eyebrow">Ler</p>
+        <ul class="fact-links">
+          <li><a href="{{ '/journal/' | url }}">Jornal GPTCLONE</a></li>
+          <li><a href="{{ '/ai-research/' | url }}">Investigação em IA</a></li>
+          <li><a href="{{ '/academy/' | url }}">GPTCLONE Academy</a></li>
+          <li><a href="{{ site.github }}" target="_blank" rel="noopener noreferrer">Repositório GitHub</a></li>
+        </ul>
+      </div>
+    </aside>
   </div>
 </section>

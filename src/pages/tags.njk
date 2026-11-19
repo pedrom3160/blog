@@ -4,18 +4,28 @@ pagination:
   data: collections.tags
   size: 1
   alias: tag
-permalink: /tags/{{ tag | slug }}/
+navKey: blog
+eleventyComputed:
+  permalink: "/tags/{{ tag | slug }}/"
+  title: "Etiqueta: {{ tag }}"
+  description: "Artigos do GPTCLONE Blog com a etiqueta «{{ tag }}»."
 ---
 {% import "components/cards.njk" as cards %}
 {% set articles = collections.articles | filterByTag(tag) %}
 
+<section class="page-hero">
+  <div class="container">
+    <p class="eyebrow"><span class="eyebrow-mark" aria-hidden="true"></span>Etiqueta</p>
+    <div class="page-hero-grid">
+      <h1 class="page-title">#{{ tag }}</h1>
+      <p class="page-lead">{{ articles.length }} artigo{% if articles.length != 1 %}s{% endif %} publicado{% if articles.length != 1 %}s{% endif %} com esta etiqueta.</p>
+    </div>
+    <p class="page-meta"><a href="{{ '/tags/' | url }}">&larr; Todas as etiquetas</a></p>
+  </div>
+</section>
+
 <section class="section">
   <div class="container">
-    <header class="section-header">
-      <h1>Etiqueta: {{ tag }}</h1>
-      <p class="section-intro">{{ articles.length }} artigo(s) encontrado(s) com esta etiqueta.</p>
-    </header>
-
     {% if articles.length %}
       <div class="card-grid card-grid-3">
         {% for article in articles %}{{ cards.articleCard(article) }}{% endfor %}

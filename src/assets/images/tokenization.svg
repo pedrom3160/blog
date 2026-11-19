@@ -1,10 +1,15 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 300" fill="none">
-  <rect width="600" height="300" fill="#0f172a"/>
-  <rect x="50" y="100" width="60" height="40" rx="4" fill="#8b5cf6" opacity="0.8"/>
-  <rect x="120" y="100" width="60" height="40" rx="4" fill="#3b82f6" opacity="0.7"/>
-  <rect x="190" y="100" width="60" height="40" rx="4" fill="#06b6d4" opacity="0.6"/>
-  <rect x="260" y="100" width="60" height="40" rx="4" fill="#8b5cf6" opacity="0.5"/>
-  <rect x="330" y="100" width="60" height="40" rx="4" fill="#3b82f6" opacity="0.5"/>
-  <rect x="400" y="100" width="60" height="40" rx="4" fill="#06b6d4" opacity="0.5"/>
-  <text x="300" y="220" font-family="Inter, sans-serif" font-size="20" font-weight="bold" fill="#94a3b8" text-anchor="middle">Tokenização</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675">
+  <rect width="1200" height="675" fill="#14161a"/>
+  <g stroke="#262a31" stroke-width="1">
+    <path d="M0 168.75h1200M0 337.5h1200M0 506.25h1200M300 0v675M600 0v675M900 0v675"/>
+  </g>
+  <text x="56" y="84" font-family="'IBM Plex Mono', ui-monospace, monospace" font-size="18" letter-spacing="6" fill="#8d877c">GPTCLONE / JOURNAL</text>
+  <text x="56" y="618" font-family="'IBM Plex Mono', ui-monospace, monospace" font-size="16" letter-spacing="5" fill="#8d877c">K-01</text>
+  <text x="1144" y="628" text-anchor="end" font-family="Georgia, 'Times New Roman', serif" font-size="150" fill="#1f2329">08</text>
+  <rect x="360" y="300" width="120" height="56" fill="#f5f1e8"/>
+  <rect x="492" y="300" width="72" height="56" fill="none" stroke="#f5f1e8" stroke-width="2"/>
+  <rect x="576" y="300" width="150" height="56" fill="#e2542a"/>
+  <rect x="738" y="300" width="96" height="56" fill="none" stroke="#e2542a" stroke-width="2"/>
+  <rect x="846" y="300" width="44" height="56" fill="#f5f1e8" opacity=".5"/>
+  <g stroke="#8d877c"><path d="M360 392v22M492 392v22M576 392v22M738 392v22M846 392v22"/></g>
 </svg>

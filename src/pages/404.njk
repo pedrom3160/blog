@@ -6,12 +6,18 @@ permalink: /404.html
 ---
 <section class="notfound">
   <div class="container notfound-inner">
-    <p class="notfound-code">404</p>
-    <h1>Página não encontrada</h1>
-    <p>A página que procura não existe ou foi movida.</p>
+    <p class="eyebrow"><span class="eyebrow-mark" aria-hidden="true"></span>Erro 404</p>
+    <p class="notfound-code" aria-hidden="true">404</p>
+    <h1 class="notfound-title">Esta página não existe.</h1>
+    <p class="notfound-lead">O endereço pode estar errado, ou a página pode ter sido movida.</p>
     <div class="notfound-actions">
-      <a class="btn btn-primary" href="{{ '/' | url }}">Voltar ao início</a>
-      <a class="btn btn-outline" href="{{ '/journal/' | url }}">Explorar o Jornal</a>
+      <a class="btn btn-primary" href="{{ '/' | url }}">Voltar ao blog</a>
+      <button class="btn btn-ghost" type="button" data-search-open>Pesquisar no blog</button>
     </div>
+    <p class="notfound-links">
+      Ou explore <a href="{{ '/journal/' | url }}">o Jornal</a>,
+      <a href="{{ '/ai-research/' | url }}">Investigação em IA</a> e
+      <a href="{{ '/tags/' | url }}">as etiquetas</a>.
+    </p>
   </div>
 </section>

@@ -1,0 +1,202 @@
+---
+layout: layouts/base.njk
+title: Apoiar o GPTCLONE
+description: Porque existe apoio ao GPTCLONE Blog, para onde ele iria, que princípios de transparência se aplicam e o estado atual dos canais de donativo.
+permalink: /donations/
+navKey: donations
+---
+<section class="page-hero page-hero-donations">
+  <div class="container">
+    <p class="eyebrow"><span class="eyebrow-mark" aria-hidden="true"></span>Donations</p>
+    <div class="page-hero-grid">
+      <h1 class="page-title page-title-lg">Apoiar um projeto que se publica em aberto.</h1>
+      <p class="page-lead">
+        O GPTCLONE Blog é gratuito, sem conta e sem paywall. Esta página explica
+        porque existe apoio, para onde ele iria e — sobretudo — o que ainda não está disponível.
+      </p>
+    </div>
+    <p class="page-meta">
+      {% if donations.channels.length %}Canais ativos{% else %}Sem canais ativos{% endif %}
+      &middot; Última revisão: {{ donations.lastReviewed | formatDate }}
+    </p>
+    <div class="hero-actions hero-actions-left">
+      <a class="btn btn-primary" href="#canais">Ver canais de apoio</a>
+      <a class="btn btn-ghost" href="{{ '/about/' | url }}">Sobre o projeto</a>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container split-intro">
+    <div class="split-intro-title">
+      <p class="eyebrow"><span class="section-num">01</span> Motivo</p>
+      <h2 class="section-title">Porque apoiar</h2>
+    </div>
+    <div class="split-intro-body">
+      <p>
+        Manter uma publicação técnica independente tem custos reais: alojamento,
+        ferramentas, manutenção e, acima de tudo, tempo. O blog não tem paywall nem
+        publicidade, e todo o conteúdo continua acessível sem conta.
+      </p>
+      <p>
+        O apoio não compra influência editorial. Não existe conteúdo patrocinado,
+        tratamento preferencial ou acesso antecipado pago. Se um dia existirem canais
+        de apoio, serão listados exclusivamente nesta página.
+      </p>
+      <p>
+        A prioridade é conservadora: manter o que existe a funcionar e continuar a
+        publicar. Nada mais.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="section section-tint">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow"><span class="section-num">02</span> Prioridades</p>
+      <h2 class="section-title">Para onde iria o apoio</h2>
+      <p class="section-lead">Categorias de custo reais, sem números inventados nem promessas de retorno.</p>
+    </div>
+
+    <ol class="goal-grid">
+      <li class="goal">
+        <span class="goal-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="7" rx="1.5" /><rect x="2" y="14" width="20" height="7" rx="1.5" /><path d="M6 6.5h.01M6 17.5h.01" /></svg>
+        </span>
+        <h3>Alojamento e infraestrutura</h3>
+        <p>Publicação estática, serviços necessários para servir o site e recursos descarregáveis.</p>
+      </li>
+      <li class="goal">
+        <span class="goal-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0 5 5L21 21H3l7.7-7.7a4 4 0 0 0 5-5Z" /><path d="m9 15 3-3" /></svg>
+        </span>
+        <h3>Manutenção e correções</h3>
+        <p>Atualizações de dependências, correções, acessibilidade e validação contínua do site.</p>
+      </li>
+      <li class="goal">
+        <span class="goal-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" /><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z" /></svg>
+        </span>
+        <h3>Investigação e redação</h3>
+        <p>Tempo dedicado a estudar, escrever, revisar e editar os artigos e percursos educativos.</p>
+      </li>
+      <li class="goal">
+        <span class="goal-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20h18" /><path d="M6 20V9M12 20V4M18 20v-7" /></svg>
+        </span>
+        <h3>Sustentabilidade</h3>
+        <p>Margem para evoluir a plataforma sem recorrer a publicidade ou a um paywall.</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="callout">
+      <p class="eyebrow"><span class="section-num">03</span> Compromissos</p>
+      <h2 class="callout-title">Transparência antes de botões.</h2>
+      <ul class="callout-list">
+        <li><strong>Sem paywall.</strong> Nenhum artigo será colocado atrás de um pagamento.</li>
+        <li><strong>Sem publicidade nem rastreio de terceiros.</strong> O site não tem analytics de terceiros.</li>
+        <li><strong>Canais verificados.</strong> Só serão publicados canais que o projeto controle e consiga verificar.</li>
+        <li><strong>Sem contrapartidas.</strong> O apoio é voluntário e não dá acesso privilegiado nem influência editorial.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section section-tint" id="canais">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow"><span class="section-num">04</span> Canais</p>
+      <h2 class="section-title">Canais de apoio</h2>
+    </div>
+
+    {% if donations.channels.length %}
+    <ul class="channel-grid">
+      {% for channel in donations.channels %}
+      <li class="channel">
+        <p class="eyebrow">{% if channel.type == 'recurring' %}Recorrente{% else %}Pontual{% endif %}</p>
+        <h3 class="channel-title">{{ channel.label }}</h3>
+        <p class="channel-desc">{{ channel.description }}</p>
+        <a class="btn btn-primary btn-sm" href="{{ channel.url }}" target="_blank" rel="noopener noreferrer">Abrir canal</a>
+      </li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <div class="empty-panel">
+      <p class="eyebrow">Estado atual</p>
+      <h3 class="empty-title">Ainda não existem canais de apoio ativos.</h3>
+      <p>
+        Esta página é o único lugar onde canais legítimos serão publicados.
+        Não são aceites donativos através de links, contas ou endereços que não
+        estejam listados aqui.
+      </p>
+      <p class="empty-note">
+        Se um canal for ativado, aparecerá nesta secção com descrição e ligação verificada.
+        Até lá, a melhor forma de ajudar é partilhar o blog e reportar problemas.
+      </p>
+    </div>
+    {% endif %}
+
+    <p class="page-footnote">
+      Última revisão desta página: {{ donations.lastReviewed | formatDate }}.
+      Não são publicados números de cartão, IBANs ou endereços de criptomoedas.
+    </p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container split-intro">
+    <div class="split-intro-title">
+      <p class="eyebrow"><span class="section-num">05</span> Alternativas</p>
+      <h2 class="section-title">Ajudar sem doar</h2>
+    </div>
+    <div class="split-intro-body">
+      <ul class="plain-list">
+        <li><strong>Partilhar.</strong> Enviar um artigo a alguém que possa beneficiar dele continua a ser a forma mais eficaz de divulgar o projeto.</li>
+        <li><strong>Reportar erros.</strong> Corrigir uma imprecisão técnica ou um problema de acessibilidade melhora o blog para todos.</li>
+        <li><strong>Contribuir no repositório.</strong> O código e os conteúdos vivem num repositório público no GitHub.</li>
+      </ul>
+      <a class="link-arrow" href="{{ site.github }}" target="_blank" rel="noopener noreferrer">Abrir o repositório <span aria-hidden="true">&rarr;</span></a>
+    </div>
+  </div>
+</section>
+
+<section class="section section-tint">
+  <div class="container container-narrow-lg">
+    <div class="section-head">
+      <p class="eyebrow"><span class="section-num">06</span> Perguntas</p>
+      <h2 class="section-title">Perguntas frequentes</h2>
+    </div>
+
+    <div class="faq">
+      <details class="faq-item">
+        <summary>O GPTCLONE Blog vai passar a ser pago?</summary>
+        <p>Não. O objetivo é manter o acesso público e gratuito, sem paywall.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Que custos existem?</summary>
+        <p>Alojamento, ferramentas, manutenção e tempo de investigação e redação. Não são publicados números que o projeto não consiga verificar.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Como sei que um canal de apoio é legítimo?</summary>
+        <p>Apenas os canais listados nesta página são considerados legítimos. Qualquer pedido de donativo por outro meio deve ser ignorado.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Recebo algo em troca de um donativo?</summary>
+        <p>Não. O apoio é voluntário e não dá acesso a conteúdo exclusivo, tratamento preferencial ou influência editorial.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Os donativos são dedutíveis em impostos?</summary>
+        <p>Não está prevista qualquer dedução fiscal, e não são emitidos recibos para esse efeito.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Porque não há um botão de donativo ativo?</summary>
+        <p>Porque ainda não existe um canal configurado e verificado. Esta página prefere um estado vazio honesto a uma ligação inventada.</p>
+      </details>
+    </div>
+  </div>
+</section>

@@ -1,11 +1,15 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 300" fill="none">
-  <rect width="600" height="300" fill="#0f172a"/>
-  <circle cx="100" cy="150" r="30" fill="#8b5cf6" opacity="0.8"/>
-  <circle cx="300" cy="150" r="30" fill="#3b82f6" opacity="0.8"/>
-  <circle cx="500" cy="150" r="30" fill="#06b6d4" opacity="0.8"/>
-  <path d="M130 150 L270 150" stroke="#94a3b8" stroke-width="2"/>
-  <path d="M330 150 L470 150" stroke="#94a3b8" stroke-width="2"/>
-  <text x="100" y="210" font-family="Inter, sans-serif" font-size="14" fill="#94a3b8" text-anchor="middle">Foundation</text>
-  <text x="300" y="210" font-family="Inter, sans-serif" font-size="14" fill="#94a3b8" text-anchor="middle">Router</text>
-  <text x="500" y="210" font-family="Inter, sans-serif" font-size="14" fill="#94a3b8" text-anchor="middle">Blog</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675">
+  <rect width="1200" height="675" fill="#14161a"/>
+  <g stroke="#262a31" stroke-width="1">
+    <path d="M0 168.75h1200M0 337.5h1200M0 506.25h1200M300 0v675M600 0v675M900 0v675"/>
+  </g>
+  <text x="56" y="84" font-family="'IBM Plex Mono', ui-monospace, monospace" font-size="18" letter-spacing="6" fill="#8d877c">GPTCLONE / JOURNAL</text>
+  <text x="56" y="618" font-family="'IBM Plex Mono', ui-monospace, monospace" font-size="16" letter-spacing="5" fill="#8d877c">A-01</text>
+  <text x="1144" y="628" text-anchor="end" font-family="Georgia, 'Times New Roman', serif" font-size="150" fill="#1f2329">04</text>
+  <g stroke="#8d877c" stroke-width="1.5" opacity=".75" fill="none">
+    <path d="M480 250 650 200 820 280 740 430 540 420Z"/>
+    <path d="M650 200 740 430M480 250 740 430M820 280 540 420"/>
+  </g>
+  <g fill="#e2542a"><circle cx="650" cy="200" r="12"/><circle cx="740" cy="430" r="12"/></g>
+  <g fill="#f5f1e8"><circle cx="480" cy="250" r="9"/><circle cx="820" cy="280" r="9"/><circle cx="540" cy="420" r="9"/></g>
 </svg>

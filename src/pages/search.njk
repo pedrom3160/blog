@@ -3,22 +3,36 @@ layout: layouts/base.njk
 title: Pesquisar
 description: Pesquisar artigos, PDFs e audiolivros no GPTCLONE Blog.
 permalink: /search/
+navKey: blog
 ---
-<section class="section">
-  <div class="container container-narrow">
-    <header class="section-header">
-      <h1>Pesquisar</h1>
-      <p class="section-intro">Pesquise em todo o conteúdo do GPTCLONE Blog.</p>
-    </header>
+<section class="page-hero">
+  <div class="container">
+    <p class="eyebrow"><span class="eyebrow-mark" aria-hidden="true"></span>Pesquisa</p>
+    <div class="page-hero-grid">
+      <h1 class="page-title">Pesquisar</h1>
+      <p class="page-lead">Pesquise em todos os artigos, documentos e audiolivros do GPTCLONE Blog.</p>
+    </div>
+  </div>
+</section>
 
-    <form class="filter-bar filter-bar-page" id="page-search-form" role="search" data-page-search>
-      <div class="filter-field">
-        <label class="sr-only" for="page-search-input">Pesquisar</label>
-        <input id="page-search-input" type="search" data-page-search-input placeholder="Pesquisar artigos, PDFs, audiolivros..." autocomplete="off" />
+<section class="section">
+  <div class="container container-narrow-lg">
+    <form class="search-page-form" id="page-search-form" role="search" data-page-search>
+      <label class="sr-only" for="page-search-input">Termos de pesquisa</label>
+      <div class="search-page-field">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+          <circle cx="11" cy="11" r="7" /><path d="m20 20-4.2-4.2" />
+        </svg>
+        <input id="page-search-input" type="search" data-page-search-input placeholder="Pesquisar artigos, PDFs, audiolivros…" autocomplete="off" />
+        <button class="btn btn-primary" type="submit">Pesquisar</button>
       </div>
     </form>
 
-    <div class="search-results search-results-page" id="page-search-results" aria-live="polite"></div>
-    <p class="search-empty" id="page-search-empty" hidden>Nenhum resultado encontrado. Experimente outros termos.</p>
+    <p class="search-hint search-hint-page">
+      Dica: em qualquer página, pressione <kbd>/</kbd> para abrir a pesquisa rápida.
+    </p>
+
+    <div class="search-results search-results-page" id="page-search-results" aria-live="polite" aria-label="Resultados da pesquisa"></div>
+    <p class="search-empty" id="page-search-empty" hidden>Nenhum resultado encontrado. Experimente outro termo.</p>
   </div>
 </section>

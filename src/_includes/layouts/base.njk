@@ -1,39 +1,33 @@
 <!doctype html>
-<html lang="{{ site.language }}" data-theme="dark">
+<html lang="{{ site.language }}" data-theme="light">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{% if title %}{{ title }} | {{ site.title }}{% else %}{{ site.title }}{% endif %}</title>
+    <meta name="color-scheme" content="light dark" />
+    <title>{% if page.url == '/' %}{{ site.title }} — {{ site.tagline }}{% elif title %}{{ title }} — {{ site.title }}{% else %}{{ site.title }}{% endif %}</title>
     <meta name="description" content="{{ description or site.description }}" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
     <link rel="canonical" href="{{ page.url | absoluteUrl }}" />
-    <meta name="theme-color" content="#1b1836" />
+    <meta name="generator" content="Eleventy" />
+    <meta name="theme-color" content="#faf7f1" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0e1013" media="(prefers-color-scheme: dark)" />
     <meta name="search-index" content="{{ '/search-index.json' | url }}" />
 
     <meta property="og:site_name" content="{{ site.title }}" />
     <meta property="og:type" content="{{ ogType or 'website' }}" />
     <meta property="og:url" content="{{ page.url | absoluteUrl }}" />
-    <meta property="og:title" content="{{ title or site.title }}" />
+    <meta property="og:title" content="{% if page.url == '/' %}{{ site.title }} — {{ site.tagline }}{% else %}{{ title or site.title }}{% endif %}" />
     <meta property="og:description" content="{{ description or site.description }}" />
     <meta property="og:locale" content="{{ site.locale }}" />
-    {% if image %}
-    <meta property="og:image" content="{{ image | absoluteUrl }}" />
+    <meta property="og:image" content="{{ (image | socialImage(site.defaultImage)) | absoluteUrl }}" />
     <meta property="og:image:alt" content="{{ title or site.title }}" />
-    {% endif %}
-    <meta name="twitter:card" content="{% if image %}summary_large_image{% else %}summary{% endif %}" />
-    <meta name="twitter:title" content="{{ title or site.title }}" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="{% if page.url == '/' %}{{ site.title }}{% else %}{{ title or site.title }}{% endif %}" />
     <meta name="twitter:description" content="{{ description or site.description }}" />
-    {% if image %}
-    <meta name="twitter:image" content="{{ image | absoluteUrl }}" />
-    {% endif %}
-    {% if pubDate %}
-    <meta property="article:published_time" content="{{ pubDate | isoDate }}" />
-    {% endif %}
-    {% if updatedDate %}
-    <meta property="article:modified_time" content="{{ updatedDate | isoDate }}" />
-    {% endif %}
-    {% if author %}
-    <meta property="article:author" content="{{ author }}" />
-    {% endif %}
+    <meta name="twitter:image" content="{{ (image | socialImage(site.defaultImage)) | absoluteUrl }}" />
+    {% if pubDate %}<meta property="article:published_time" content="{{ pubDate | isoDate }}" />{% endif %}
+    {% if updatedDate %}<meta property="article:modified_time" content="{{ updatedDate | isoDate }}" />{% endif %}
+    {% if author %}<meta property="article:author" content="{{ author }}" />{% endif %}
 
     <link rel="icon" type="image/svg+xml" href="{{ '/assets/favicon.svg' | url }}" />
     <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ '/rss.xml' | url }}" />
@@ -41,30 +35,53 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Fira+Code:wght@400;500&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="{{ '/styles/main.css' | url }}" />
+    <link rel="stylesheet" href="{{ '/styles/main.css' | url }}?v=3.0.0" />
 
     <script>
       (function () {
         try {
           var stored = localStorage.getItem('gptclone-theme');
-          document.documentElement.setAttribute('data-theme', stored === 'light' ? 'light' : 'dark');
+          var system = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+          var theme = stored === 'light' || stored === 'dark' ? stored : system ? 'dark' : 'light';
+          document.documentElement.setAttribute('data-theme', theme);
         } catch (error) {
-          document.documentElement.setAttribute('data-theme', 'dark');
+          document.documentElement.setAttribute('data-theme', 'light');
         }
       })();
     </script>
+
+    {% if page.url == '/' %}
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": {{ site.title | dump | safe }},
+        "alternateName": {{ site.shortTitle | dump | safe }},
+        "url": {{ site.url | dump | safe }},
+        "description": {{ site.description | dump | safe }},
+        "inLanguage": {{ site.language | dump | safe }},
+        "license": "https://creativecommons.org/licenses/by/4.0/",
+        "publisher": {
+          "@type": "Organization",
+          "name": {{ site.author | dump | safe }},
+          "url": {{ site.url | dump | safe }}
+        }
+      }
+    </script>
+    {% endif %}
+    {% block structuredData %}{% endblock %}
   </head>
   <body>
     <a class="skip-link" href="#main">Saltar para o conteúdo</a>
     {% include "components/header.njk" %}
-    <main id="main" class="site-main">
+    <main id="main" class="site-main" tabindex="-1">
       {{ content | safe }}
     </main>
     {% include "components/footer.njk" %}
     {% include "components/search-modal.njk" %}
-    <script src="{{ '/scripts/main.js' | url }}?v=2.0.0" defer></script>
+    <script src="{{ '/scripts/main.js' | url }}?v=3.0.0" defer></script>
   </body>
 </html>

@@ -14,8 +14,6 @@ readingTime: "10 min"
 related: ["introducao-llms", "arquitetura-transformers", "tokenizacao-explicada"]
 ---
 
-# Inteligência Artificial: Uma Introdução
-
 ## O que é a IA?
 
 A Inteligência Artificial (IA) é o ramo da ciência da computação dedicado a criar sistemas capazes de executar tarefas que, tradicionalmente, requerem inteligência humana. Estas tarefas incluem raciocínio, aprendizagem, percepção, compreensão de linguagem natural, tomada de decisão e resolução de problemas.

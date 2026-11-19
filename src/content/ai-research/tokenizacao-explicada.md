@@ -14,8 +14,6 @@ readingTime: "10 min"
 related: ["introducao-llms", "arquitetura-transformers", "introducao-ia"]
 ---
 
-# Tokenização Explicada
-
 ## O que é a tokenização?
 
 A tokenização é o processo de dividir um texto em unidades menores chamadas **tokens**. Os modelos de linguagem não processam texto bruto; processam representações numéricas desses tokens. Cada token é mapeado para um inteiro (token ID) que serve de índice numa tabela de embeddings.

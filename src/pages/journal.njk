@@ -9,5 +9,5 @@ eleventyComputed:
   permalink: "{% if pagination.pageNumber > 0 %}/journal/page-{{ pagination.pageNumber }}/{% else %}/journal/{% endif %}"
 ---
 {% import "components/listing.njk" as listing %}
-{{ listing.collectionListing(pagination.items | sortByDate, "Jornal GPTCLONE", "Notícias do projeto, atualizações de desenvolvimento, marcos, decisões técnicas e muito mais.", "Categoria") }}
+{{ listing.collectionListing(pagination.items | sortByDate, "Jornal GPTCLONE", "Notícias do projeto, atualizações de desenvolvimento, marcos, decisões técnicas e muito mais.", "Categoria", "Jornal") }}
 {{ listing.paginationNav(pagination) }}

@@ -1,16 +1,17 @@
-// Validates the built _site output: content counts, asset existence, base-path
-// correctness, internal links, RSS/sitemap/SEO basics. Run: node scripts/validate.mjs
+// Validates the built _site output: page inventory, assets, base-path
+// correctness, internal links, SEO metadata, navigation contract and basic
+// accessibility invariants. Run: node scripts/validate.mjs
 // Exits 1 on any failure.
-import { readdirSync, readFileSync, existsSync, statSync } from 'node:fs';
-import { join, dirname, resolve } from 'node:path';
+import { readdirSync, readFileSync, existsSync } from 'node:fs';
+import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = dirname(dirname(fileURLToPath(import.meta.url)));
 const site = join(root, '_site');
 const BASE = '/blog';
+const SITE_URL = 'https://pedrom3160.github.io/blog/';
 
 const errors = [];
-const warnings = [];
 const fail = (msg) => errors.push(msg);
 
 // Collect all files under _site
@@ -26,8 +27,12 @@ const files = [];
 const htmlFiles = files.filter((f) => f.endsWith('.html'));
 const allFiles = files.map((f) => '/' + f.slice(site.length + 1).replaceAll('\\', '/'));
 
+function cleanUrl(url) {
+  return url.split('#')[0].split('?')[0];
+}
+
 function assetExists(url) {
-  const clean = url.split('#')[0].split('?')[0];
+  const clean = cleanUrl(url);
   let rel = clean;
   if (clean.startsWith(BASE + '/')) rel = clean.slice(BASE.length);
   return existsSync(join(site, rel));
@@ -37,8 +42,8 @@ function assetExists(url) {
 // 1. Expected page inventory
 // ---------------------------------------------------------------------------
 const EXPECTED_DIRS = [
-  '', '/about', '/journal', '/ai-research', '/academy', '/pdf-library',
-  '/audiobook-library', '/search', '/tags',
+  '', '/about', '/donations', '/journal', '/ai-research', '/academy',
+  '/pdf-library', '/audiobook-library', '/search', '/tags',
 ];
 const CONTENT_SLUGS = [
   '/journal/bem-vindo-ao-blog-gptclone', '/journal/introducao-ao-gptclone',
@@ -63,7 +68,7 @@ if (!existsSync(join(site, 'search-index.json'))) fail('Missing /search-index.js
 // ---------------------------------------------------------------------------
 // 2. Assets copied
 // ---------------------------------------------------------------------------
-for (const asset of ['/styles/main.css', '/scripts/main.js', '/assets/favicon.svg']) {
+for (const asset of ['/styles/main.css', '/scripts/main.js', '/assets/favicon.svg', '/assets/images/social-card.png']) {
   if (!assetExists(asset)) fail(`Missing asset: ${asset}`);
 }
 
@@ -87,8 +92,9 @@ for (const file of htmlFiles) {
 }
 if (badRootUrls.length) fail(`Root-relative URLs missing /blog prefix (${badRootUrls.length}):\n  ` + badRootUrls.slice(0, 12).join('\n  '));
 if (doubleBase.length) fail(`Doubled /blog/blog URLs (${doubleBase.length}):\n  ` + doubleBase.slice(0, 12).join('\n  '));
-if (canonicals.some((c) => !c.startsWith('https://pedrom3160.github.io/blog/') || c.includes('/blog/blog'))) {
-  fail('Canonical URLs malformed: ' + canonicals.filter((c) => !c.startsWith('https://pedrom3160.github.io/blog/') || c.includes('/blog/blog')).join(', '));
+if (!canonicals.length) fail('No canonical URLs found');
+if (canonicals.some((c) => !c.startsWith(SITE_URL) || c.includes('/blog/blog'))) {
+  fail('Canonical URLs malformed: ' + canonicals.filter((c) => !c.startsWith(SITE_URL) || c.includes('/blog/blog')).join(', '));
 }
 
 // ---------------------------------------------------------------------------
@@ -104,10 +110,8 @@ for (const file of htmlFiles) {
 }
 const broken = [...localLinks].filter((l) => {
   if (l.endsWith('.xml') || l.endsWith('.json')) return !assetExists(l);
-  let rel = l.slice(BASE.length) || '/';
-  // Exact file (e.g. /styles/main.css, /resources/pdfs/x.pdf)
+  const rel = cleanUrl(l).slice(BASE.length) || '/';
   if (existsSync(join(site, rel))) return false;
-  // Directory link -> index.html
   const dir = rel.endsWith('/') ? rel : rel + '/';
   return !existsSync(join(site, dir, 'index.html'));
 });
@@ -133,14 +137,97 @@ for (const item of audioLibrary.audiobooks) {
 // ---------------------------------------------------------------------------
 const sitemap = readFileSync(join(site, 'sitemap.xml'), 'utf8');
 const locs = [...sitemap.matchAll(/<loc>([^<]*)<\/loc>/g)].map((m) => m[1]);
-if (locs.some((l) => !l.startsWith('https://pedrom3160.github.io/blog/'))) fail('Sitemap contains URLs outside https://pedrom3160.github.io/blog/');
+if (locs.some((l) => !l.startsWith(SITE_URL))) fail('Sitemap contains URLs outside https://pedrom3160.github.io/blog/');
 if (locs.some((l) => l.includes('/blog/blog'))) fail('Sitemap contains doubled /blog/blog URLs');
+if (!locs.includes(SITE_URL + 'donations/')) fail('Sitemap is missing /donations/');
+if (!locs.includes(SITE_URL + 'about/')) fail('Sitemap is missing /about/');
+if (locs.some((l) => l.endsWith('/404.html'))) fail('Sitemap must not include 404.html');
 const rss = readFileSync(join(site, 'rss.xml'), 'utf8');
 if (rss.includes('/blog/blog')) fail('RSS contains doubled /blog/blog URLs');
 if (!rss.startsWith('<?xml')) fail('rss.xml is not XML');
 
 // ---------------------------------------------------------------------------
-// 7. No leaked debug artifacts / raw JSON
+// 7. Navigation contract — exactly Blog, About, Donations
+// ---------------------------------------------------------------------------
+const REQUIRED_NAV = ['Blog', 'About', 'Donations'];
+const navPagesChecked = [];
+for (const file of htmlFiles) {
+  const rel = file.slice(site.length).replaceAll('\\', '/');
+  if (rel.startsWith('/admin/')) continue;
+  const html = readFileSync(file, 'utf8');
+  const nav = html.match(/<nav class="primary-nav"[^>]*>([\s\S]*?)<\/nav>/);
+  if (!nav) {
+    fail(`Primary navigation missing in ${rel}`);
+    continue;
+  }
+  const labels = [...nav[1].matchAll(/<a[^>]*class="nav-link[^"]*"[^>]*>([^<]*)<\/a>/g)].map((m) => m[1].trim());
+  if (labels.length !== REQUIRED_NAV.length) {
+    fail(`Primary navigation must have exactly ${REQUIRED_NAV.length} items in ${rel} (found ${labels.length}: ${labels.join(', ')})`);
+  } else if (REQUIRED_NAV.some((label, i) => labels[i] !== label)) {
+    fail(`Primary navigation labels must be ${REQUIRED_NAV.join(' · ')} in ${rel} (found: ${labels.join(', ')})`);
+  }
+  navPagesChecked.push(rel);
+}
+if (!navPagesChecked.length) fail('No pages were checked for primary navigation');
+
+// ---------------------------------------------------------------------------
+// 8. Accessibility / document invariants
+// ---------------------------------------------------------------------------
+for (const file of htmlFiles) {
+  const rel = file.slice(site.length).replaceAll('\\', '/');
+  if (rel.startsWith('/admin/')) continue;
+  const html = readFileSync(file, 'utf8');
+
+  if (!/<html[^>]*lang="pt-PT"/.test(html)) fail(`Missing lang="pt-PT" in ${rel}`);
+  if (!/<main[^>]*id="main"/.test(html)) fail(`Missing <main id="main"> in ${rel}`);
+
+  const h1s = (html.match(/<h1[\s>]/g) || []).length;
+  if (h1s !== 1) fail(`Expected exactly one <h1> in ${rel} (found ${h1s})`);
+
+  for (const m of html.matchAll(/<img\b[^>]*>/g)) {
+    if (!/\balt=/.test(m[0])) fail(`Image without alt attribute in ${rel}: ${m[0].slice(0, 90)}`);
+  }
+
+  const ids = [...html.matchAll(/\sid="([^"]+)"/g)].map((m) => m[1]);
+  const duplicate = ids.find((id, index) => ids.indexOf(id) !== index);
+  if (duplicate) fail(`Duplicate id "${duplicate}" in ${rel}`);
+
+  const title = html.match(/<title>([^<]*)<\/title>/);
+  if (!title || title[1].trim().length < 10) fail(`Missing or too-short <title> in ${rel}`);
+  const description = html.match(/<meta name="description" content="([^"]*)"/);
+  if (!description || description[1].trim().length < 40) fail(`Missing or too-short meta description in ${rel}`);
+}
+
+// ---------------------------------------------------------------------------
+// 9. Structured data on articles
+// ---------------------------------------------------------------------------
+for (const slug of CONTENT_SLUGS) {
+  const file = join(site, slug.replace(/^\//, ''), 'index.html');
+  const html = readFileSync(file, 'utf8');
+  const blocks = [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)];
+  if (!blocks.length) {
+    fail(`No JSON-LD in ${slug}`);
+    continue;
+  }
+  const parsed = [];
+  for (const block of blocks) {
+    try {
+      parsed.push(JSON.parse(block[1]));
+    } catch (error) {
+      fail(`Invalid JSON-LD in ${slug}: ${error.message}`);
+    }
+  }
+  const types = parsed.map((entry) => entry['@type']);
+  if (!types.includes('BlogPosting')) fail(`Missing BlogPosting JSON-LD in ${slug}`);
+  if (!types.includes('BreadcrumbList')) fail(`Missing BreadcrumbList JSON-LD in ${slug}`);
+  const posting = parsed.find((entry) => entry['@type'] === 'BlogPosting');
+  if (posting && !/^https:\/\//.test(String(posting.image || ''))) {
+    fail(`BlogPosting image must be absolute in ${slug}`);
+  }
+}
+
+// ---------------------------------------------------------------------------
+// 10. No leaked debug artifacts / raw JSON
 // ---------------------------------------------------------------------------
 if (existsSync(join(site, 'content'))) fail('_site/content directory should not be emitted');
 const debugLeak = files.find((f) => f.includes('debug'));
@@ -151,7 +238,7 @@ if (debugLeak) fail('Debug page emitted: ' + debugLeak);
 // ---------------------------------------------------------------------------
 console.log(`Validated ${files.length} files (${htmlFiles.length} HTML) in _site/`);
 console.log(`Internal links checked: ${localLinks.size}`);
-if (warnings.length) console.log('Warnings:\n  ' + warnings.join('\n  '));
+console.log(`Navigation contract checked on ${navPagesChecked.length} pages: ${REQUIRED_NAV.join(' · ')}`);
 if (errors.length) {
   console.error('\nVALIDATION FAILED:\n  ' + errors.join('\n  '));
   process.exit(1);

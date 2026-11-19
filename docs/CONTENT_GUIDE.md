@@ -60,12 +60,12 @@ slug: "titulo-do-artigo"
 collection: "journal"
 permalink: "/journal/titulo-do-artigo/"
 image: "/assets/images/exemplo.svg"
+imageAlt: "Descrição breve da ilustração de abertura"
 tags: ["tag1", "tag2"]
 category: "Categoria"
+readingTime: "6 min"
 related: ["slug-de-artigo-relacionado"]
 ---
-
-# Título do Artigo
 
 Conteúdo do artigo em Markdown.
 ```
@@ -74,6 +74,9 @@ Notas:
 - `permalink` é escrito **sem** o prefixo `/blog` — o filtro `| url` e o transform de build adicionam-no.
 - Tags alimentam automaticamente `/tags/` e `/tags/[tag]/`.
 - Os dados por coleção (layout, etc.) estão em `.11tydata.json` dentro de cada diretório.
+- **Não incluir um `# Título` no corpo**: o layout `article.njk` gera o único `<h1>` a partir de `title`. O validador falha se a página tiver mais de um.
+- Blocos de código devem indicar a linguagem (```` ```python ````) para receber realce Prism; blocos sem linguagem permanecem texto simples.
+- `imageAlt` é opcional; sem ele, o layout usa uma descrição editorial derivada do título.
 
 ### Adicionar um PDF à Biblioteca
 
@@ -85,7 +88,7 @@ Notas:
 ### Adicionar um Audiolivro
 
 1. Colocar o ficheiro de áudio em `public/resources/audiobooks/`
-2. Adicionar uma entrada a `src/_data/audiobook-library.json` (renomear para o formato de `audiobookLibrary.json`)
+2. Adicionar uma entrada a `src/_data/audiobookLibrary.json`
 3. Definir `streamUrl`/`downloadUrl` apenas quando o ficheiro existir e o licenciamento o permitir
 4. Caso contrário, manter `placeholder: true` e `durationDisplay` honesto
 

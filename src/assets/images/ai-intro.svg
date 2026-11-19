@@ -1,8 +1,14 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 300" fill="none">
-  <rect width="600" height="300" fill="#0f172a"/>
-  <circle cx="300" cy="150" r="80" fill="none" stroke="#8b5cf6" stroke-width="2" opacity="0.5"/>
-  <path d="M220 150 Q300 70 380 150" stroke="#3b82f6" stroke-width="2" fill="none" opacity="0.7"/>
-  <path d="M220 150 Q300 230 380 150" stroke="#06b6d4" stroke-width="2" fill="none" opacity="0.7"/>
-  <circle cx="300" cy="150" r="6" fill="#8b5cf6"/>
-  <text x="300" y="250" font-family="Inter, sans-serif" font-size="20" font-weight="bold" fill="#94a3b8" text-anchor="middle">Inteligência Artificial</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675">
+  <rect width="1200" height="675" fill="#14161a"/>
+  <g stroke="#262a31" stroke-width="1">
+    <path d="M0 168.75h1200M0 337.5h1200M0 506.25h1200M300 0v675M600 0v675M900 0v675"/>
+  </g>
+  <text x="56" y="84" font-family="'IBM Plex Mono', ui-monospace, monospace" font-size="18" letter-spacing="6" fill="#8d877c">GPTCLONE / JOURNAL</text>
+  <text x="56" y="618" font-family="'IBM Plex Mono', ui-monospace, monospace" font-size="16" letter-spacing="5" fill="#8d877c">I-01</text>
+  <text x="1144" y="628" text-anchor="end" font-family="Georgia, 'Times New Roman', serif" font-size="150" fill="#1f2329">05</text>
+  <circle cx="720" cy="330" r="180" fill="none" stroke="#e2542a" stroke-width="2"/>
+  <circle cx="720" cy="330" r="90" fill="none" stroke="#f5f1e8" stroke-width="1.5" opacity=".45"/>
+  <path d="M720 150 900 330 593 457Z" fill="none" stroke="#8d877c" opacity=".45"/>
+  <circle cx="720" cy="330" r="14" fill="#e2542a"/>
+  <g fill="#f5f1e8"><circle cx="900" cy="330" r="7"/><circle cx="720" cy="150" r="7"/><circle cx="593" cy="457" r="7"/></g>
 </svg>

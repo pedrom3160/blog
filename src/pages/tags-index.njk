@@ -2,20 +2,32 @@
 layout: layouts/base.njk
 permalink: /tags/
 title: Etiquetas
-description: Índice de todas as etiquetas (tags) usadas nos artigos do GPTCLONE Blog.
+description: Índice de todas as etiquetas usadas nos artigos do GPTCLONE Blog.
+navKey: blog
 ---
-{% import "components/cards.njk" as cards %}
+{% set tags = collections.articles | tagCounts %}
+
+<section class="page-hero">
+  <div class="container">
+    <p class="eyebrow"><span class="eyebrow-mark" aria-hidden="true"></span>Arquivo</p>
+    <div class="page-hero-grid">
+      <h1 class="page-title">Etiquetas</h1>
+      <p class="page-lead">Um índice dos temas tratados no blog. Cada etiqueta reúne os artigos que a utilizam.</p>
+    </div>
+    <p class="page-meta">{{ tags.length }} etiquetas em {{ collections.articles.length }} artigos</p>
+  </div>
+</section>
 
 <section class="section">
   <div class="container">
-    <header class="section-header">
-      <h1>Etiquetas</h1>
-      <p class="section-intro">{{ collections.tags.length }} etiqueta(s) usadas nos artigos do GPTCLONE Blog.</p>
-    </header>
-    <div class="tag-cloud">
-      {% for tag in collections.tags | sort %}
-        <a class="tag-pill" href="{{ ('/tags/' ~ (tag | slug) ~ '/') | url }}">#{{ tag }}</a>
+    <ul class="tag-list tag-list-lg">
+      {% for tag in tags %}
+      <li>
+        <a class="tag" href="{{ ('/tags/' ~ (tag.name | slug) ~ '/') | url }}">
+          {{ tag.name }} <span class="tag-count">{{ tag.count }}</span>
+        </a>
+      </li>
       {% endfor %}
-    </div>
+    </ul>
   </div>
 </section>

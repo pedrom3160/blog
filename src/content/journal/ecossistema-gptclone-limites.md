@@ -14,8 +14,6 @@ readingTime: "6 min"
 related: ["introducao-ao-gptclone", "sobre-o-jornal-gptclone"]
 ---
 
-# Ecossistema GPTCLONE e Limites do Projeto
-
 ## O ecossistema GPTCLONE
 
 O projeto GPTCLONE é composto por múltiplos componentes, cada um com responsabilidades bem definidas:

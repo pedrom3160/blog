@@ -1,8 +1,8 @@
+// Primary navigation — exactly three destinations.
+// Content discovery (sections, tags, search, pagination) is intentionally NOT
+// part of the primary menu; it lives on the homepage and in the footer.
 export default [
-  { label: 'Início', url: '/' },
-  { label: 'Jornal', url: '/journal/' },
-  { label: 'Investigação IA', url: '/ai-research/' },
-  { label: 'Academia', url: '/academy/' },
-  { label: 'Biblioteca PDF', url: '/pdf-library/' },
-  { label: 'Audiolivros', url: '/audiobook-library/' },
+  { label: 'Blog', url: '/', key: 'blog' },
+  { label: 'About', url: '/about/', key: 'about' },
+  { label: 'Donations', url: '/donations/', key: 'donations' },
 ];

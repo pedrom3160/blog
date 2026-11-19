@@ -1,11 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 300" fill="none">
-  <rect width="600" height="300" fill="#0f172a"/>
-  <rect x="100" y="100" width="80" height="100" rx="4" fill="#8b5cf6" opacity="0.8"/>
-  <rect x="210" y="70" width="80" height="160" rx="4" fill="#3b82f6" opacity="0.7"/>
-  <rect x="320" y="100" width="80" height="100" rx="4" fill="#06b6d4" opacity="0.6"/>
-  <rect x="430" y="130" width="80" height="40" rx="4" fill="#8b5cf6" opacity="0.5"/>
-  <path d="M180 150 L210 150" stroke="#94a3b8" stroke-width="2"/>
-  <path d="M290 150 L320 150" stroke="#94a3b8" stroke-width="2"/>
-  <path d="M400 150 L430 150" stroke="#94a3b8" stroke-width="2"/>
-  <text x="300" y="260" font-family="Inter, sans-serif" font-size="20" font-weight="bold" fill="#94a3b8" text-anchor="middle">Arquitetura Transformer</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675">
+  <rect width="1200" height="675" fill="#14161a"/>
+  <g stroke="#262a31" stroke-width="1">
+    <path d="M0 168.75h1200M0 337.5h1200M0 506.25h1200M300 0v675M600 0v675M900 0v675"/>
+  </g>
+  <text x="56" y="84" font-family="'IBM Plex Mono', ui-monospace, monospace" font-size="18" letter-spacing="6" fill="#8d877c">GPTCLONE / JOURNAL</text>
+  <text x="56" y="618" font-family="'IBM Plex Mono', ui-monospace, monospace" font-size="16" letter-spacing="5" fill="#8d877c">T-01</text>
+  <text x="1144" y="628" text-anchor="end" font-family="Georgia, 'Times New Roman', serif" font-size="150" fill="#1f2329">07</text>
+  <defs><pattern id="cells" width="58" height="58" patternUnits="userSpaceOnUse"><path d="M58 0H0v58" fill="none" stroke="#2b2f36"/></pattern></defs>
+  <rect x="400" y="180" width="464" height="348" fill="url(#cells)" stroke="#3a3f47"/>
+  <g fill="#e2542a"><rect x="458" y="238" width="58" height="58"/><rect x="632" y="296" width="58" height="58"/><rect x="748" y="412" width="58" height="58"/></g>
+  <rect x="516" y="354" width="58" height="58" fill="#f5f1e8" opacity=".85"/>
 </svg>

@@ -14,8 +14,6 @@ readingTime: "5 min"
 related: ["introducao-ao-gptclone", "sobre-o-jornal-gptclone"]
 ---
 
-# Bem-vindo ao GPTCLONE Blog
-
 O GPTCLONE Blog é uma plataforma pública de conhecimento, investigação, educação e diário de projeto. O nosso objetivo é partilhar recursos técnicos, materiais de aprendizagem e atualizações de desenvolvimento com toda a comunidade, sem necessidade de registo ou criação de conta.
 
 ## Sobre esta plataforma

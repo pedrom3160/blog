@@ -14,8 +14,6 @@ readingTime: "15 min"
 related: ["introducao-llms", "introducao-ia", "tokenizacao-explicada"]
 ---
 
-# Arquitetura Transformer Explicada
-
 ## O que é o Transformer?
 
 O Transformer é uma arquitetura de rede neural introduzida no artigo "Attention Is All You Need" (Vaswani et al., 2017). Revolucionou o processamento de linguagem natural ao dispensar recorrência e convoluções, baseando-se exclusivamente em mecanismos de atenção.

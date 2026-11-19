@@ -14,8 +14,6 @@ readingTime: "12 min"
 related: ["introducao-ia", "arquitetura-transformers", "tokenizacao-explicada"]
 ---
 
-# Grandes Modelos de Linguagem (LLMs): Introdução
-
 ## O que é um LLM?
 
 Um Grande Modelo de Linguagem (LLM) é um modelo de inteligência artificial treinado em vastas quantidades de texto, capaz de compreender, gerar e manipular linguagem humana de forma avançada. Os LLMs modernos são baseados na arquitetura Transformer e contam com biliões (ou centenas de biliões) de parâmetros.

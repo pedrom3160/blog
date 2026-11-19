@@ -14,8 +14,6 @@ readingTime: "4 min"
 related: ["introducao-ao-gptclone", "bem-vindo-ao-blog-gptclone"]
 ---
 
-# Sobre o Jornal GPTCLONE
-
 O Jornal GPTCLONE é a secção de registo técnico do projeto. Aqui publicamos:
 
 - Notícias do projeto

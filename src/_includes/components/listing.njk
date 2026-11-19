@@ -1,26 +1,35 @@
 {% import "components/cards.njk" as cards %}
 
-{% macro collectionListing(items, heading, intro, filterLabel = 'Categoria') %}
+{% macro collectionListing(items, heading, intro, filterLabel = 'Categoria', kicker = 'Secção') %}
 {% set filters = items | categories %}
 
-<section class="section listing-section">
+<section class="page-hero">
   <div class="container">
-    <header class="section-header">
-      <h1>{{ heading }}</h1>
-      <p class="section-intro">{{ intro }}</p>
-    </header>
+    <p class="eyebrow"><span class="eyebrow-mark" aria-hidden="true"></span>{{ kicker }}</p>
+    <div class="page-hero-grid">
+      <h1 class="page-title">{{ heading }}</h1>
+      <p class="page-lead">{{ intro }}</p>
+    </div>
+    <p class="page-meta">{{ items.length }} artigo{% if items.length != 1 %}s{% endif %} publicado{% if items.length != 1 %}s{% endif %}</p>
+  </div>
+</section>
 
-    <div class="filter-bar" data-collection-filter>
-      <div class="filter-field">
+<section class="section">
+  <div class="container">
+    <div class="toolbar" data-collection-filter>
+      <div class="field field-search">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+          <circle cx="11" cy="11" r="7" /><path d="m20 20-4.2-4.2" />
+        </svg>
         <label class="sr-only" for="listing-search">Pesquisar</label>
-        <input id="listing-search" type="search" data-filter-search placeholder="Pesquisar em {{ heading | lower }}..." />
+        <input id="listing-search" type="search" data-filter-search placeholder="Pesquisar em {{ heading | lower }}…" />
       </div>
-      <div class="filter-field">
+      <div class="field field-select">
         <label class="sr-only" for="listing-category">{{ filterLabel }}</label>
         <select id="listing-category" data-filter-category>
           <option value="">{{ filterLabel }}: todos</option>
           {% for filter in filters %}
-            <option value="{{ filter.name | lower }}">{{ filter.name }}</option>
+            <option value="{{ filter.name | lower }}">{{ filter.name }} ({{ filter.count }})</option>
           {% endfor %}
         </select>
       </div>
@@ -38,12 +47,12 @@
 {% if pagination and pagination.hrefs and pagination.hrefs.length > 1 %}
 <nav class="pagination" aria-label="Paginação">
   {% if pagination.href.previous %}
-  <a class="pagination-link pagination-prev" href="{{ pagination.href.previous | url }}" rel="prev">&larr; Página anterior</a>
-  {% endif %}
-  <span class="pagination-status" aria-current="page">Página {{ pagination.pageNumber + 1 }} de {{ pagination.hrefs.length }}</span>
+  <a class="pagination-link" href="{{ pagination.href.previous | url }}" rel="prev">&larr; Anteriores</a>
+  {% else %}<span class="pagination-link is-disabled" aria-hidden="true">&larr; Anteriores</span>{% endif %}
+  <span class="pagination-count">Página {{ pagination.pageNumber + 1 }} de {{ pagination.hrefs.length }}</span>
   {% if pagination.href.next %}
-  <a class="pagination-link pagination-next" href="{{ pagination.href.next | url }}" rel="next">Página seguinte &rarr;</a>
-  {% endif %}
+  <a class="pagination-link" href="{{ pagination.href.next | url }}" rel="next">Seguintes &rarr;</a>
+  {% else %}<span class="pagination-link is-disabled" aria-hidden="true">Seguintes &rarr;</span>{% endif %}
 </nav>
 {% endif %}
 {% endmacro %}

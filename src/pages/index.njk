@@ -1,123 +1,225 @@
 ---
 layout: layouts/base.njk
 title: GPTCLONE Blog
-description: Conhecimento, investigação, educação e diário de projeto. Acesso público e gratuito sem necessidade de conta.
+description: Publicação independente sobre inteligência artificial. Notas de investigação, diário de projeto e material educativo, em português europeu, sem conta e sem barreiras de acesso.
 permalink: /
+navKey: blog
 ---
 {% import "components/cards.njk" as cards %}
-{% set featured = collections.articles.slice(0, 3) %}
-{% set latest = collections.articles.slice(0, 6) %}
+{% set articles = collections.articles %}
+{% set featured = articles.slice(0, 3) %}
+{% set secondary = articles.slice(1, 4) %}
+{% set archive = articles.slice(0, 6) %}
+{% set tags = articles | tagCounts %}
 
 <section class="hero">
-  <div class="hero-glow" aria-hidden="true"></div>
-  <div class="container hero-inner">
-    <span class="hero-badge">Público e gratuito &middot; Sem registo necessário</span>
-    <h1 class="hero-title">Conhecimento aberto,<br />investigação partilhada</h1>
-    <p class="hero-lead">
-      O GPTCLONE Blog é uma plataforma pública de conhecimento, investigação e educação.
-      Explore o Jornal, a Biblioteca PDF, a Biblioteca de Audiolivros, a Investigação em IA e a Academia.
+  <div class="container hero-grid">
+    <div class="hero-copy">
+      <p class="eyebrow"><span class="eyebrow-mark" aria-hidden="true"></span>Publicação independente &middot; pt-PT</p>
+      <h1 class="hero-title">Um registo aberto de <em>investigação</em> em inteligência artificial.</h1>
+      <p class="hero-lead">
+        O GPTCLONE Blog reúne notas de investigação, diário de projeto e material
+        educativo sobre IA. Publicado em aberto, sem conta e sem paywall.
+      </p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#arquivo">Ler as últimas publicações</a>
+        <a class="btn btn-ghost" href="{{ '/about/' | url }}">Sobre o projeto</a>
+      </div>
+      <dl class="hero-stats">
+        <div>
+          <dt>Artigos</dt>
+          <dd>{{ articles.length }}</dd>
+        </div>
+        <div>
+          <dt>Temas</dt>
+          <dd>{{ collections.tags.length }}</dd>
+        </div>
+        <div>
+          <dt>Licença</dt>
+          <dd>{{ site.license }}</dd>
+        </div>
+      </dl>
+    </div>
+
+    <aside class="hero-index" aria-labelledby="edicao-title">
+      <div class="hero-index-head">
+        <h2 id="edicao-title">Nesta edição</h2>
+        <span>{{ featured[0].data.pubDate | monthYear }}</span>
+      </div>
+      <ol class="index-list">
+        {% for article in featured %}
+        <li>
+          <a class="index-item" href="{{ article.url | url }}">
+            <span class="index-num" aria-hidden="true">0{{ loop.index }}</span>
+            <span class="index-body">
+              <span class="index-cat">{{ article.data.category }}</span>
+              <span class="index-title">{{ article.data.title }}</span>
+            </span>
+            <time class="index-date" datetime="{{ article.data.pubDate | isoDate }}">{{ article.data.pubDate | shortDate }}</time>
+          </a>
+        </li>
+        {% endfor %}
+      </ol>
+      <div class="hero-index-foot">
+        <a href="#arquivo">Ver arquivo</a>
+        <button class="index-search" type="button" data-search-open>
+          Pesquisar <kbd>/</kbd>
+        </button>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<section class="section" id="destaque">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow"><span class="section-num">01</span> Em destaque</p>
+      <h2 class="section-title">Seleção editorial</h2>
+    </div>
+
+    {% set lead = featured[0] %}
+    <div class="feature-grid">
+      <article class="feature">
+        <a class="feature-media" href="{{ lead.url | url }}" tabindex="-1" aria-hidden="true">
+          <img src="{{ lead.data.image | url }}" alt="" width="1200" height="675" loading="eager" decoding="async" />
+        </a>
+        <div class="feature-body">
+          <p class="card-kicker">
+            <span class="card-category">{{ lead.data.category }}</span>
+            <time datetime="{{ lead.data.pubDate | isoDate }}">{{ lead.data.pubDate | shortDate }}</time>
+          </p>
+          <h3 class="feature-title"><a href="{{ lead.url | url }}">{{ lead.data.title }}</a></h3>
+          <p class="feature-desc">{{ lead.data.description }}</p>
+          <p class="feature-meta">Por {{ lead.data.author }} &middot; {{ lead.data.readingTime }} de leitura</p>
+          <a class="link-arrow" href="{{ lead.url | url }}">Ler o artigo <span aria-hidden="true">&rarr;</span></a>
+        </div>
+      </article>
+
+      <div class="feature-side">
+        <p class="side-title">Também nesta edição</p>
+        {% for article in secondary %}
+        <article class="mini-card">
+          <a class="mini-media" href="{{ article.url | url }}" tabindex="-1" aria-hidden="true">
+            <img src="{{ article.data.image | url }}" alt="" width="1200" height="675" loading="lazy" decoding="async" />
+          </a>
+          <div class="mini-body">
+            <p class="card-kicker"><span class="card-category">{{ article.data.category }}</span></p>
+            <h3 class="mini-title"><a href="{{ article.url | url }}">{{ article.data.title }}</a></h3>
+            <p class="mini-meta">{{ article.data.pubDate | shortDate }} &middot; {{ article.data.readingTime }}</p>
+          </div>
+        </article>
+        {% endfor %}
+        <a class="feature-side-foot" href="{{ '/ai-research/' | url }}">Explorar Investigação em IA <span aria-hidden="true">&rarr;</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section-tint" id="arquivo">
+  <div class="container">
+    <div class="section-head section-head-row">
+      <div>
+        <p class="eyebrow"><span class="section-num">02</span> Arquivo</p>
+        <h2 class="section-title">Últimas publicações</h2>
+      </div>
+      <a class="link-more" href="{{ '/journal/' | url }}">Ver o Jornal <span aria-hidden="true">&rarr;</span></a>
+    </div>
+    <div class="card-grid card-grid-3">
+      {% for article in archive %}{{ cards.articleCard(article) }}{% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section" id="explorar">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow"><span class="section-num">03</span> Explorar</p>
+      <h2 class="section-title">Áreas de conteúdo</h2>
+      <p class="section-lead">As secções do blog vivem dentro da experiência de leitura — não são menus adicionais.</p>
+    </div>
+
+    <ul class="explore-list">
+      <li>
+        <a class="explore-item" href="{{ '/journal/' | url }}">
+          <span class="explore-num" aria-hidden="true">01</span>
+          <span class="explore-name">Jornal</span>
+          <span class="explore-desc">Notícias do projeto, atualizações de desenvolvimento, marcos e decisões técnicas.</span>
+          <span class="explore-count">{{ collections.journal.length }} artigos</span>
+          <span class="explore-arrow" aria-hidden="true">&rarr;</span>
+        </a>
+      </li>
+      <li>
+        <a class="explore-item" href="{{ '/ai-research/' | url }}">
+          <span class="explore-num" aria-hidden="true">02</span>
+          <span class="explore-name">Investigação em IA</span>
+          <span class="explore-desc">IA, machine learning, LLMs, arquiteturas Transformer e tokenização, explicados em profundidade.</span>
+          <span class="explore-count">{{ collections['ai-research'].length }} artigos</span>
+          <span class="explore-arrow" aria-hidden="true">&rarr;</span>
+        </a>
+      </li>
+      <li>
+        <a class="explore-item" href="{{ '/academy/' | url }}">
+          <span class="explore-num" aria-hidden="true">03</span>
+          <span class="explore-name">GPTCLONE Academy</span>
+          <span class="explore-desc">Caminhos de aprendizagem estruturados, do nível iniciante ao avançado.</span>
+          <span class="explore-count">{{ collections.academy.length }} artigo</span>
+          <span class="explore-arrow" aria-hidden="true">&rarr;</span>
+        </a>
+      </li>
+      <li>
+        <a class="explore-item" href="{{ '/pdf-library/' | url }}">
+          <span class="explore-num" aria-hidden="true">04</span>
+          <span class="explore-name">Biblioteca PDF</span>
+          <span class="explore-desc">Documentos técnicos e materiais educativos para descarregar.</span>
+          <span class="explore-count">{{ pdfLibrary.documents.length }} documentos</span>
+          <span class="explore-arrow" aria-hidden="true">&rarr;</span>
+        </a>
+      </li>
+      <li>
+        <a class="explore-item" href="{{ '/audiobook-library/' | url }}">
+          <span class="explore-num" aria-hidden="true">05</span>
+          <span class="explore-name">Audiolivros</span>
+          <span class="explore-desc">Material educativo em áudio, reproduzível diretamente no navegador.</span>
+          <span class="explore-count">{{ audiobookLibrary.audiobooks.length }} entradas</span>
+          <span class="explore-arrow" aria-hidden="true">&rarr;</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<section class="section section-tint" id="temas">
+  <div class="container">
+    <div class="section-head section-head-row">
+      <div>
+        <p class="eyebrow"><span class="section-num">04</span> Temas</p>
+        <h2 class="section-title">Etiquetas</h2>
+      </div>
+      <a class="link-more" href="{{ '/tags/' | url }}">Todas as etiquetas <span aria-hidden="true">&rarr;</span></a>
+    </div>
+    <ul class="tag-list tag-list-lg">
+      {% for tag in tags.slice(0, 18) %}
+      <li>
+        <a class="tag" href="{{ ('/tags/' ~ (tag.name | slug) ~ '/') | url }}">
+          {{ tag.name }} <span class="tag-count">{{ tag.count }}</span>
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+</section>
+
+<section class="support">
+  <div class="container support-inner">
+    <p class="eyebrow"><span class="eyebrow-mark eyebrow-mark-light" aria-hidden="true"></span>Apoio ao projeto</p>
+    <h2 class="support-title">Um projeto aberto também precisa de sustentação.</h2>
+    <p class="support-lead">
+      Sem paywall, sem publicidade e sem conta. O apoio cobre alojamento, manutenção
+      e o tempo dedicado à investigação e à redação.
     </p>
-    <div class="hero-actions">
-      <a class="btn btn-primary btn-lg" href="{{ '/journal/' | url }}">Explorar o Jornal</a>
-      <a class="btn btn-outline btn-lg" href="{{ '/ai-research/' | url }}">Investigação em IA</a>
-    </div>
-  </div>
-</section>
-
-<section class="section">
-  <div class="container">
-    <div class="section-heading">
-      <div>
-        <h2>Artigos em destaque</h2>
-        <p>Leituras recentes do Jornal e da Investigação em IA</p>
-      </div>
-      <a class="link-more" href="{{ '/journal/' | url }}">Ver todos &rarr;</a>
-    </div>
-    <div class="card-grid card-grid-3">
-      {% for article in featured %}{{ cards.articleCard(article) }}{% endfor %}
-    </div>
-  </div>
-</section>
-
-<section class="section section-alt">
-  <div class="container">
-    <div class="section-heading">
-      <div>
-        <h2>Áreas de conteúdo</h2>
-        <p>Explore as principais secções do GPTCLONE Blog</p>
-      </div>
-    </div>
-    <div class="area-grid">
-      <a class="area-card" href="{{ '/journal/' | url }}">
-        <span class="area-icon area-icon-purple" aria-hidden="true">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-4 0V9" /><path d="M18 14h-8M15 18h-5M10 6h8v4h-8z" /></svg>
-        </span>
-        <h3>Jornal GPTCLONE</h3>
-        <p>Notícias, atualizações de desenvolvimento, marcos, decisões técnicas e relatórios de progresso.</p>
-        <span class="area-link">Ler mais &rarr;</span>
-      </a>
-
-      <a class="area-card" href="{{ '/ai-research/' | url }}">
-        <span class="area-icon area-icon-aurora" aria-hidden="true">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2" /><polyline points="2 17 12 22 22 17" /><polyline points="2 12 12 17 22 12" /></svg>
-        </span>
-        <h3>Investigação em IA</h3>
-        <p>IA, Machine Learning, Deep Learning, LLMs, Transformers, Tokenização e muito mais.</p>
-        <span class="area-link">Ler mais &rarr;</span>
-      </a>
-
-      <a class="area-card" href="{{ '/academy/' | url }}">
-        <span class="area-icon area-icon-emerald" aria-hidden="true">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10 12 5 2 10l10 5 10-5z" /><path d="M6 12v5c0 1.1 2.7 2 6 2s6-.9 6-2v-5" /></svg>
-        </span>
-        <h3>GPTCLONE Academy</h3>
-        <p>Caminhos de aprendizagem estruturados, do nível iniciante ao avançado.</p>
-        <span class="area-link">Ler mais &rarr;</span>
-      </a>
-    </div>
-  </div>
-</section>
-
-<section class="section">
-  <div class="container">
-    <div class="section-heading">
-      <div>
-        <h2>Bibliotecas de recursos</h2>
-        <p>Navegue, filtre e descarregue documentos técnicos e materiais educativos</p>
-      </div>
-    </div>
-    <div class="library-grid">
-      <div class="library-card">
-        <div class="library-icon" aria-hidden="true">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><polyline points="14 2 14 8 20 8" /><line x1="16" y1="13" x2="8" y2="13" /><line x1="16" y1="17" x2="8" y2="17" /></svg>
-        </div>
-        <h3>Biblioteca PDF</h3>
-        <p>Manuais técnicos, tutoriais, documentos de investigação e guias de programação.</p>
-        <a class="btn btn-primary" href="{{ '/pdf-library/' | url }}">Explorar PDFs</a>
-      </div>
-
-      <div class="library-card">
-        <div class="library-icon" aria-hidden="true">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6" /><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z" /></svg>
-        </div>
-        <h3>Biblioteca de Audiolivros</h3>
-        <p>Material educativo em formato áudio, reproduzível diretamente no navegador.</p>
-        <a class="btn btn-primary" href="{{ '/audiobook-library/' | url }}">Explorar Audiolivros</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="section section-alt">
-  <div class="container">
-    <div class="section-heading">
-      <div>
-        <h2>Últimas publicações</h2>
-        <p>Todo o conteúdo recente, por ordem de publicação</p>
-      </div>
-    </div>
-    <div class="card-grid card-grid-3">
-      {% for article in latest %}{{ cards.articleCard(article) }}{% endfor %}
+    <div class="support-actions">
+      <a class="btn btn-light" href="{{ '/donations/' | url }}">Sobre donativos</a>
+      <a class="link-light" href="{{ '/about/' | url }}">Conhecer o projeto <span aria-hidden="true">&rarr;</span></a>
     </div>
   </div>
 </section>

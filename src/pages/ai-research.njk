@@ -9,5 +9,5 @@ eleventyComputed:
   permalink: "{% if pagination.pageNumber > 0 %}/ai-research/page-{{ pagination.pageNumber }}/{% else %}/ai-research/{% endif %}"
 ---
 {% import "components/listing.njk" as listing %}
-{{ listing.collectionListing(pagination.items | sortByDate, "Investigação em IA", "Inteligência Artificial, Machine Learning, Deep Learning, Grandes Modelos de Linguagem, Transformers, Tokenização e muito mais.", "Tópico") }}
+{{ listing.collectionListing(pagination.items | sortByDate, "Investigação em IA", "Inteligência Artificial, Machine Learning, Deep Learning, Grandes Modelos de Linguagem, Transformers, Tokenização e muito mais.", "Tópico", "Investigação") }}
 {{ listing.paginationNav(pagination) }}

@@ -47,6 +47,7 @@ collections:
       - { label: "Data de atualização", name: "updatedDate", widget: "datetime", date_format: "DD/MM/YYYY", time_format: false }
       - { label: "Autor", name: "author", widget: "string", default: "Equipa GPTCLONE" }
       - { label: "Imagem em destaque", name: "image", widget: "image" }
+      - { label: "Texto alternativo da imagem (acessibilidade)", name: "imageAlt", widget: "string", required: false }
       - { label: "Categoria", name: "category", widget: "string" }
       - { label: "Etiquetas", name: "tags", widget: "list" }
       - { label: "Tempo de leitura", name: "readingTime", widget: "string" }
@@ -72,6 +73,7 @@ collections:
       - { label: "Data de atualização", name: "updatedDate", widget: "datetime", date_format: "DD/MM/YYYY", time_format: false }
       - { label: "Autor", name: "author", widget: "string", default: "Equipa GPTCLONE" }
       - { label: "Imagem em destaque", name: "image", widget: "image" }
+      - { label: "Texto alternativo da imagem (acessibilidade)", name: "imageAlt", widget: "string", required: false }
       - { label: "Categoria", name: "category", widget: "string" }
       - { label: "Etiquetas", name: "tags", widget: "list" }
       - { label: "Tempo de leitura", name: "readingTime", widget: "string" }
@@ -97,6 +99,7 @@ collections:
       - { label: "Data de atualização", name: "updatedDate", widget: "datetime", date_format: "DD/MM/YYYY", time_format: false }
       - { label: "Autor", name: "author", widget: "string", default: "Equipa GPTCLONE" }
       - { label: "Imagem em destaque", name: "image", widget: "image" }
+      - { label: "Texto alternativo da imagem (acessibilidade)", name: "imageAlt", widget: "string", required: false }
       - { label: "Categoria", name: "category", widget: "string" }
       - { label: "Etiquetas", name: "tags", widget: "list" }
       - { label: "Tempo de leitura", name: "readingTime", widget: "string" }
@@ -109,13 +112,25 @@ collections:
     file: "src/content/about.md"
     fields:
       - { label: "Título da página", name: "title", widget: "string" }
-      - { label: "Descrição curta", name: "description", widget: "text" }
+      - { label: "Descrição curta (SEO)", name: "description", widget: "text" }
+      - { label: "Rótulo superior", name: "kicker", widget: "string" }
+      - { label: "Título principal", name: "heading", widget: "string" }
+      - { label: "Entrada / lead", name: "lead", widget: "text" }
       - { label: "Missão", name: "mission", widget: "text" }
       - { label: "Visão", name: "vision", widget: "text" }
-      - { label: "Interesses de investigação", name: "researchInterests", widget: "text" }
-      - { label: "Ecossistema", name: "ecosystem", widget: "text" }
+      - label: "Princípios"
+        name: "principles"
+        widget: "list"
+        fields:
+          - { label: "Título", name: "title", widget: "string" }
+          - { label: "Texto", name: "text", widget: "text" }
+      - label: "Ficha do projeto"
+        name: "facts"
+        widget: "list"
+        fields:
+          - { label: "Rótulo", name: "label", widget: "string" }
+          - { label: "Valor", name: "value", widget: "string" }
       - { label: "Conteúdo adicional (Markdown)", name: "body", widget: "markdown" }
-
 preview_path: "preview/"
 preview_template: |
   <!doctype html>

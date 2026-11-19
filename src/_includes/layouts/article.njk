@@ -2,92 +2,143 @@
 layout: layouts/base.njk
 ---
 {% import "components/cards.njk" as cards %}
+{% import "components/share.njk" as share %}
+{% set section = collection | sectionMeta %}
 {% set related = related | relatedArticles(collections.articles) %}
+{% set neighbours = page.url | articleNeighbours(collections.articles) %}
+
 <article class="article">
-  <div class="container article-container">
+  <div class="reading-progress" aria-hidden="true"><span data-reading-progress></span></div>
+
+  <div class="container">
+    <nav class="breadcrumbs" aria-label="Trilho de navegação">
+      <ol>
+        <li><a href="{{ '/' | url }}">Blog</a></li>
+        <li><a href="{{ section.url | url }}">{{ section.label }}</a></li>
+        <li aria-current="page"><span>{{ title }}</span></li>
+      </ol>
+    </nav>
+
     <header class="article-header">
-      {% if image %}
-        <div class="article-hero">
-          <img src="{{ image | url }}" alt="{{ title }}" />
-        </div>
-      {% endif %}
-
-      <div class="badges">
-        {% if category %}<span class="badge badge-category">{{ category }}</span>{% endif %}
-        {% for tag in tags %}
-          <a class="badge badge-tag" href="{{ ('/tags/' ~ (tag | slug) ~ '/') | url }}">{{ tag }}</a>
-        {% endfor %}
-      </div>
-
+      <p class="eyebrow"><span class="eyebrow-mark" aria-hidden="true"></span>{{ section.label }}{% if category %} &middot; {{ category }}{% endif %}</p>
       <h1 class="article-title">{{ title }}</h1>
       <p class="article-description">{{ description }}</p>
 
-      <div class="article-meta">
-        <span class="meta-author">Por {{ author }}</span>
-        <time datetime="{{ pubDate | isoDate }}">{{ pubDate | formatDate }}</time>
-        {% if updatedDate %}
-          <span>Atualizado: <time datetime="{{ updatedDate | isoDate }}">{{ updatedDate | formatDate }}</time></span>
-        {% endif %}
-        {% if readingTime %}
-          <span class="reading-time">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <circle cx="12" cy="12" r="10" />
-              <path d="M12 6v6l4 2" />
-            </svg>
-            {{ readingTime }}
+      <div class="article-byline">
+        <div class="byline-author">
+          {% if author == site.author %}
+          <img class="byline-avatar" src="{{ '/assets/avatars/gptclone-team.svg' | url }}" alt="" width="42" height="42" />
+          {% endif %}
+          <span class="byline-text">
+            <span class="byline-name">{{ author }}</span>
+            <span class="byline-detail">
+              <time datetime="{{ pubDate | isoDate }}">{{ pubDate | formatDate }}</time>
+              {% if readingTime %}<span aria-hidden="true"> &middot; </span><span>{{ readingTime }} de leitura</span>{% endif %}
+            </span>
           </span>
-        {% endif %}
+        </div>
+        {{ share.shareButtons(page.url, title, 'Partilhar') }}
       </div>
     </header>
 
-    <div class="article-layout">
-      <aside class="toc" aria-label="Índice da página">
-        <p class="toc-title">Nesta página</p>
-        <nav class="toc-nav" id="toc-nav" aria-label="Índice"></nav>
+    {% if image %}
+    <figure class="article-figure">
+      <img src="{{ image | url }}" alt="{{ imageAlt or ('Ilustração editorial alusiva ao artigo ' ~ title) }}" width="1200" height="675" />
+      <figcaption>Ilustração editorial{% if category %} &middot; {{ category }}{% endif %}</figcaption>
+    </figure>
+    {% endif %}
+
+    <div class="article-body">
+      <aside class="article-rail" aria-label="Índice do artigo">
+        <div class="toc">
+          <p class="toc-title">Nesta página</p>
+          <nav class="toc-nav" id="toc-nav" aria-label="Índice do artigo"></nav>
+        </div>
       </aside>
 
       <div class="article-content" data-article-content>
+        <details class="toc-mobile">
+          <summary>Índice do artigo</summary>
+          <nav class="toc-nav toc-nav-mobile" id="toc-nav-mobile" aria-label="Índice do artigo"></nav>
+        </details>
         {{ content | safe }}
       </div>
     </div>
 
-    {% if related.length %}
-      <section class="related">
-        <h2 class="related-title">Artigos relacionados</h2>
-        <div class="card-grid card-grid-3">
-          {% for item in related %}{{ cards.articleCard(item) }}{% endfor %}
-        </div>
-      </section>
+    <div class="article-end">
+      {% if tags %}
+      <div class="article-tags">
+        <p class="eyebrow">Temas</p>
+        <ul class="tag-list">
+          {% for tag in tags %}<li><a class="tag" href="{{ ('/tags/' ~ (tag | slug) ~ '/') | url }}">{{ tag }}</a></li>{% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+      {{ share.shareButtons(page.url, title, 'Partilhar este artigo') }}
+    </div>
+
+    {% if neighbours.previous or neighbours.next %}
+    <nav class="article-nav" aria-label="Artigos anterior e seguinte">
+      {% if neighbours.previous %}
+      <a class="article-nav-item article-nav-prev" href="{{ neighbours.previous.url | url }}" rel="prev">
+        <span class="article-nav-label">&larr; Artigo anterior</span>
+        <span class="article-nav-title">{{ neighbours.previous.data.title }}</span>
+      </a>
+      {% endif %}
+      {% if neighbours.next %}
+      <a class="article-nav-item article-nav-next" href="{{ neighbours.next.url | url }}" rel="next">
+        <span class="article-nav-label">Artigo seguinte &rarr;</span>
+        <span class="article-nav-title">{{ neighbours.next.data.title }}</span>
+      </a>
+      {% endif %}
+    </nav>
     {% endif %}
 
-    <footer class="article-footer">
-      <div class="share">
-        <span class="share-label">Partilhar</span>
-        <a class="share-btn" href="https://www.facebook.com/sharer/sharer.php?u={{ page.url | absoluteUrl | urlencode }}" target="_blank" rel="noopener noreferrer" aria-label="Partilhar no Facebook">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" /></svg>
-        </a>
-        <a class="share-btn" href="https://x.com/intent/tweet?url={{ page.url | absoluteUrl | urlencode }}&text={{ title | urlencode }}" target="_blank" rel="noopener noreferrer" aria-label="Partilhar no X">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z" /></svg>
-        </a>
-        <a class="share-btn" href="https://www.linkedin.com/sharing/share-offsite/?url={{ page.url | absoluteUrl | urlencode }}" target="_blank" rel="noopener noreferrer" aria-label="Partilhar no LinkedIn">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2zM18 18h3v-7a6 6 0 0 0-6-6z" /></svg>
-        </a>
+    {% if related.length %}
+    <section class="related" aria-labelledby="related-title">
+      <div class="section-head">
+        <p class="eyebrow">Continuar a ler</p>
+        <h2 class="section-title" id="related-title">Artigos relacionados</h2>
       </div>
-    </footer>
-
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "BlogPosting",
-      "headline": {{ title | dump | safe }},
-      "description": {{ (description or '') | dump | safe }},
-      "datePublished": "{{ pubDate | isoDate }}",
-      "dateModified": "{{ (updatedDate or pubDate) | isoDate }}",
-      "author": { "@type": "Person", "name": {{ (author or site.author) | dump | safe }} },
-      "publisher": { "@type": "Organization", "name": {{ site.title | dump | safe }}, "url": "{{ site.url }}" },
-      "mainEntityOfPage": { "@type": "WebPage", "@id": "{{ page.url | absoluteUrl }}" },
-      "image": {{ (image or '') | url | dump | safe }}
-    }
-    </script>
+      <div class="card-grid card-grid-3">
+        {% for item in related %}{{ cards.articleCard(item) }}{% endfor %}
+      </div>
+    </section>
+    {% endif %}
   </div>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": {{ title | dump | safe }},
+    "description": {{ (description or '') | dump | safe }},
+    "datePublished": "{{ pubDate | isoDate }}",
+    "dateModified": "{{ (updatedDate or pubDate) | isoDate }}",
+    "inLanguage": {{ site.language | dump | safe }},
+    "articleSection": {{ (category or section.label) | dump | safe }},
+    "keywords": {{ (tags or []) | join(', ') | dump | safe }},
+    "author": { "@type": "Person", "name": {{ (author or site.author) | dump | safe }} },
+    "publisher": {
+      "@type": "Organization",
+      "name": {{ site.title | dump | safe }},
+      "url": {{ site.url | dump | safe }},
+      "logo": { "@type": "ImageObject", "url": {{ site.defaultImage | absoluteUrl | dump | safe }} }
+    },
+    "mainEntityOfPage": { "@type": "WebPage", "@id": {{ page.url | absoluteUrl | dump | safe }} },
+    "image": {{ (image | socialImage(site.defaultImage)) | absoluteUrl | dump | safe }},
+    "url": {{ page.url | absoluteUrl | dump | safe }}
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Blog", "item": {{ '/' | absoluteUrl | dump | safe }} },
+      { "@type": "ListItem", "position": 2, "name": {{ section.label | dump | safe }}, "item": {{ section.url | absoluteUrl | dump | safe }} },
+      { "@type": "ListItem", "position": 3, "name": {{ title | dump | safe }}, "item": {{ page.url | absoluteUrl | dump | safe }} }
+    ]
+  }
+  </script>
 </article>

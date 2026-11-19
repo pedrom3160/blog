@@ -14,8 +14,6 @@ readingTime: "8 min"
 related: ["sobre-o-jornal-gptclone", "ecossistema-gptclone-limites"]
 ---
 
-# Introdução ao GPTCLONE
-
 ## O que é o GPTCLONE
 
 O GPTCLONE é um projeto de investigação e desenvolvimento focado na criação de componentes de inteligência artificial, incluindo tokenizador, arquitetura Transformer, motor de treino e motor de inferência. O objetivo é duplo: uma implementação tecnicamente correta e um entendimento profundo de por que cada componente funciona.

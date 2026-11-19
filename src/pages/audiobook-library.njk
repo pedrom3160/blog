@@ -3,23 +3,33 @@ layout: layouts/base.njk
 title: Biblioteca de Audiolivros
 description: Material educativo em formato áudio, reproduzível diretamente no navegador.
 permalink: /audiobook-library/
+navKey: blog
 ---
 {% import "components/cards.njk" as cards %}
 {% set categories = audiobookLibrary.audiobooks | categories %}
 
+<section class="page-hero">
+  <div class="container">
+    <p class="eyebrow"><span class="eyebrow-mark" aria-hidden="true"></span>Biblioteca</p>
+    <div class="page-hero-grid">
+      <h1 class="page-title">Biblioteca de Audiolivros</h1>
+      <p class="page-lead">Ouça conteúdo educativo diretamente no navegador. Organizado por categoria e tópico.</p>
+    </div>
+    <p class="page-meta">{{ audiobookLibrary.audiobooks.length }} entradas no catálogo</p>
+  </div>
+</section>
+
 <section class="section">
   <div class="container">
-    <header class="section-header">
-      <h1>Biblioteca de Audiolivros</h1>
-      <p class="section-intro">Ouça conteúdo educativo diretamente no navegador. Organizado por categoria e tópico.</p>
-    </header>
-
-    <div class="filter-bar" data-collection-filter>
-      <div class="filter-field">
+    <div class="toolbar" data-collection-filter>
+      <div class="field field-search">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+          <circle cx="11" cy="11" r="7" /><path d="m20 20-4.2-4.2" />
+        </svg>
         <label class="sr-only" for="audio-search">Pesquisar audiolivros</label>
-        <input id="audio-search" type="search" data-filter-search placeholder="Pesquisar audiolivros..." />
+        <input id="audio-search" type="search" data-filter-search placeholder="Pesquisar audiolivros…" />
       </div>
-      <div class="filter-field">
+      <div class="field field-select">
         <label class="sr-only" for="audio-category">Categoria</label>
         <select id="audio-category" data-filter-category>
           <option value="">Categoria: todas</option>
@@ -37,21 +47,25 @@ permalink: /audiobook-library/
   </div>
 </section>
 
-<section class="section section-alt">
+<section class="section section-tint">
   <div class="container">
-    <h2 class="section-title">Reprodução de áudio</h2>
-    <p class="section-intro">O leitor de áudio do GPTCLONE Blog suporta reprodução, pausa, progresso, volume e descarga.</p>
+    <div class="section-head">
+      <p class="eyebrow">Demonstração</p>
+      <h2 class="section-title">Reprodução de áudio</h2>
+      <p class="section-lead">O leitor suporta reprodução, pausa, progresso, volume e descarga.</p>
+    </div>
 
     {{ cards.audioPlayer('Amostra técnica de áudio', '/resources/audiobooks/sample-tone.wav', '/resources/audiobooks/sample-tone.wav') }}
 
-    <div class="notice notice-info">
-      <h2>Sobre o conteúdo áudio</h2>
+    <div class="notice">
+      <p class="eyebrow">Aviso</p>
+      <h2 class="notice-title">Sobre o conteúdo áudio</h2>
       <p>
-        A amostra acima é um tom técnico gerado automaticamente apenas para demonstrar o leitor de áudio.
-        Os itens do catálogo marcados como &ldquo;Em breve&rdquo; são marcadores de posição para futuros audiolivros.
-        Para adicionar conteúdo áudio real, coloque os ficheiros em
+        A amostra acima é um tom técnico gerado automaticamente apenas para demonstrar
+        o leitor. As entradas marcadas como “Em breve” são marcadores de posição para
+        futuros audiolivros. Para adicionar conteúdo real, coloque os ficheiros em
         <code>public/resources/audiobooks/</code> e registe as entradas em
-        <code>src/_data/audiobook-library.json</code>.
+        <code>src/_data/audiobookLibrary.json</code>.
       </p>
     </div>
   </div>

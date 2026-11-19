@@ -14,8 +14,6 @@ readingTime: "12 min"
 related: ["introducao-ia", "introducao-llms"]
 ---
 
-# Caminho de Aprendizagem em Inteligência Artificial
-
 Bem-vindo à GPTCLONE Academy. Este caminho de aprendizagem está estruturado para ensinar conceitos de Inteligência Artificial de forma progressiva, do nível iniciante ao avançado.
 
 ## Estrutura do caminho

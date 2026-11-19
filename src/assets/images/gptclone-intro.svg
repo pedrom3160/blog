@@ -1,7 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 300" fill="none">
-  <rect width="600" height="300" fill="#0f172a"/>
-  <circle cx="300" cy="150" r="100" fill="none" stroke="#8b5cf6" stroke-width="2" opacity="0.5"/>
-  <circle cx="300" cy="150" r="60" fill="none" stroke="#3b82f6" stroke-width="2" opacity="0.7"/>
-  <path d="M200 150 Q300 50 400 150" stroke="#8b5cf6" stroke-width="2" fill="none" opacity="0.6"/>
-  <text x="300" y="160" font-family="Inter, sans-serif" font-size="24" font-weight="bold" fill="#8b5cf6" text-anchor="middle">GPTCLONE</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675">
+  <rect width="1200" height="675" fill="#14161a"/>
+  <g stroke="#262a31" stroke-width="1">
+    <path d="M0 168.75h1200M0 337.5h1200M0 506.25h1200M300 0v675M600 0v675M900 0v675"/>
+  </g>
+  <text x="56" y="84" font-family="'IBM Plex Mono', ui-monospace, monospace" font-size="18" letter-spacing="6" fill="#8d877c">GPTCLONE / JOURNAL</text>
+  <text x="56" y="618" font-family="'IBM Plex Mono', ui-monospace, monospace" font-size="16" letter-spacing="5" fill="#8d877c">D-01</text>
+  <text x="1144" y="628" text-anchor="end" font-family="Georgia, 'Times New Roman', serif" font-size="150" fill="#1f2329">03</text>
+  <rect x="420" y="180" width="170" height="170" fill="none" stroke="#f5f1e8" stroke-width="2"/>
+  <rect x="620" y="180" width="170" height="170" fill="#f5f1e8"/>
+  <rect x="420" y="380" width="170" height="120" fill="#e2542a"/>
+  <rect x="620" y="380" width="170" height="120" fill="none" stroke="#e2542a" stroke-width="2"/>
 </svg>

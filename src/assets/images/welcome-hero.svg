@@ -1,14 +1,14 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400" fill="none">
-  <defs>
-    <linearGradient id="aurora" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#8b5cf6"/>
-      <stop offset="50%" stop-color="#3b82f6"/>
-      <stop offset="100%" stop-color="#06b6d4"/>
-    </linearGradient>
-  </defs>
-  <rect width="800" height="400" fill="#0f172a"/>
-  <path d="M100 300 Q200 100 400 200 T700 350" stroke="url(#aurora)" stroke-width="3" fill="none" opacity="0.6"/>
-  <path d="M50 350 Q150 250 350 300 T750 380" stroke="#8b5cf6" stroke-width="2" fill="none" opacity="0.4"/>
-  <text x="400" y="210" font-family="Inter, sans-serif" font-size="32" font-weight="bold" fill="#8b5cf6" text-anchor="middle">GPTCLONE</text>
-  <text x="400" y="240" font-family="Inter, sans-serif" font-size="16" fill="#94a3b8" text-anchor="middle">Blog de Conhecimento e Investigação</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675">
+  <rect width="1200" height="675" fill="#14161a"/>
+  <g stroke="#262a31" stroke-width="1">
+    <path d="M0 168.75h1200M0 337.5h1200M0 506.25h1200M300 0v675M600 0v675M900 0v675"/>
+  </g>
+  <text x="56" y="84" font-family="'IBM Plex Mono', ui-monospace, monospace" font-size="18" letter-spacing="6" fill="#8d877c">GPTCLONE / JOURNAL</text>
+  <text x="56" y="618" font-family="'IBM Plex Mono', ui-monospace, monospace" font-size="16" letter-spacing="5" fill="#8d877c">J-01</text>
+  <text x="1144" y="628" text-anchor="end" font-family="Georgia, 'Times New Roman', serif" font-size="150" fill="#1f2329">01</text>
+  <g fill="none" stroke="#e2542a" stroke-width="2">
+    <circle cx="840" cy="330" r="215"/><circle cx="840" cy="330" r="158" opacity=".6"/><circle cx="840" cy="330" r="102" opacity=".35"/>
+  </g>
+  <rect x="470" y="190" width="120" height="120" fill="#f5f1e8"/>
+  <rect x="600" y="320" width="70" height="70" fill="#e2542a"/>
 </svg>

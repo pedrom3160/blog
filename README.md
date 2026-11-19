@@ -1,85 +1,113 @@
 # GPTCLONE Blog
 
-Plataforma pública de conhecimento, investigação, educação e diário de projeto do GPTCLONE.
+Publicação independente sobre inteligência artificial: notas de investigação, diário de projeto e material educativo.
 
-**URL de produção:** https://pedrom3160.github.io/blog/
+**Produção:** https://pedrom3160.github.io/blog/
+**Repositório:** https://github.com/pedrom3160/blog
 
-## Idioma
+## Identidade e navegação
 
-Português Europeu (pt-PT). Arquitetura preparada para expansão multilingue.
+O site tem **exatamente três destinos na navegação principal**:
 
-## Secções de conteúdo
+| Menu | Destino |
+|------|---------|
+| Blog | `/` — homepage editorial com destaque, arquivo, áreas de conteúdo e temas |
+| About | `/about/` — projeto, missão, visão, princípios e limites |
+| Donations | `/donations/` — modelo de apoio, prioridades e estado dos canais |
 
-- **Jornal GPTCLONE** — Notícias, atualizações de desenvolvimento, marcos, decisões técnicas.
-- **Biblioteca PDF** — Catálogo de documentos técnicos (PDFs de amostra CC-BY-4.0).
-- **Biblioteca de Audiolivros** — Material educativo em formato áudio (entradas placeholder, áudio em breve).
-- **Investigação em IA** — IA, ML, DL, LLMs, Transformers, Tokenização e muito mais.
-- **GPTCLONE Academy** — Caminhos de aprendizagem estruturados.
-- **Pesquisa** — Modal de pesquisa global e página de pesquisa, sobre `search-index.json`.
+As secções de conteúdo (Jornal, Investigação em IA, Academy, Bibliotecas, Etiquetas e Pesquisa) são
+descoberta de conteúdo: vivem na homepage e no rodapé, e **não** são menus adicionais.
+
+## Conteúdo
+
+- **Jornal GPTCLONE** — notícias, atualizações de desenvolvimento, marcos e decisões técnicas.
+- **Investigação em IA** — IA, ML, DL, LLMs, Transformers, tokenização e temas relacionados.
+- **GPTCLONE Academy** — caminhos de aprendizagem estruturados.
+- **Biblioteca PDF** — documentos técnicos de amostra (CC-BY-4.0).
+- **Biblioteca de Audiolivros** — catálogo com placeholders honestos e um leitor de áudio funcional.
+- **Pesquisa** — modal global (`/`) e página dedicada sobre `search-index.json`.
+
+Idioma: **português europeu (pt-PT)**. A arquitetura está preparada para expansão multilingue.
+
+## Design system
+
+Identidade editorial própria, documentada em `src/styles/main.css`:
+
+- **Graphite & Vermilion** — papel quente (`#faf7f1`) e tinta grafite no tema claro; grafite profundo no tema escuro; acento vermelhão (`#b5391b` / `#ff7a4f`).
+- **Tipografia** — Fraunces (títulos), Inter (texto), IBM Plex Mono (rótulos, metadados e código).
+- **Grelha editorial** — linhas finas, cartões sem sombras pesadas, numeração de secções, capa em “placa” escura.
+- **Tema** — claro por defeito, escuro conforme `prefers-color-scheme`; escolha persistida em `localStorage`.
+- **Acessibilidade** — contraste AA/AAA nos pares principais, foco visível, `prefers-reduced-motion`, navegação por teclado e skip link.
 
 ## Stack
 
-- [Eleventy 3.x](https://www.11ty.dev/) — Gerador de sites estáticos
-- Nunjucks — Templates
-- Markdown — Conteúdo
-- CSS moderno (design system próprio, sem frameworks CSS)
-- JavaScript ES Modules (vanilla, sem frameworks)
-- [Vitest](https://vitest.dev/) — Testes
+- [Eleventy 3.x](https://www.11ty.dev/) + Nunjucks
+- Markdown (markdown-it) com realce de sintaxe Prism no build
+- CSS moderno sem frameworks
+- JavaScript vanilla (tema, pesquisa, filtros, TOC, progresso de leitura, copiar código/ligação, áudio)
+- [Vitest](https://vitest.dev/) + jsdom
 - Node.js 22 LTS + npm
+- GitHub Actions → GitHub Pages
 
 ## Comandos
 
 ```bash
-# Instalar dependências
-npm install
-
-# Servidor de desenvolvimento
-npm run dev
-
-# Build de produção (base path /blog/, saída em _site/)
-npm run build
-
-# Validar o output do build (links, assets, base path, SEO)
-npm run validate
-
-# Pré-visualizar build
-npm run preview
-
-# Executar testes (Vitest)
-npm test
-
-# Regenerar PDFs/áudio de amostra
+npm install          # dependências
+npm run dev          # servidor local (http://localhost:8080/blog/)
+npm run build        # build de produção em _site/ com base path /blog/
+npm run validate     # valida o output (rotas, links, SEO, acessibilidade, navegação)
+npm test             # Vitest
+npm run preview      # pré-visualizar o build
 npm run generate:samples
 ```
 
-## Estrutura de diretórios
+## Estrutura
 
 ```
-.eleventy.js        Configuração Eleventy (collections, filtros, base path)
+.eleventy.js              Configuração: coleções, filtros, realce, base path
 src/
-  _includes/        Layouts e componentes Nunjucks
-  pages/            Páginas e rotas (njk, 11ty.js)
-  content/          Conteúdo Markdown (journal, ai-research, academy, authors)
-  _data/            Dados globais (site, navigation, catálogos JSON)
-  assets/           Imagens, favicon
-  styles/           Design system (main.css)
-  scripts/          Interatividade cliente (main.js)
-  utils/            Utilitários (datas, pesquisa)
-public/
-  resources/        PDFs e áudio de amostra
-scripts/            build.mjs, validate.mjs, generate-samples.mjs
-tests/              Testes Vitest
-.github/workflows/  Deploy para GitHub Pages
+  _includes/
+    layouts/              base.njk, article.njk, about.njk
+    components/           header, footer, cards, listing, share, search-modal
+  pages/                  homepage, secções, about, donations, bibliotecas, tags,
+                          pesquisa, 404, rss, sitemap, search-index, preview
+  content/                Markdown (journal, ai-research, academy, authors) + about.md
+  _data/                  site.js, navigation.js, donations.js, catálogos JSON
+  assets/                 capas editoriais SVG, favicon, social-card.png
+  styles/main.css         Design system completo
+  scripts/main.js         Interações cliente
+  utils/                  datas e pesquisa (testados)
+public/resources/         PDFs e áudio de amostra
+scripts/                  build.mjs, validate.mjs, generate-samples.mjs, migrate-content.mjs
+tests/                    Vitest (datas, pesquisa, DOM, navegação/donativos)
+docs/                     Arquitetura, conteúdo, deploy, donativos, contribuição
+reports/                  Auditoria e relatório de redesign
 ```
+
+## Navegação e contratos
+
+- A navegação primária é gerada a partir de `src/_data/navigation.js` (3 itens).
+- `npm run validate` falha se qualquer página tiver mais ou menos de três links primários, se os
+  rótulos não forem `Blog · About · Donations`, se faltar `<h1>` único, `lang="pt-PT"`,
+  `alt` em imagens, metadados SEO, JSON-LD de artigo ou se existirem IDs duplicados.
+- Os URLs existentes são preservados; a única rota nova é `/donations/`.
 
 ## Base path
 
-O site é servido em `/blog/`. Todos os URLs relativos à raiz são reescritos para `/blog/...` por um transform de build (ver `.eleventy.js`).
+O site é servido em `/blog/`. `pathPrefix` adiciona o prefixo via filtro `| url`; um transform
+reescreve URLs relativos à raiz no HTML final. `absoluteUrl` aceita URLs com ou sem prefixo e
+normaliza para `https://pedrom3160.github.io/blog/...`.
+
+## Donativos
+
+`src/_data/donations.js` é o único ponto de configuração. Sem canais verificados, `/donations/`
+mostra um estado vazio explícito em vez de uma ligação inventada. Ver `docs/DONATIONS.md`.
 
 ## Licença
 
-Conteúdo publicado sob licença CC-BY-4.0 salvo indicação em contrário.
+Conteúdo publicado sob CC-BY-4.0, salvo indicação em contrário.
 
-## Limites arquitetónicos
+## Limites arquiteturais
 
-O Blog é uma plataforma independente do ecossistema GPTCLONE. Não é uma dependência do Foundation, Studio, Router ou Model Hub.
+O Blog é independente do GPTCLONE Foundation, Studio, Router e Model Hub. Não depende de backend,
+base de dados, autenticação ou rastreio de terceiros.
