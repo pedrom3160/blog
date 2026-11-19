@@ -4,6 +4,8 @@ import {
   validateSuggestion,
   buildIssueUrl,
   formatSuggestionText,
+  buildWeb3FormsPayload,
+  web3formsSucceeded,
 } from '../src/scripts/suggestions.js';
 
 const valid = {
@@ -36,11 +38,16 @@ describe('suggestions configuration', () => {
     }
   });
 
-  it('uses an empty or secure form endpoint and names its provider', () => {
-    expect(typeof suggestions.endpoint).toBe('string');
-    if (suggestions.endpoint) {
-      expect(suggestions.endpoint).toMatch(/^https:\/\//);
-      expect(suggestions.endpointProvider.length).toBeGreaterThan(0);
+  it('selects one coherent submission mode', () => {
+    const { submission } = suggestions;
+    expect(['github', 'web3forms', 'endpoint']).toContain(submission.mode);
+    if (submission.mode === 'github') {
+      expect(submission.endpoint).toBe('');
+      expect(submission.accessKey).toBe('');
+    } else {
+      expect(submission.endpoint).toMatch(/^https:\/\//);
+      expect(submission.provider.length).toBeGreaterThan(0);
+      if (submission.mode === 'web3forms') expect(submission.accessKey.length).toBeGreaterThan(0);
     }
   });
 
@@ -103,5 +110,45 @@ describe('GitHub issue handoff', () => {
     expect(text).toContain('Sugestão: ' + valid.title);
     expect(text).toContain('Categoria: Feedback');
     expect(text).toContain(valid.description);
+  });
+
+  it('never includes the email in copyable text', () => {
+    const text = formatSuggestionText({ ...valid, email: 'leitora@example.com' });
+    expect(text).not.toContain('leitora@example.com');
+  });
+
+  it('encodes HTML-sensitive input in the issue URL', () => {
+    const url = buildIssueUrl({ ...valid, title: '<script>alert(1)</script>' });
+    expect(url).not.toContain('<script>');
+    expect(new URL(url).searchParams.get('title')).toContain('<script>');
+  });
+});
+
+describe('Web3Forms payload', () => {
+  it('builds the public form payload without requiring email', () => {
+    const payload = buildWeb3FormsPayload(valid, 'public-form-key', 'https://example.test/suggestions/');
+    expect(payload.access_key).toBe('public-form-key');
+    expect(payload.title).toBe(valid.title);
+    expect(payload.message).toBe(valid.description);
+    expect(payload.category).toBe('ideas');
+    expect(payload.email).toBeUndefined();
+    expect(payload.botcheck).toBe(false);
+    expect(payload.page_url).toBe('https://example.test/suggestions/');
+  });
+
+  it('includes email only when supplied', () => {
+    const payload = buildWeb3FormsPayload({ ...valid, email: 'leitora@example.com' }, 'public-form-key');
+    expect(payload.email).toBe('leitora@example.com');
+  });
+
+  it('requires a public access key', () => {
+    expect(() => buildWeb3FormsPayload(valid, '')).toThrow();
+  });
+
+  it('only treats an explicit success:true as successful', () => {
+    expect(web3formsSucceeded({ success: true })).toBe(true);
+    expect(web3formsSucceeded({ success: 'true' })).toBe(false);
+    expect(web3formsSucceeded({ success: false })).toBe(false);
+    expect(web3formsSucceeded(null)).toBe(false);
   });
 });

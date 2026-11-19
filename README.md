@@ -112,9 +112,13 @@ mostra um estado vazio explícito em vez de uma ligação inventada. Ver `docs/D
 `/suggestions/` apresenta as categorias de contributo, a explicação do nome provisório e um
 formulário. Por omissão, o formulário não tem backend: valida os campos e prepara uma issue
 pública no GitHub, que o visitante confirma. Não existe falsa confirmação de envio e não é
-pedido email nesse modo. Para receber sugestões sem conta GitHub, configure um endpoint
-privado compatível com CORS em `src/_data/suggestions.js`. Privacidade, spam e limitações estão
-em `docs/SUGGESTIONS.md`.
+pedido email nesse modo.
+
+Para receber sugestões sem exigir uma conta GitHub, crie um formulário Web3Forms e defina a
+variável pública `WEB3FORMS_ACCESS_KEY` no repositório (Actions → Variables) ou no ambiente de
+build. O formulário passa então a enviar por `POST` para Web3Forms, com email opcional e o
+GitHub ainda disponível como alternativa pública. A chave é pública por desenho; não é um
+segredo. Privacidade, spam, retenção e ativação estão em `docs/SUGGESTIONS.md`.
 
 ## Licença
 

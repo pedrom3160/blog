@@ -5,6 +5,7 @@ description: Um espaço aberto para propor funcionalidades, nomes, melhorias de 
 permalink: /suggestions/
 navKey: suggestions
 ---
+{% set submission = suggestions.submission %}
 <section class="page-hero page-hero-suggestions">
   <div class="container">
     <p class="eyebrow"><span class="eyebrow-mark" aria-hidden="true"></span>Sugestões</p>
@@ -81,7 +82,10 @@ navKey: suggestions
       <p class="eyebrow"><span class="section-num">03</span> Enviar uma sugestão</p>
       <h2 class="section-title">Uma ideia pode começar aqui.</h2>
       <p>
-        {% if suggestions.endpoint %}
+        {% if submission.mode == 'web3forms' %}
+        Preencha o essencial. A sugestão é enviada para Web3Forms e entregue por email
+        ao responsável do projeto; não é publicada neste site.
+        {% elif submission.mode == 'endpoint' %}
         Preencha o essencial. A sugestão é enviada para o serviço de formulários
         configurado e não é publicada neste site.
         {% else %}
@@ -91,10 +95,17 @@ navKey: suggestions
       </p>
 
       <div class="privacy-note">
-        {% if suggestions.endpoint %}
+        {% if submission.mode == 'web3forms' %}
+        <p>
+          <strong>Privacidade.</strong> Os campos são enviados para Web3Forms, que os
+          encaminha por email ao responsável do projeto. O email é opcional e não é
+          publicado. Não inclua informação sensível.
+          <a href="{{ submission.privacyUrl }}" target="_blank" rel="noopener noreferrer">Privacidade do Web3Forms</a>.
+        </p>
+        {% elif submission.mode == 'endpoint' %}
         <p>
           <strong>Privacidade.</strong> Os campos são enviados para
-          {{ suggestions.endpointProvider or 'o serviço de formulários configurado' }}.
+          {{ submission.provider or 'o serviço de formulários configurado' }}.
           O email é opcional e não é publicado. Não inclua informação sensível.
         </p>
         {% else %}
@@ -107,7 +118,7 @@ navKey: suggestions
         {% endif %}
       </div>
 
-      {% if not suggestions.endpoint %}
+      {% if submission.mode == 'github' %}
       <a class="link-arrow suggestion-direct" href="https://github.com/{{ suggestions.repo }}/issues/new" target="_blank" rel="noopener noreferrer">
         Abrir uma issue em branco <span aria-hidden="true">&nearr;</span>
       </a>
@@ -118,14 +129,21 @@ navKey: suggestions
       <form
         class="suggestion-form"
         id="suggestion-form"
-        action="{% if suggestions.endpoint %}{{ suggestions.endpoint }}{% else %}https://github.com/{{ suggestions.repo }}/issues/new{% endif %}"
-        method="{% if suggestions.endpoint %}post{% else %}get{% endif %}"
-        data-endpoint="{{ suggestions.endpoint }}"
+        action="{% if submission.mode == 'github' %}https://github.com/{{ suggestions.repo }}/issues/new{% else %}{{ submission.endpoint }}{% endif %}"
+        method="{% if submission.mode == 'github' %}get{% else %}post{% endif %}"
+        data-mode="{{ submission.mode }}"
+        data-endpoint="{{ submission.endpoint }}"
+        data-access-key="{{ submission.accessKey }}"
         data-repo="{{ suggestions.repo }}"
       >
+        {% if submission.mode == 'web3forms' %}
+        <input type="hidden" name="access_key" value="{{ submission.accessKey }}" />
+        <input type="hidden" name="from_name" value="GPTCLONE Blog" />
+        <input type="hidden" name="subject" value="Nova sugestão — GPTCLONE Blog" />
+        {% endif %}
         <p class="form-required-note">Campos marcados com <span aria-hidden="true">*</span><span class="sr-only">asterisco</span> são obrigatórios.</p>
 
-        <div class="form-row{% if not suggestions.endpoint %} form-row-single{% endif %}">
+        <div class="form-row{% if submission.mode == 'github' %} form-row-single{% endif %}">
           <div class="form-field">
             <label for="suggestion-name">Nome ou pseudónimo <span class="form-optional">(opcional)</span></label>
             <input
@@ -134,15 +152,15 @@ navKey: suggestions
               name="name"
               maxlength="80"
               autocomplete="nickname"
-              aria-describedby="hint-name"
+              aria-describedby="hint-name error-name"
             />
             <p class="form-hint" id="hint-name">
-              {% if suggestions.endpoint %}Não é publicado.{% else %}Aparece na issue pública se preencher.{% endif %}
+              {% if submission.mode == 'github' %}Aparece na issue pública se preencher.{% else %}Não é publicado.{% endif %}
             </p>
             <p class="form-error" id="error-name" data-error-for="name" hidden></p>
           </div>
 
-          {% if suggestions.endpoint %}
+          {% if submission.mode != 'github' %}
           <div class="form-field">
             <label for="suggestion-email">Email <span class="form-optional">(opcional)</span></label>
             <input
@@ -151,7 +169,7 @@ navKey: suggestions
               name="email"
               maxlength="120"
               autocomplete="email"
-              aria-describedby="hint-email"
+              aria-describedby="hint-email error-email"
             />
             <p class="form-hint" id="hint-email">Para uma eventual resposta. Não é publicado.</p>
             <p class="form-error" id="error-email" data-error-for="email" hidden></p>
@@ -204,20 +222,33 @@ navKey: suggestions
         <div class="hp-field" aria-hidden="true">
           <label for="suggestion-website">Website</label>
           <input type="text" id="suggestion-website" name="website" tabindex="-1" autocomplete="off" />
+          {% if submission.mode == 'web3forms' %}
+          <label for="suggestion-botcheck">Não preencher</label>
+          <input type="checkbox" id="suggestion-botcheck" name="botcheck" tabindex="-1" autocomplete="off" />
+          {% endif %}
         </div>
 
         <div class="form-actions">
           <button class="btn btn-primary" type="submit">
-            {% if suggestions.endpoint %}Enviar sugestão{% else %}Preparar sugestão no GitHub{% endif %}
+            {% if submission.mode == 'github' %}Preparar sugestão no GitHub{% else %}Enviar sugestão{% endif %}
           </button>
           <button class="btn btn-ghost" type="button" id="suggestion-copy">Copiar sugestão</button>
         </div>
 
+        {% if submission.mode != 'github' %}
+        <p class="form-alt">
+          Prefere uma issue pública?
+          <button class="link-inline" type="button" id="suggestion-github">Preparar no GitHub</button>
+        </p>
+        {% endif %}
+
         <p class="form-footnote">
-          {% if suggestions.endpoint %}
-          O envio só é confirmado depois de uma resposta bem-sucedida do serviço.
-          {% else %}
+          {% if submission.mode == 'github' %}
           A publicação só fica concluída depois de confirmar no GitHub. Este site não envia nem armazena os dados.
+          {% elif submission.mode == 'web3forms' %}
+          O envio só é confirmado depois de uma resposta bem-sucedida do Web3Forms.
+          {% else %}
+          O envio só é confirmado depois de uma resposta bem-sucedida do serviço.
           {% endif %}
         </p>
 
@@ -225,9 +256,11 @@ navKey: suggestions
 
         <noscript>
           <p class="form-noscript">
+            {% if submission.mode == 'github' %}
             Este formulário usa JavaScript para preparar a submissão.
-            {% if not suggestions.endpoint %}
             Sem JavaScript, pode <a href="https://github.com/{{ suggestions.repo }}/issues/new">abrir uma issue em branco no GitHub</a>.
+            {% else %}
+            Sem JavaScript, o formulário é enviado diretamente para o serviço configurado.
             {% endif %}
           </p>
         </noscript>
@@ -240,4 +273,4 @@ navKey: suggestions
   </div>
 </section>
 
-<script type="module" src="{{ '/scripts/suggestions.js' | url }}?v=3.1.0"></script>
+<script type="module" src="{{ '/scripts/suggestions.js' | url }}?v=3.2.0"></script>

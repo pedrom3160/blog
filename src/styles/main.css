@@ -330,6 +330,11 @@ pre {
   color: #fff;
 }
 
+[data-theme='dark'] .btn-primary,
+[data-theme='dark'] .btn-primary:hover {
+  color: var(--paper);
+}
+
 .btn-ghost {
   background: transparent;
   border-color: var(--rule-strong);
@@ -1836,6 +1841,27 @@ pre {
 
 .form-status[hidden] {
   display: none;
+}
+
+.form-alt {
+  margin-top: 0.9rem;
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+.link-inline {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--accent);
+  font: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.link-inline:hover {
+  color: var(--accent-strong);
 }
 
 .hp-field {

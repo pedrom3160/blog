@@ -1,9 +1,10 @@
 // Suggestions form — pure helpers plus browser wiring.
 //
-// The site is static (GitHub Pages). By default the form prepares a public
-// GitHub issue; nothing is sent by this page and no success is reported until
-// the visitor confirms the issue on GitHub. If `data-endpoint` is configured,
-// the form posts JSON to that endpoint and only reports success on a 2xx reply.
+// The site is static (GitHub Pages). With no provider configured, the form
+// prepares a public GitHub issue; nothing is sent by this page and no success
+// is reported until the visitor confirms the issue on GitHub. When a Web3Forms
+// public form key or a generic CORS endpoint is configured, the form posts
+// directly and reports success only after a successful provider response.
 //
 // The exported helpers are covered by tests/suggestions.test.js.
 
@@ -73,6 +74,37 @@ export function formatSuggestionText(input) {
     .join('\n');
 }
 
+// Web3Forms expects a public access key (a form ID, not a secret). The key is
+// visible in the page by design and only routes a submission to its inbox.
+export function buildWeb3FormsPayload(input, accessKey, pageUrl = '') {
+  const key = String(accessKey || '').trim();
+  if (!key) throw new Error('Chave Web3Forms em falta.');
+
+  const title = String(input.title || '').trim();
+  const description = String(input.description || '').trim();
+  const category = String(input.category || '').trim() || 'Outra';
+  const name = String(input.name || '').trim();
+  const email = String(input.email || '').trim();
+
+  return {
+    access_key: key,
+    subject: `[Sugestão] ${title}`,
+    from_name: 'GPTCLONE Blog',
+    name: name || 'Anónimo',
+    ...(email ? { email } : {}),
+    category,
+    title,
+    message: description,
+    botcheck: false,
+    source: 'GPTCLONE Blog — Sugestões',
+    ...(pageUrl ? { page_url: pageUrl } : {}),
+  };
+}
+
+export function web3formsSucceeded(payload) {
+  return Boolean(payload && payload.success === true);
+}
+
 function copyToClipboard(text) {
   if (navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
     return navigator.clipboard.writeText(text);
@@ -103,9 +135,15 @@ function initSuggestionForm() {
   const status = document.getElementById('suggestion-status');
   const submit = form.querySelector('button[type="submit"]');
   const copyButton = document.getElementById('suggestion-copy');
+  const githubButton = document.getElementById('suggestion-github');
+  const mode = String(form.dataset.mode || 'github').trim();
   const endpoint = String(form.dataset.endpoint || '').trim();
+  const accessKey = String(form.dataset.accessKey || '').trim();
   const repo = String(form.dataset.repo || '').trim();
   const submitLabel = submit ? submit.textContent.trim() : '';
+  const privateConfigured =
+    (mode === 'web3forms' && Boolean(accessKey) && Boolean(endpoint)) ||
+    (mode === 'endpoint' && Boolean(endpoint));
 
   form.noValidate = true;
 
@@ -170,7 +208,7 @@ function initSuggestionForm() {
     if (first) first.focus();
   }
 
-  function setStatus(state, message, link) {
+  function setStatus(state, message, link, linkLabel = 'Abrir a issue no GitHub') {
     if (!status) return;
     status.hidden = false;
     status.dataset.state = state;
@@ -185,7 +223,7 @@ function initSuggestionForm() {
       anchor.href = link;
       anchor.target = '_blank';
       anchor.rel = 'noopener noreferrer';
-      anchor.textContent = 'Abrir a issue no GitHub';
+      anchor.textContent = linkLabel;
       status.appendChild(anchor);
     }
   }
@@ -195,6 +233,48 @@ function initSuggestionForm() {
     if (!select || select.selectedIndex < 0) return '';
     const option = select.options[select.selectedIndex];
     return option ? option.textContent.trim() : '';
+  }
+
+  function payloadFrom(data) {
+    return {
+      category: categoryLabel() || data.category,
+      title: data.title.trim(),
+      description: data.description.trim(),
+      name: data.name.trim(),
+      email: data.email.trim(),
+    };
+  }
+
+  function issueUrlFrom(payload) {
+    try {
+      return buildIssueUrl({ ...payload, repo });
+    } catch (error) {
+      return '';
+    }
+  }
+
+  function openIssue(payload) {
+    const url = issueUrlFrom(payload);
+    if (!url) {
+      setStatus('error', 'Não foi possível preparar a issue. Copie o texto da sugestão para não o perder.');
+      return;
+    }
+    window.open(url, '_blank', 'noopener');
+    setStatus(
+      'info',
+      'Sugestão preparada. Reveja o texto no GitHub e confirme a publicação; nada foi enviado por este site.',
+      url,
+      'Abrir a issue no GitHub'
+    );
+  }
+
+  function setBusy(busy) {
+    if (submit) {
+      submit.disabled = busy;
+      submit.textContent = busy ? 'A enviar…' : submitLabel;
+    }
+    if (busy) form.setAttribute('aria-busy', 'true');
+    else form.removeAttribute('aria-busy');
   }
 
   for (const input of form.querySelectorAll('input, select, textarea')) {
@@ -211,7 +291,8 @@ function initSuggestionForm() {
     if (status) status.hidden = true;
 
     const honeypot = field('website');
-    if (honeypot && honeypot.value) return;
+    const botcheck = field('botcheck');
+    if ((honeypot && honeypot.value) || (botcheck && botcheck.checked)) return;
 
     const data = values();
     const errors = validateSuggestion(data);
@@ -220,52 +301,87 @@ function initSuggestionForm() {
       return;
     }
 
-    const label = categoryLabel();
-    const payload = {
-      category: label || data.category,
-      title: data.title.trim(),
-      description: data.description.trim(),
-      name: data.name.trim(),
-    };
+    const payload = payloadFrom(data);
 
-    if (endpoint) {
-      if (submit) {
-        submit.disabled = true;
-        submit.textContent = 'A enviar…';
-      }
-      try {
+    if (mode === 'github') {
+      openIssue(payload);
+      return;
+    }
+
+    if (!privateConfigured) {
+      setStatus(
+        'error',
+        'O serviço de envio não está configurado. Pode publicar a sugestão no GitHub ou copiá-la.',
+        issueUrlFrom(payload),
+        'Publicar no GitHub'
+      );
+      return;
+    }
+
+    setBusy(true);
+    setStatus('info', 'A enviar a sugestão…');
+
+    try {
+      if (mode === 'web3forms') {
+        const body = buildWeb3FormsPayload(payload, accessKey, window.location.href);
         const response = await fetch(endpoint, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-          body: JSON.stringify({ ...payload, email: data.email.trim(), _subject: 'Nova sugestão — GPTCLONE Blog' }),
+          body: JSON.stringify(body),
+        });
+        let result = null;
+        try {
+          result = await response.json();
+        } catch (error) {
+          result = null;
+        }
+        if (!response.ok || !web3formsSucceeded(result)) throw new Error('Web3Forms submission failed');
+        form.reset();
+        resetErrors();
+        setStatus('success', 'Sugestão enviada. Obrigado pelo contributo.');
+      } else {
+        const response = await fetch(endpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify({
+            ...payload,
+            _subject: 'Nova sugestão — GPTCLONE Blog',
+            source: 'GPTCLONE Blog — Sugestões',
+          }),
         });
         if (!response.ok) throw new Error('HTTP ' + response.status);
         form.reset();
         resetErrors();
         setStatus('success', 'Sugestão enviada. Obrigado pelo contributo.');
-      } catch (error) {
-        setStatus('error', 'Não foi possível enviar a sugestão. Tente novamente mais tarde ou copie o texto para não o perder.');
-      } finally {
-        if (submit) {
-          submit.disabled = false;
-          submit.textContent = submitLabel;
-        }
       }
-      return;
-    }
-
-    try {
-      const url = buildIssueUrl({ ...payload, repo });
-      window.open(url, '_blank', 'noopener');
-      setStatus(
-        'info',
-        'Sugestão preparada. Reveja o texto no GitHub e confirme a publicação; nada foi enviado por este site.',
-        url
-      );
     } catch (error) {
-      setStatus('error', 'Não foi possível preparar a issue. Copie o texto da sugestão para não o perder.');
+      setStatus(
+        'error',
+        'Não foi possível enviar a sugestão. Tente novamente mais tarde ou publique-a no GitHub; o texto preenchido mantém-se.',
+        issueUrlFrom(payload),
+        'Publicar no GitHub'
+      );
+    } finally {
+      setBusy(false);
     }
   });
+
+  if (githubButton) {
+    githubButton.addEventListener('click', () => {
+      resetErrors();
+      const data = values();
+      const errors = validateSuggestion(data);
+      if (Object.keys(errors).length) {
+        showErrors(errors);
+        setStatus('error', 'Corrija os campos indicados antes de preparar a issue.');
+        return;
+      }
+      const honeypot = field('website');
+      const botcheck = field('botcheck');
+      if ((honeypot && honeypot.value) || (botcheck && botcheck.checked)) return;
+      openIssue(payloadFrom(data));
+    });
+  }
 
   if (copyButton) {
     copyButton.addEventListener('click', () => {
@@ -277,15 +393,12 @@ function initSuggestionForm() {
         setStatus('error', 'Corrija os campos indicados antes de copiar a sugestão.');
         return;
       }
-      const text = formatSuggestionText({
-        category: categoryLabel() || data.category,
-        title: data.title.trim(),
-        description: data.description.trim(),
-        name: data.name.trim(),
-      });
+      const text = formatSuggestionText(payloadFrom(data));
       copyToClipboard(text)
         .then(() => setStatus('success', 'Sugestão copiada para a área de transferência.'))
-        .catch(() => setStatus('error', 'Não foi possível copiar automaticamente. Selecione o texto do formulário e copie-o manualmente.'));
+        .catch(() =>
+          setStatus('error', 'Não foi possível copiar automaticamente. Selecione o texto do formulário e copie-o manualmente.')
+        );
     });
   }
 }

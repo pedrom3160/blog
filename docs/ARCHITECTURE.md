@@ -93,11 +93,14 @@ rodapé), não menus.
 
 ## Sugestões e participação
 
-`src/_data/suggestions.js` contém o repositório, as cinco categorias, a data de revisão e um
-`endpoint` opcional. Sem endpoint, `src/scripts/suggestions.js` valida o formulário e abre uma
-issue pública pré-preenchida no GitHub; não há pedido de email nem confirmação falsa. Com endpoint,
-o formulário faz `POST` JSON e só reporta sucesso após uma resposta 2xx. Ver `docs/SUGGESTIONS.md`.
-A página e o formulário são cobertos por `tests/suggestions.test.js` e pelo validador.
+`src/_data/suggestions.js` contém o repositório, as cinco categorias, a data de revisão e o modo
+de submissão (`github`, `web3forms` ou `endpoint`). Sem configuração, `src/scripts/suggestions.js`
+valida o formulário e abre uma issue pública pré-preenchida no GitHub; não há pedido de email nem
+confirmação falsa. Com a variável pública `WEB3FORMS_ACCESS_KEY`, o formulário faz `POST` JSON para
+Web3Forms, mostra o campo de email opcional e mantém o GitHub como alternativa. Um endpoint CORS
+genérico continua disponível. Só há sucesso após uma resposta positiva do fornecedor; erros mostram
+uma alternativa para publicar no GitHub. Ver `docs/SUGGESTIONS.md`. A página e o formulário são
+cobertos por `tests/suggestions.test.js` e pelo validador.
 
 ## Design System
 

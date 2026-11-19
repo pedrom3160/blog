@@ -5,6 +5,7 @@
 import { readdirSync, readFileSync, existsSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import suggestions from '../src/_data/suggestions.js';
 
 const root = dirname(dirname(fileURLToPath(import.meta.url)));
 const site = join(root, '_site');
@@ -143,6 +144,8 @@ if (!locs.includes(SITE_URL + 'donations/')) fail('Sitemap is missing /donations
 if (!locs.includes(SITE_URL + 'about/')) fail('Sitemap is missing /about/');
 if (!locs.includes(SITE_URL + 'suggestions/')) fail('Sitemap is missing /suggestions/');
 if (locs.some((l) => l.endsWith('/404.html'))) fail('Sitemap must not include 404.html');
+const notFound = readFileSync(join(site, '404.html'), 'utf8');
+if (!/<meta name="robots" content="noindex/.test(notFound)) fail('404 page must be noindex');
 const rss = readFileSync(join(site, 'rss.xml'), 'utf8');
 if (rss.includes('/blog/blog')) fail('RSS contains doubled /blog/blog URLs');
 if (!rss.startsWith('<?xml')) fail('rss.xml is not XML');
@@ -182,11 +185,34 @@ for (const field of ['category', 'title', 'body', 'name']) {
 }
 if (!/id="suggestion-form"/.test(suggestionsHtml)) fail('Suggestions form is missing its id');
 if (!/data-repo="pedrom3160\/blog"/.test(suggestionsHtml)) fail('Suggestions form is missing its GitHub repository');
-if (!/action="https:\/\/github\.com\/pedrom3160\/blog\/issues\/new"/.test(suggestionsHtml)) {
-  fail('Suggestions form has no working GitHub issue fallback action');
+const submission = suggestions.submission;
+if (submission.mode === 'github') {
+  if (!/action="https:\/\/github\.com\/pedrom3160\/blog\/issues\/new"/.test(suggestionsHtml)) {
+    fail('Suggestions form has no working GitHub issue fallback action');
+  }
+} else if (!new RegExp(`action="${submission.endpoint.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}"`).test(suggestionsHtml)) {
+  fail('Suggestions form action does not target the configured provider');
+}
+if (!new RegExp(`data-mode="${submission.mode}"`).test(suggestionsHtml)) {
+  fail(`Suggestions form mode is not rendered as "${submission.mode}"`);
 }
 if (!/id="suggestion-status"[^>]*role="status"/.test(suggestionsHtml) || !/aria-live="polite"/.test(suggestionsHtml)) {
   fail('Suggestions form status is not an accessible live region');
+}
+if (!/id="suggestion-name"[\s\S]{0,500}?aria-describedby="[^"]*error-name/.test(suggestionsHtml)) {
+  fail('Suggestions name field is not linked to its error message');
+}
+if (submission.mode === 'github') {
+  if (/name="email"/.test(suggestionsHtml)) fail('Public GitHub mode must not collect email');
+} else {
+  if (!/name="email"/.test(suggestionsHtml)) fail('Provider mode must offer the optional email field');
+  if (!/id="suggestion-email"[\s\S]{0,500}?aria-describedby="[^"]*error-email/.test(suggestionsHtml)) {
+    fail('Suggestions email field is not linked to its error message');
+  }
+  if (!/data-endpoint="https:\/\/[^"]+"/.test(suggestionsHtml)) fail('Provider mode has no https endpoint');
+  if (submission.mode === 'web3forms' && (!/data-access-key="[^"]+"/.test(suggestionsHtml) || !/name="access_key" value="[^"]+"/.test(suggestionsHtml))) {
+    fail('Web3Forms mode has no public access key');
+  }
 }
 const suggestionsText = suggestionsHtml.replaceAll('&amp;', '&').replaceAll('&#39;', "'");
 for (const copy of [
@@ -195,7 +221,7 @@ for (const copy of [
   'O nome pode ser temporário. A visão não.',
   'Ideias & Funcionalidades',
   'O que pode sugerir?',
-  'Preparar sugestão no GitHub',
+  submission.mode === 'github' ? 'Preparar sugestão no GitHub' : 'Enviar sugestão',
 ]) {
   if (!suggestionsText.includes(copy)) fail(`Suggestions page is missing expected copy: ${copy}`);
 }
@@ -245,6 +271,10 @@ for (const file of htmlFiles) {
 
   for (const label of html.matchAll(/<label[^>]*\bfor="([^"]+)"[^>]*>/g)) {
     if (!ids.includes(label[1])) fail(`Label for missing id "${label[1]}" in ${rel}`);
+  }
+
+  if (html.includes('id="search-results"') && !/id="search-results"[^>]*role="(region|status)"/.test(html)) {
+    fail(`Search results live region has no supporting role in ${rel}`);
   }
 
   const title = html.match(/<title>([^<]*)<\/title>/);

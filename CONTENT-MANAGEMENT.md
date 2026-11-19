@@ -393,9 +393,10 @@ A página `/suggestions/` não é gerida pelo CMS: o texto editorial vive em
 `src/pages/suggestions.njk`, as categorias em `src/_data/suggestions.js` e o comportamento
 em `src/scripts/suggestions.js`. Por omissão, o formulário prepara uma issue pública no
 GitHub; não há backend nem armazenamento de submissões. Para receber sugestões sem conta
-GitHub, configure um endpoint CORS em `src/_data/suggestions.js` e siga
-`docs/SUGGESTIONS.md`. O CMS continua a gerir apenas os artigos, a página Sobre e os
-catálogos de recursos.
+GitHub, crie um formulário Web3Forms e defina a variável pública
+`WEB3FORMS_ACCESS_KEY` no repositório; o workflow passa-a ao build. Em alternativa,
+configure um endpoint CORS em `src/_data/suggestions.js`. Siga `docs/SUGGESTIONS.md`.
+O CMS continua a gerir apenas os artigos, a página Sobre e os catálogos de recursos.
 
 ## Resumo: operacional vs. requer configuração
 

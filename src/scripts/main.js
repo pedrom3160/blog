@@ -48,7 +48,12 @@
 
   if (navToggle && mainNav) {
     navToggle.addEventListener('click', function () {
-      setNav(!mainNav.classList.contains('is-open'));
+      var open = !mainNav.classList.contains('is-open');
+      setNav(open);
+      if (open) {
+        var firstLink = mainNav.querySelector('a');
+        if (firstLink) firstLink.focus();
+      }
     });
 
     mainNav.addEventListener('click', function (event) {
