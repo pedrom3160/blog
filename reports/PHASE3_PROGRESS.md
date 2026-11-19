@@ -115,7 +115,41 @@ testing were not available; those limitations remain from Phase 2.
 
 ## 6. Deployment and live verification
 
-To be completed after commit, push and the Pages workflow.
+- Implementation commit: `b00f974e1ef6cd875b144ecb72f05f5fac59b275`
+  (`feat: add publishing handbooks and refine PDF catalog`), pushed to `origin/main`.
+- GitHub Actions run [44591311447](https://github.com/pedrom3160/blog/actions/runs/44591311447):
+  **completed / success**.
+- Local and remote `main` matched at the pushed implementation commit.
+
+Live checks against `https://pedrom3160.github.io/blog/`:
+
+| Route/check | Result |
+|---|---|
+| Home | 200; exact “O Blog reúne…” sentence; four nav links; no old phrase |
+| About, Suggestions, Donations, Journal, article, PDF/audio libraries | 200 |
+| Suggestions | `data-mode="github"`, no email field, GitHub action, five categories, temporary-name copy |
+| Empty Submit | Three errors, focus on category, `aria-invalid="true"` |
+| Valid Submit (stubbed `window.open`) | Honest “Sugestão preparada” status and correct issue URL; no issue created |
+| PDF library | 3 cards; accessible Ver PDF and Descarregar actions; PDF returns 200 `application/pdf`; 375 px no overflow |
+| Audio library | 3 cards, player present, WAV returns 200 `audio/wav`; 375 px no overflow |
+| 404 | HTTP 404, `noindex, follow`, four nav links |
+| RSS / sitemap | 200 `application/xml`; canonical/OG on Suggestions correct |
+| Assets | CSS/JS still served from the deployed build |
+
+Production Lighthouse (mobile):
+
+| Page | Performance | Accessibility | Best practices | SEO |
+|---|---|---|---|---|
+| Home | 99 | 96 | 100 | 100 |
+| PDF library | 99 | 96 | 100 | 100 |
+
+The only accessibility failure on both pages is the intentional, non-interactive,
+`aria-hidden` footer wordmark contrast. The new PDF heading-order and accessible-label issues were
+fixed and no longer appear.
+
+**Email delivery was not tested and is not active.** There is no `WEB3FORMS_ACCESS_KEY` in the
+repository or Actions build, so production remains on the GitHub fallback. No real provider
+request, email or GitHub issue was created during verification.
 
 ## 7. Remaining limitations
 
