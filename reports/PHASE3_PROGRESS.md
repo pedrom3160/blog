@@ -104,7 +104,7 @@ accessibility with only the known decorative footer wordmark contrast finding.
 | Audio page | PASS — 3 catalog cards, player, audio file returned 200 |
 | Mobile menu | PASS — first link focused on open; Escape returned focus to toggle |
 | Homepage layout | PASS — 375 px `scrollWidth` 358, no overflow |
-| PDF layout | PASS — 1440 px `scrollWidth` 1423, no overflow |
+| PDF layout | PASS — 375→358, 430→413, 768→751, 1024→1007, 1440→1423; action row not overflowing |
 | Audio layout | PASS — 375 px, no overflow |
 | Documentation targets | PASS — new guide/README relative targets exist; sample content paths inside code fences are intentionally illustrative |
 
@@ -130,7 +130,7 @@ Live checks against `https://pedrom3160.github.io/blog/`:
 | Suggestions | `data-mode="github"`, no email field, GitHub action, five categories, temporary-name copy |
 | Empty Submit | Three errors, focus on category, `aria-invalid="true"` |
 | Valid Submit (stubbed `window.open`) | Honest “Sugestão preparada” status and correct issue URL; no issue created |
-| PDF library | 3 cards; accessible Ver PDF and Descarregar actions; PDF returns 200 `application/pdf`; 375 px no overflow |
+| PDF library | 3 cards; accessible Ver PDF and Descarregar actions; PDF returns 200 `application/pdf`; no overflow at 375/430/768/1024/1440 px |
 | Audio library | 3 cards, player present, WAV returns 200 `audio/wav`; 375 px no overflow |
 | 404 | HTTP 404, `noindex, follow`, four nav links |
 | RSS / sitemap | 200 `application/xml`; canonical/OG on Suggestions correct |
