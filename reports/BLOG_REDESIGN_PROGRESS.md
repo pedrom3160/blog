@@ -142,7 +142,8 @@ player. Reduced-motion and high-contrast media queries included.
 | Contrast | PASS — accent 5.51:1, muted 5.26:1, secondary 9.75:1, dark accent 7.39:1 |
 | Visual review | Desktop (1440), tablet (768/1024) and mobile (375) reviewed in-browser; homepage, About, Donations, article, PDF library |
 
-**Not checked:** Safari/Firefox rendering, screen-reader announcement testing, Lighthouse scores.
+**Not checked:** Safari/Firefox rendering, screen-reader announcement testing, Lighthouse scores,
+and the Decap CMS admin (it needs the external OAuth proxy).
 
 ---
 
@@ -171,4 +172,39 @@ player. Reduced-motion and high-contrast media queries included.
 
 ## 9. Publication and deployment
 
-To be completed after the push: commit SHAs, GitHub Actions run, production verification.
+### Commits
+
+| Commit | Content |
+|--------|---------|
+| `0972eb5` | Redesign implementation (59 files, +4722/−1721) |
+| `b1b9b88` | Audit, progress report and Kilo's preserved recovery report |
+
+Pushed without force: `56d016a..b1b9b88  main -> main` to
+https://github.com/pedrom3160/blog. At deployment time `git rev-parse HEAD` and
+`git rev-parse origin/main` both returned `b1b9b88b39fb154999eafd438c36da616c559ec0`.
+
+### GitHub Actions
+
+- Run: https://github.com/pedrom3160/blog/actions/runs/44574246100
+- Workflow: “Deploy GPTCLONE Blog to GitHub Pages”
+- Status: **completed / success** (triggered 2026-11-19T17:10:18Z)
+
+### Production verification (https://pedrom3160.github.io/blog/)
+
+| Check | Result |
+|-------|--------|
+| `/`, `/about/`, `/donations/` | 200, new design, one `<h1>`, `lang="pt-PT"`, canonical |
+| Section pages (`/journal/`, `/ai-research/`, `/academy/`, `/pdf-library/`, `/audiobook-library/`, `/search/`, `/tags/`) | all 200 |
+| Article page | 200, `BlogPosting` + breadcrumbs, OG/Twitter image resolves to `social-card.png` |
+| Primary navigation | exactly 3 links on all 12 sampled pages: Blog · About · Donations |
+| Images | 0 `<img>` without `alt` on all sampled pages |
+| CSS / JS / fonts / covers | 200, no console errors, no failed requests in the browser |
+| `/assets/images/social-card.png` | 200, `image/png`, 58 189 bytes |
+| `/rss.xml` | 200, `application/xml` |
+| `/sitemap.xml` | includes `/blog/donations/`, excludes `404.html` |
+| `/blog/nao-existe-xyz/` | HTTP 404 with the branded error page |
+| Mobile 375 px | no horizontal overflow (`scrollWidth 358`), menu button exposes 3 links, Donations page stacks correctly |
+| Visual review | deployed homepage (light/dark), Donations and article at 1440 px; Donations at 375 px |
+
+A final documentation-only commit records this section; the code served by GitHub Pages is the
+implementation from commit `0972eb5`, deployed via `b1b9b88`.
