@@ -64,7 +64,7 @@ spam filtering and returns an explicit JSON success flag. GitHub remains a publi
 | # | Finding | Severity | Disposition |
 |---|---------|----------|-------------|
 | 1 | No live anonymous submission path; only GitHub (account required) | High, external | Web3Forms adapter implemented; activation blocked on owner key |
-| 2 | Dark-theme primary button: white on `#ff7a4f`, **2.58:1** | Serious accessibility | Fixed: dark text on accent, **7.03:1** |
+| 2 | Dark-theme primary button: white on `#ff7a4f`, **2.58:1** | Serious accessibility | Fixed: dark text on accent, **7.39:1** |
 | 3 | 404 emitted `index, follow` | SEO | Fixed: `noindex, follow` |
 | 4 | Search results `aria-label` on a generic `div` (`aria-prohibited-attr`) | Serious accessibility | Fixed: `role="region"` on modal and page results |
 | 5 | Name/email errors were not in `aria-describedby` | Accessibility | Fixed for both fields |

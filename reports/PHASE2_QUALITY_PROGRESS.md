@@ -35,7 +35,7 @@ putting an optional email into a GitHub URL when JavaScript is unavailable.
 - Added a “Preparar no GitHub” alternative in provider mode and a prefilled GitHub fallback on
   provider failure.
 - Added `aria-busy` during submission and kept the form text intact on failure.
-- Fixed dark-theme primary button contrast: dark text on `#ff7a4f` (**7.03:1**, was **2.58:1**
+- Fixed dark-theme primary button contrast: dark text on `#ff7a4f` (**7.39:1**, was **2.58:1**
   with white text).
 - Fixed 404 `noindex, follow`; 404 retains the four-item navigation.
 - Fixed `aria-prohibited-attr` by giving both search-results regions `role="region"`.
@@ -92,7 +92,7 @@ putting an optional email into a GitHub URL when JavaScript is unavailable.
 | Web3Forms build | PASS — `data-mode="web3forms"`, email field, hidden key, endpoint and provider copy; validator passes |
 | Mobile focus | PASS — opening focuses “Blog”; Escape returns focus to “Abrir menu”; four links |
 | Search axe | PASS — no `aria-prohibited-attr`; role region present |
-| Dark button | PASS — computed foreground `#0e1013` on `#ff7a4f` |
+| Dark button | PASS — computed foreground `#0e1013` on `#ff7a4f`, 7.39:1 |
 | 404 | PASS — 404 response, `noindex, follow`, four nav links |
 | Lighthouse (local Suggestions) | 99 performance / 96 accessibility / 100 best practices / 100 SEO |
 
@@ -126,4 +126,34 @@ WebKit/Safari is unavailable on this host. Edge was not tested separately.
 
 ## 8. Git, CI and live production
 
-To be completed after commit, push and deployment.
+- Initial HEAD: `961eb8f9520817b5ae5bed5d489df6f64e23deab`.
+- Implementation commit: `81ea562c539ed2f30b614e9f73ca64390e18a99b`
+  (`feat: add Web3Forms path and accessibility hardening`), pushed to `origin/main`.
+- GitHub Actions run [44586881391](https://github.com/pedrom3160/blog/actions/runs/44586881391):
+  **completed / success**.
+- Local and remote `main` matched at the pushed commit; the working tree was clean before
+  this report update.
+
+Live checks against `https://pedrom3160.github.io/blog/`:
+
+| Route/check | Result |
+|---|---|
+| Home, About, Suggestions, Donations, Journal, article | 200, one `h1`, four nav links |
+| Suggestions mode | `github`; no email field; GitHub action |
+| Empty Submit | Three errors, focus on category, `aria-invalid="true"` |
+| Valid Submit (stubbed `window.open`) | Honest “Sugestão preparada” status and correct prefilled issue URL; no request or issue created |
+| 404 | HTTP 404, `noindex, follow`, four nav links |
+| Search | `id="search-results" role="region"` |
+| Brand | `G GPTCLONE Journal — página inicial` |
+| Assets | CSS and both JS files return 200 at `v=3.2.0` |
+| Sitemap / RSS | Suggestions included, 404 excluded; RSS 200 `application/xml` |
+| Canonical / OG | Correct production URLs and title |
+| Dark primary button | Computed `#0e1013` on `#ff7a4f`, **7.39:1** |
+| Layout | 1440: scrollWidth 1423, form 648; 375: no overflow |
+
+Live Lighthouse (mobile, Suggestions): **98 performance / 96 accessibility / 100 best
+practices / 100 SEO**; FCP 1.8 s, LCP 1.8 s, CLS 0. The only accessibility failure is the
+decorative `aria-hidden` footer wordmark. The earlier local post-fix run scored 99 performance.
+
+No real Web3Forms submission, GitHub issue or other public test content was created. The
+provider path remains inactive until the owner adds `WEB3FORMS_ACCESS_KEY`.
