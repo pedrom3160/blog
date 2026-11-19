@@ -30,6 +30,22 @@ descoberta de conteúdo: vivem na homepage e no rodapé, e **não** são menus a
 
 Idioma: **português europeu (pt-PT)**. A arquitetura está preparada para expansão multilingue.
 
+## Publicar e manter conteúdo
+
+O percurso recomendado não exige um CMS: os artigos são Markdown no repositório e os recursos
+são ficheiros mais entradas de catálogo.
+
+- [Guia geral de publicação](docs/PUBLISHING_GUIDE.md) — comece aqui.
+- [Artigos](docs/ARTICLES_GUIDE.md) — frontmatter, Markdown, imagens, pré-visualização e publicação.
+- [PDFs](docs/PDF_LIBRARY_GUIDE.md) — ficheiros, catálogo, tamanho e download.
+- [Áudio e audiolivros](docs/AUDIOBOOKS_GUIDE.md) — formatos, catálogo, player e acessibilidade.
+- [Referência técnica de conteúdo](docs/CONTENT_GUIDE.md).
+- [Sugestões e privacidade](docs/SUGGESTIONS.md).
+
+A interface opcional em `/admin/` (Decap CMS) continua documentada em
+[CONTENT-MANAGEMENT.md](CONTENT-MANAGEMENT.md), mas exige uma OAuth App e um proxy Node.js
+configurados; não é necessária para publicar pelo GitHub.
+
 ## Design system
 
 Identidade editorial própria, documentada em `src/styles/main.css`:
@@ -82,7 +98,7 @@ src/
 public/resources/         PDFs e áudio de amostra
 scripts/                  build.mjs, validate.mjs, generate-samples.mjs, migrate-content.mjs
 tests/                    Vitest (datas, pesquisa, DOM, navegação/donativos)
-docs/                     Arquitetura, conteúdo, deploy, donativos, sugestões, contribuição
+docs/                     Arquitetura, guias de publicação, conteúdo, deploy, donativos, sugestões
 reports/                  Auditoria e relatório de redesign
 ```
 

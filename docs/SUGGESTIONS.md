@@ -17,7 +17,7 @@ uma issue em branco; no modo provider, envia diretamente para o endpoint (Web3Fo
 chave pública num campo oculto). Com JavaScript, o botão principal usa o mesmo modo e o GitHub
 continua disponível como alternativa.
 
-## Modo atual: issue pública no GitHub
+## Modo atual em produção: issue pública no GitHub
 
 Sem chave nem endpoint, o formulário valida os campos localmente e **prepara** uma issue no
 repositório `pedrom3160/blog` com título, categoria, descrição e nome/pseudónimo opcional.
@@ -57,19 +57,41 @@ identificador público de encaminhamento, não uma credencial com poderes de lei
 
 ### Ativação (requer uma conta Web3Forms do proprietário)
 
-1. Criar um formulário em https://web3forms.com/ com o email que deve receber as sugestões.
-2. Confirmar o email e copiar o **Access Key** do formulário (UUID).
-3. No GitHub, abrir **Settings → Secrets and variables → Actions → Variables** e criar
-   `WEB3FORMS_ACCESS_KEY` com esse valor. É uma variável, não um secret: a chave fica visível
-   no HTML por desenho.
-4. O workflow `.github/workflows/deploy.yml` passa a variável ao build. Localmente:
-   `WEB3FORMS_ACCESS_KEY=... npm run build && npm run validate`.
-5. No painel Web3Forms, definir a retenção de submissões para **7 dias** (ou o mínimo adequado)
-   e ativar hCaptcha apenas se houver spam.
-6. Publicar e verificar que a página tem `data-mode="web3forms"`, o campo de email opcional e
-   o botão “Enviar sugestão”. Fazer uma submissão real de teste.
+A conta e a chave pertencem ao proprietário do projeto. Criar a conta, verificar o email de
+destino e receber a chave exige acesso à caixa de correio; não pode ser feito apenas pelo
+repositório. O endereço de destino é o inbox indicado pelo proprietário no momento da criação
+do formulário e **não é guardado neste repositório público**, para não publicar um email pessoal.
 
-Sem o passo 3, o site continua no modo GitHub. Não existe uma chave fictícia no repositório.
+1. Abrir https://web3forms.com/ e criar um formulário com o email que deve receber as sugestões.
+2. Confirmar o email de verificação e copiar a **Access Key** enviada para essa caixa (UUID).
+3. Abrir a página exata de variáveis do repositório:
+   https://github.com/pedrom3160/blog/settings/variables/actions
+4. Criar uma **Repository variable** (não um secret) com o nome `WEB3FORMS_ACCESS_KEY` e a chave
+   copiada. A chave é pública por desenho e fica visível no HTML; não é uma credencial privada.
+5. Opcionalmente, correr o workflow manualmente em **Actions → Deploy GPTCLONE Blog to GitHub
+   Pages → Run workflow**; o workflow `.github/workflows/deploy.yml` passa a variável ao build.
+6. Confirmar no run que o build e a validação passaram e que a página publicada contém
+   `data-mode="web3forms"`, o campo de email opcional e o botão **Enviar sugestão**.
+7. Fazer uma submissão real controlada, identificada como teste, e confirmar a receção no inbox.
+   O teste fica privado no email, não cria uma issue pública. Apagar a submissão de teste no
+   painel Web3Forms se essa opção estiver disponível.
+8. No painel Web3Forms, definir a retenção para **7 dias** (ou o mínimo adequado) e ativar
+   hCaptcha apenas se houver spam.
+
+**Estado em 19 de novembro de 2026:** a chave ainda não existe, portanto o passo 4 não foi feito
+e a produção continua em `github`. Sem a variável, o site não falha e não finge enviar: mantém o
+handoff honesto para uma issue. Localmente, a variável pode ser passada com
+`WEB3FORMS_ACCESS_KEY=... npm run build && npm run validate`, mas isso não ativa a produção;
+é a repository variable que o workflow de Pages lê.
+
+### Verificação após ativação
+
+- `data-mode="github"` significa que a variável não chegou ao build; confirme o nome, o run e o
+  ambiente do job.
+- `data-mode="web3forms"` confirma o modo, mas **não** confirma entrega. A entrega só é real
+  quando o inbox recebe a submissão e o painel Web3Forms a mostra.
+- Não usar uma chave de outra pessoa, uma chave de teste pública ou uma conta descartável. Não
+  rodar a chave sem necessidade; se houver abuso, criar uma nova e atualizar a variável.
 
 ### O que o visitante vê
 

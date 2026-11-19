@@ -1,105 +1,88 @@
-# Guia de Conteúdo — GPTCLONE Blog
+# Guia de Conteúdo — referência técnica
+
+Este documento é a referência curta para quem já conhece o projeto. O percurso completo e
+explicado passo a passo está nos handbooks:
+
+- [Guia geral de publicação](PUBLISHING_GUIDE.md)
+- [Artigos](ARTICLES_GUIDE.md)
+- [PDFs](PDF_LIBRARY_GUIDE.md)
+- [Audiolivros e áudio](AUDIOBOOKS_GUIDE.md)
 
 ## Idioma
 
-O idioma principal do site é **português europeu (pt-PT)**. A arquitetura está preparada para futura expansão para inglês e espanhol, mas nenhuma tradução foi ainda implementada.
+O idioma principal é **português europeu (pt-PT)**. A arquitetura está preparada para futuras
+traduções, mas não existe tradução publicada.
 
-## Secções de Conteúdo
+## Secções
 
-### 1. Jornal GPTCLONE
+| Secção | Pasta | Coleção | URL base |
+|---|---|---|---|
+| Jornal GPTCLONE | `src/content/journal/` | `journal` | `/journal/` |
+| Investigação em IA | `src/content/ai-research/` | `ai-research` | `/ai-research/` |
+| GPTCLONE Academy | `src/content/academy/` | `academy` | `/academy/` |
+| Biblioteca PDF | `public/resources/pdfs/` + `src/_data/pdfLibrary.json` | — | `/pdf-library/` |
+| Audiolivros | `public/resources/audiobooks/` + `src/_data/audiobookLibrary.json` | — | `/audiobook-library/` |
 
-Localização: `src/content/journal/`
+Os dados de diretório em `*.11tydata.json` aplicam `layouts/article.njk` aos artigos. Não é
+necessário repetir `layout` no frontmatter.
 
-Artigos sobre notícias do projeto, atualizações de desenvolvimento, marcos, anúncios, decisões técnicas e relatórios.
+## Frontmatter de artigo
 
-### 2. Investigação em IA
-
-Localização: `src/content/ai-research/`
-
-Tópicos: LLMs, Transformers, Tokenização, Machine Learning, treino/fine-tuning, agentes, avaliação, RAG, NLP.
-
-**Importante:** Distinguir claramente entre resultados verificados, hipóteses e planos futuros.
-
-### 3. GPTCLONE Academy
-
-Localização: `src/content/academy/`
-
-Caminho inicial: **From Zero to Builder — The GPTCLONE Journey** — fundamentos de programação, Python, matemática para IA, ML, redes neurais, Linux, networking, cibersegurança, hardware e desenvolvimento assistido por IA.
-
-### 4. Biblioteca PDF
-
-Localização: `src/_data/pdfLibrary.json`
-
-Catálogo de documentos PDF com título, descrição, categoria, tags, autor, licença, páginas, tamanho e `downloadUrl`/`previewUrl`. Os ficheiros de amostra (CC-BY-4.0, claramente identificados como exemplos) podem ser regenerados com `npm run generate:samples`.
-
-**Nunca criar ligações de download falsas ou ficheiros em falta.** `npm run validate` verifica que cada URL do catálogo existe no build.
-
-### 5. Biblioteca de Audiolivros
-
-Localização: `src/_data/audiobookLibrary.json`
-
-Catálogo de recursos áudio. As entradas atuais são placeholders verdadeiros (`placeholder: true`, `streamUrl: null`, "Disponível em breve"). O ficheiro `sample-tone.wav` é uma demonstração técnica do player, não um audiolivro. Respeitar direitos de autor e licenciamento.
-
-## Como Adicionar Conteúdo
-
-### Adicionar um Artigo (Markdown)
-
-1. Criar um ficheiro `.md` em `src/content/journal/`, `src/content/ai-research/` ou `src/content/academy/`
-2. Incluir frontmatter YAML completo
-3. O artigo é automaticamente listado (coleção explícita em `.eleventy.js`)
-
-Exemplo:
-
-```markdown
+```yaml
 ---
-title: "Título do Artigo"
-description: "Descrição resumida do artigo."
-pubDate: 2026-11-17
+slug: o-meu-artigo
+collection: journal
+permalink: /journal/o-meu-artigo/
+title: "Título"
+description: "Resumo real para cartões, pesquisa e SEO."
+pubDate: 2026-11-19
+updatedDate: 2026-11-19
 author: "GPTCLONE"
-slug: "titulo-do-artigo"
-collection: "journal"
-permalink: "/journal/titulo-do-artigo/"
-image: "/assets/images/exemplo.svg"
-imageAlt: "Descrição breve da ilustração de abertura"
-tags: ["tag1", "tag2"]
+image: "/assets/images/capa.svg"
+imageAlt: "Descrição da imagem"
+tags: ["tag"]
 category: "Categoria"
-readingTime: "6 min"
-related: ["slug-de-artigo-relacionado"]
+readingTime: "5 min"
+related: ["outro-slug"]
 ---
-
-Conteúdo do artigo em Markdown.
 ```
 
-Notas:
-- `permalink` é escrito **sem** o prefixo `/blog` — o filtro `| url` e o transform de build adicionam-no.
-- Tags alimentam automaticamente `/tags/` e `/tags/[tag]/`.
-- Os dados por coleção (layout, etc.) estão em `.11tydata.json` dentro de cada diretório.
-- **Não incluir um `# Título` no corpo**: o layout `article.njk` gera o único `<h1>` a partir de `title`. O validador falha se a página tiver mais de um.
-- Blocos de código devem indicar a linguagem (```` ```python ````) para receber realce Prism; blocos sem linguagem permanecem texto simples.
-- `imageAlt` é opcional; sem ele, o layout usa uma descrição editorial derivada do título.
+Regras essenciais:
 
-### Adicionar um PDF à Biblioteca
+- `permalink` sem `/blog`; o build acrescenta o prefixo.
+- Não escrever `# Título` no corpo: o layout cria o único `<h1>`.
+- Código com linguagem; o Prism está configurado para Python, Bash e JSON.
+- Imagens em `src/assets/images/` ou `public/resources/uploads/`; caminhos sem `/blog`.
+- `draft: true` remove das coleções/pesquisa/tags/sitemap, mas não é uma barreira de privacidade:
+  o URL pode continuar a ser gerado. Use um ramo/PR para trabalho inacabado.
+- Não inventar autores, datas, resultados, parcerias ou funcionalidades.
 
-1. Colocar o ficheiro PDF em `public/resources/pdfs/`
-2. Adicionar uma entrada a `src/_data/pdfLibrary.json`
-3. Definir `downloadUrl` e `previewUrl` (sem prefixo `/blog`)
-4. Atualizar `pages` e `sizeBytes` com valores reais
+## PDFs
 
-### Adicionar um Audiolivro
+O catálogo `src/_data/pdfLibrary.json` aponta para ficheiros em `public/resources/pdfs/`.
+`downloadUrl` e `previewUrl` têm de existir; `npm run validate` falha se faltarem. O cartão
+mostra **Ver PDF** quando há `previewUrl` e **Descarregar** quando há `downloadUrl`. Não existe
+página individual por PDF.
 
-1. Colocar o ficheiro de áudio em `public/resources/audiobooks/`
-2. Adicionar uma entrada a `src/_data/audiobookLibrary.json`
-3. Definir `streamUrl`/`downloadUrl` apenas quando o ficheiro existir e o licenciamento o permitir
-4. Caso contrário, manter `placeholder: true` e `durationDisplay` honesto
+## Áudio
 
-### Adicionar um Autor
+O catálogo `src/_data/audiobookLibrary.json` aponta para ficheiros em
+`public/resources/audiobooks/`. Use `streamUrl`/`downloadUrl` apenas para ficheiros reais;
+entradas futuras usam `placeholder: true` e “Disponível em breve”. O cartão mostra **Ouvir** e
+**Descarregar**; o player incorporado é o macro `audioPlayer` em
+`src/_includes/components/cards.njk`, usado numa página própria.
 
-1. Criar um ficheiro `.md` em `src/content/authors/`
-2. Incluir frontmatter com `name`, `avatar` (opcional), `bio`, `role` (`permalink: false` é herdado do `.11tydata.json`)
+## Princípios editoriais
 
-## Princípios Editoriais
+- **Precisão:** distinguir factos, hipóteses e planos.
+- **Transparência:** não apresentar funcionalidades planeadas como implementadas.
+- **Acessibilidade:** texto alternativo, headings corretos, linguagem clara e conteúdo sem
+  barreiras desnecessárias.
+- **Honestidade:** não inventar métricas, conquistas, colaboradores ou credenciais.
+- **Licenciamento:** publicar apenas conteúdo que pode ser distribuído e indicar a licença.
 
-- **Precisão técnica:** distinguir factos estabelecidos de planos e ideias experimentais
-- **Transparência:** não afirmar funcionalidades como implementadas quando estão apenas planeadas
-- **Acessibilidade:** o conteúdo está disponível sem conta e sem paywall
-- **Honestidade:** nunca inventar conquistas, marcos de referência ou capacidades não verificadas
+## Validação
+
+Antes de publicar, ver o [guia geral](PUBLISHING_GUIDE.md#4-percurso-com-pré-visualização-local-opcional)
+e correr `npm run build`, `npm run validate` e `npm test`. O GitHub Actions repete estes passos e
+não publica uma versão inválida.

@@ -73,6 +73,15 @@ for (const asset of ['/styles/main.css', '/scripts/main.js', '/scripts/suggestio
   if (!assetExists(asset)) fail(`Missing asset: ${asset}`);
 }
 
+// Homepage copy contract: the publication names itself simply as "O Blog".
+const homeHtml = readFileSync(join(site, 'index.html'), 'utf8');
+if (!/O Blog reúne notas de investigação, diário de projeto e material\s+educativo sobre IA, publicados à medida que o trabalho avança\./.test(homeHtml)) {
+  fail('Homepage is missing the corrected "O Blog reúne..." sentence');
+}
+if (homeHtml.includes('O GPTCLONE Blog reúne')) {
+  fail('Homepage still contains the old "O GPTCLONE Blog reúne" sentence');
+}
+
 // ---------------------------------------------------------------------------
 // 3. Base path correctness in HTML
 // ---------------------------------------------------------------------------
@@ -132,6 +141,9 @@ for (const item of audioLibrary.audiobooks) {
   if (item.streamUrl && !assetExists(item.streamUrl)) fail(`Audiobook catalog: ${item.id} streamUrl -> ${item.streamUrl} missing`);
   if (item.downloadUrl && !assetExists(item.downloadUrl)) fail(`Audiobook catalog: ${item.id} downloadUrl -> ${item.downloadUrl} missing`);
 }
+const pdfHtml = readFileSync(join(site, 'pdf-library', 'index.html'), 'utf8');
+if (!/aria-label="Ver PDF: /.test(pdfHtml)) fail('PDF catalog has no accessible Ver PDF action');
+if (!/class="sr-only">Documentos disponíveis</.test(pdfHtml)) fail('PDF catalog is missing its document heading');
 
 // ---------------------------------------------------------------------------
 // 6. RSS / sitemap URL sanity

@@ -38,8 +38,9 @@
       {% if item.durationDisplay %}<div><dt>Duração</dt><dd>{{ item.durationDisplay }}</dd></div>{% endif %}
     </dl>
     <div class="resource-actions">
-      {% if item.streamUrl %}<a class="btn btn-primary btn-sm" href="{{ item.streamUrl | url }}">Ouvir</a>{% endif %}
-      {% if item.downloadUrl %}<a class="btn btn-outline btn-sm" href="{{ item.downloadUrl | url }}" download>Descarregar</a>{% endif %}
+      {% if type == 'pdf' and item.previewUrl %}<a class="btn btn-outline btn-sm" href="{{ item.previewUrl | url }}" target="_blank" rel="noopener noreferrer" aria-label="Ver PDF: {{ item.title }}">Ver PDF</a>{% endif %}
+      {% if item.streamUrl %}<a class="btn btn-primary btn-sm" href="{{ item.streamUrl | url }}" aria-label="Ouvir: {{ item.title }}">Ouvir</a>{% endif %}
+      {% if item.downloadUrl %}<a class="btn btn-outline btn-sm" href="{{ item.downloadUrl | url }}" download aria-label="Descarregar: {{ item.title }}">Descarregar</a>{% endif %}
       {% if item.placeholder %}<button class="btn btn-outline btn-sm" type="button" disabled>Em breve</button>{% endif %}
     </div>
   </div>

@@ -1,5 +1,10 @@
 # Gestão de Conteúdo — GPTCLONE Blog
 
+> **Percurso recomendado para começar:** [docs/PUBLISHING_GUIDE.md](docs/PUBLISHING_GUIDE.md),
+> [artigos](docs/ARTICLES_GUIDE.md), [PDFs](docs/PDF_LIBRARY_GUIDE.md) e
+> [áudio](docs/AUDIOBOOKS_GUIDE.md). Não precisa do CMS nem de configurar um servidor para
+> publicar pelo GitHub. Este documento descreve a via avançada do Decap CMS.
+
 Este documento explica, passo a passo, como gerir o conteúdo do GPTCLONE Blog
 através do **CMS do Decap** (interface de administração em `/admin/`), sem
 necessidade de recorrer a um agente de IA ou a programação.

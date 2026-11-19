@@ -40,6 +40,7 @@ navKey: blog
       </div>
     </div>
 
+    <h2 class="sr-only">Documentos disponíveis</h2>
     <div class="card-grid card-grid-3" data-filter-grid>
       {% for doc in pdfLibrary.documents %}{{ cards.resourceCard(doc, 'pdf') }}{% endfor %}
     </div>
