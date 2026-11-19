@@ -152,4 +152,62 @@ Lighthouse, an actual published GitHub issue, or a live private endpoint (none i
 
 ## 9. Commits, CI and production
 
-To be completed after push and deployment.
+### Commits
+
+| SHA | Commit | Scope |
+|-----|--------|-------|
+| `4a65bca` | `feat: add suggestions page and four-menu navigation` | 41 files, +1346/−89 |
+| `550f51a` | `docs: add suggestions mission audit and progress report` | 2 files, +245 |
+
+Push: `23ecea7..550f51a main -> main` (fast-forward, no force). After the push,
+`git rev-parse HEAD` and `git rev-parse origin/main` both returned
+`550f51afdb65f1a2007e67d093bd77f21f662f17`; the working tree was clean.
+
+A docs-only follow-up commit records this verification and changes no built page.
+
+### GitHub Actions
+
+- Run: https://github.com/pedrom3160/blog/actions/runs/44579594329
+- Head: `550f51a`
+- Status: **completed / success**
+- Deployment: GitHub Pages workflow completed; the new build is served at the production URL.
+
+### Live production verification (https://pedrom3160.github.io/blog/)
+
+| Check | Verified result |
+|-------|-----------------|
+| `/`, `/about/`, `/suggestions/`, `/donations/`, `/journal/`, one article | all **200** |
+| Primary navigation on all six pages | `Blog · About · Suggestions · Donations` |
+| `<h1>` count / missing image `alt` | exactly 1 / 0 on every checked page |
+| Suggestions editorial copy | all required headings, five categories and the vision line present |
+| Temporary-name explanation | present, including “O GPTCLONE é um nome temporário.” |
+| Form markup | `#suggestion-form`, five controls, `data-repo="pedrom3160/blog"`, last-reviewed date |
+| Deployed validation | empty submit showed the three errors and focused the category |
+| Deployed handoff | stubbed `window.open` received the expected `[Sugestão]` issue URL with category, name and body; no email field |
+| Deployed status | “Sugestão preparada… nada foi enviado por este site”; success only on GitHub confirmation |
+| Deployed clipboard | “Sugestão copiada para a área de transferência.” |
+| Mobile menu at 375 px | opens with four links, Suggestions marked current, closes correctly; scroll width 358 |
+| Forbidden strings | zero occurrences of the team byline, `gptclone-team`, or the removed promotional phrases in live HTML |
+| Canonical | `https://pedrom3160.github.io/blog/suggestions/` |
+| OG title/description | “Sugestões” and the Portuguese submission description |
+| Sitemap | `/blog/suggestions/` included |
+| CSS / form JS | both 200 with expected content types and content |
+| RSS | 200, `application/xml` |
+| Unknown path | 404 |
+
+The live form was exercised against production with `window.open` stubbed, so **no real GitHub
+issue was created**. The URL construction and status behaviour are verified; account-gated
+confirmation on GitHub is not.
+
+## 10. Remaining limitations
+
+- The default submission path requires a free GitHub account. Without one, the visitor can validate,
+  copy the text and open a blank issue, but cannot complete a submission.
+- No private endpoint is configured. The optional CORS endpoint is implemented and documented but has
+  not been tested against a live provider or credentials.
+- An actual GitHub issue was not published during testing; doing so would create public content
+  under the repository.
+- Real Safari/iOS and Firefox rendering, screen-reader announcement sessions and Lighthouse were not
+  run. Responsive checks used Chromium measurements at the five requested widths.
+- The submission body is capped by the form at 2000 characters; very long GitHub URLs were not tested
+  against GitHub’s server-side URL limit.
